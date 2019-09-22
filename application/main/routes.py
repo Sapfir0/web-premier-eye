@@ -5,7 +5,8 @@ from rq import Queue
 from redis import Redis
 import config
 from werkzeug.utils import secure_filename
-import flask_uploads
+import application.errors.handlers as errors
+
 
 @bp.route('/', methods=['GET'])
 def index():
@@ -44,17 +45,12 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@bp.route('/upload')
-def upload_form():
-    return render_template('upload.html')
-
-
-@bp.route('/galery/<filename>')
+@bp.route('/gallery/<filename>')
 def getImage(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
 
-@bp.route('/galery')
+@bp.route('/gallery')
 def seeAllImages():
     imgList = []
     for img in os.listdir(UPLOAD_FOLDER):
@@ -64,23 +60,22 @@ def seeAllImages():
             path = path.replace("\\", "/")
         imgList.append(path)
 
-    return render_template('foo.html', results=imgList)
+    return render_template('gallery.html', results=imgList)
 
 
 @bp.route('/upload', methods=['POST'])
 def upload_file():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            return redirect('/upload')
-        else:
-            return redirect(request.url)
+    if 'file' not in request.files:
+        return errors.not_found_error(problem="Upload image was failure.")
+    file = request.files['file']
+    if file.filename == '':
+        return errors.not_found_error(problem="Upload image was failure.")
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        return redirect(f"/gallery/{filename}")
+    else:
+        return errors.not_found_error(problem="Upload image was failure.")
 
 
 @bp.route('/favicon.ico')
