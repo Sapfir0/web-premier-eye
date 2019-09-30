@@ -10,7 +10,7 @@ class Config(object):
 
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     APP_PATH = Path(__file__).parents[0]
-    UPLOAD_FOLDER = os.path.join(APP_PATH, "app", "base", "static", "uploads")
+    UPLOAD_FOLDER = os.path.join(APP_PATH, "application", "static", "uploads")
     if not os.path.exists(UPLOAD_FOLDER):
         os.mkdir(UPLOAD_FOLDER)
 

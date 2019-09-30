@@ -24,4 +24,4 @@ package-lock.json
 
 .idea
 error.log
-app/base/static/vendors
+application/static/vendors

@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from threading import Thread
 from time import sleep
-from app import create_app, db
+from application import create_app, db
 
 
 @fixture

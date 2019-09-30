@@ -8,10 +8,10 @@ from flask_login import (
 )
 from werkzeug.utils import secure_filename
 
-from app import db, login_manager
-from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm
-from app.base.models import User
+from application import db, login_manager
+from application.controllers.base import blueprint
+from application.controllers.base.forms import LoginForm, CreateAccountForm
+from application.models.models import User
 
 import os
 from config import Config as cfg
@@ -26,10 +26,6 @@ def route_default():
 def favicon():
     return send_from_directory(os.path.join(cfg.APP_PATH, 'static', 'images'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-
-def allowedFile(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in cfg.ALLOWED_EXTENSIONS
 
 
 @blueprint.route('/gallery/<filename>')
@@ -51,6 +47,9 @@ def seeAllImages():
 
 @blueprint.route('/upload', methods=['POST'])
 def upload_file():
+    def allowedFile(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in cfg.ALLOWED_EXTENSIONS
+
     if 'file' not in request.files:
         return -1
     file = request.files['file']
@@ -137,7 +136,7 @@ def unauthorized_handler():
 
 @blueprint.errorhandler(403)
 def access_forbidden(error):
-    return render_template('errors/page_403.html'), 403
+    return render_template(''), 403
 
 
 @blueprint.errorhandler(404)

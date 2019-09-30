@@ -3,7 +3,7 @@ from os import environ
 from sys import exit
 
 from config import config_dict
-from app import create_app, db
+from application import create_app, db
 
 get_config_mode = environ.get('GENTELELLA_CONFIG_MODE', 'Debug')
 

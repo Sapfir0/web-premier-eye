@@ -2,7 +2,7 @@ from bcrypt import gensalt, hashpw
 from flask_login import UserMixin
 from sqlalchemy import Binary, Column, Integer, String
 
-from app import db, login_manager
+from application import db, login_manager
 
 
 class User(db.Model, UserMixin):
