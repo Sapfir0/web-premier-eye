@@ -1,12 +1,12 @@
-FROM python:3.6-alpine
+FROM python:3.6
 
-COPY . /pyfront/
-WORKDIR /pyfront
-RUN pip3 install -r requirements.txt
+ENV FLASK_APP gentelella.py
 
-ENV FLASK_APP app.py
-ENV FLASK_ENV=development
-ENV FLASK_RUN_HOST 0.0.0.0
+COPY gentelella.py gunicorn.py requirements.txt config.py .env ./
+COPY app app
+COPY migrations migrations
 
-WORKDIR /pyfront
-#EXPOSE 5000
+RUN pip install -r requirements.txt
+
+EXPOSE 5000
+CMD ["gunicorn", "--config", "gunicorn.py", "gentelella:app"]

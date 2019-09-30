@@ -1,8 +1,8 @@
+bcrypt
 flask
-python-dotenv
-docker
-rq
-redis
-celery
-flask_sqlalchemy
+flask_login
 flask_migrate
+flask_wtf
+flask_sqlalchemy
+gunicorn
+psycopg2
