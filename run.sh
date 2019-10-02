@@ -1,4 +1,3 @@
-pip install -r requirements.txt
-python app.py
-npm install
+flask run
+
 npm run serve
