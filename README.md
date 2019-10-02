@@ -1,29 +1,24 @@
-# web-premier-eye
+Check out the [post](https://testdriven.io/developing-a-single-page-app-with-flask-and-vuejs).
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+1. Run the server-side Flask app in one terminal window:
 
-### Compiles and minifies for production
-```
-npm run build
-```
+    ```sh
+    $ cd server
+    $ python3.7 -m venv env
+    $ source env/bin/activate
+    (env)$ pip install -r requirements.txt
+    (env)$ python app.py
+    ```
 
-### Run your tests
-```
-npm run test
-```
+    Navigate to [http://localhost:8081](http://localhost:5000)
 
-### Lints and fixes files
-```
-npm run lint
-```
+1. Run the client-side Vue app in a different terminal window:
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+    ```sh
+    $ cd client
+    $ npm install
+    $ npm run serve
+    ```
+
+    Navigate to [http://localhost:8080](http://localhost:8080)
