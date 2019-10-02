@@ -1,12 +1,29 @@
-# Premier Eye
+# web-premier-eye
 
-<img src="../pyback/resources/images/eye.svg" width="100" height="100">
+## Project setup
+```
+npm install
+```
 
-## www
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-Requirements:
-- flask
-- sqlite3
-- redis
+### Compiles and minifies for production
+```
+npm run build
+```
 
-Of course, everything has already been delivered in docker containers, requirements exclusively for native launch
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -1,1 +1,0 @@
-find . -not -path "./tests/chromedriver" -not -path "./.git/*" -type f | xargs wc -l
