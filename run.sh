@@ -1,3 +1,2 @@
-flask run
-
+cd client
 npm run serve

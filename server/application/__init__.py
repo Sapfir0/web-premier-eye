@@ -1,20 +1,21 @@
 from importlib import import_module
 from flask import Flask, url_for
-
+from flask_cors import CORS
+from config import Config
 
 
 def registerBlueprints(app):
-    modules = ('base', 'home')
+    modules = ['base']
     for moduleName in modules:
         module = import_module(f'application.controllers.{moduleName}.routes')
         app.register_blueprint(module.blueprint)
 
 
-
-def createApp(config):
+def createApp(configClass=Config):
     staticFolder = 'static'
     templateFolder = ''
     app = Flask(__name__, static_folder=staticFolder)
-    app.config.from_object(__name__)
+    app.config.from_object(configClass)
     registerBlueprints(app)
+    CORS(app, resources={r'/*': {'origins': '*'}})
     return app
