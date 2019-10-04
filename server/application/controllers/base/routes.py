@@ -12,11 +12,6 @@ def ping_pong():
     return jsonify('pong!')
 
 
-@blueprint.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(cfg.APP_PATH, 'static', 'images'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
 
 @blueprint.route('/gallery/<filename>')
 def getImage(filename):
@@ -32,7 +27,7 @@ def seeAllImages():
         if path.index("\\"):
             path = path.replace("\\", "/")
         imgList.append(path)
-    return render_template('gallery.html', results=imgList)
+    return jsonify(imgList)
 
 
 @blueprint.route('/upload', methods=['POST'])
@@ -53,21 +48,3 @@ def upload_file():
         raise Exception
 
 
-# @blueprint.route('/page_<error>')
-# def route_errors(error):
-#     return render_template('errors/page_{}.html'.format(error))
-
-
-# @blueprint.errorhandler(403)
-# def access_forbidden(error):
-#     return render_template(''), 403
-#
-#
-# @blueprint.errorhandler(404)
-# def not_found_error(error):
-#     return render_template('errors/page_404.html'), 404
-#
-#
-# @blueprint.errorhandler(500)
-# def internal_error(error):
-#     return render_template('errors/page_500.html'), 500
