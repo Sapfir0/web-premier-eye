@@ -1,5 +1,11 @@
 version: '3'
 services:
+  server:
+    restart: always
+    build: ./server
+    ports:
+      - "5000:5000"
+
   client:
     restart: always
     env_file: .env
@@ -7,8 +13,4 @@ services:
     ports:
       - "8080:8080"
 
-  server:
-    restart: always
-    build: ./server
-    ports:
-      - "5000:5000"
+
