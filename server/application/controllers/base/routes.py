@@ -6,27 +6,14 @@ import os
 from config import Config as cfg
 
 
-# sanity check route
-@blueprint.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
-
-
-
 @blueprint.route('/gallery/<filename>')
 def getImage(filename):
     return send_from_directory(cfg.UPLOAD_FOLDER, filename)
 
 
-@blueprint.route('/gallery')
+@blueprint.route('/gallery', methods=['GET'])
 def seeAllImages():
-    imgList = []
-    for img in os.listdir(cfg.UPLOAD_FOLDER):
-        uploadName = os.path.split(cfg.UPLOAD_FOLDER)[1]
-        path = os.path.join(uploadName, img)
-        if path.index("\\"):
-            path = path.replace("\\", "/")
-        imgList.append(path)
+    imgList = [img for img in os.listdir(cfg.UPLOAD_FOLDER)]
     return jsonify(imgList)
 
 

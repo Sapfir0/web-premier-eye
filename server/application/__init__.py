@@ -13,7 +13,6 @@ def registerBlueprints(app):
 
 def createApp(configClass=Config):
     staticFolder = 'static'
-    templateFolder = ''
     app = Flask(__name__, static_folder=staticFolder)
     app.config.from_object(configClass)
     registerBlueprints(app)

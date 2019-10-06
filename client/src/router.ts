@@ -5,6 +5,23 @@ import Ping from './components/Ping.vue'
 
 Vue.use(Router);
 
+// function* generatorCreator(uri) { // хах это не указатель
+//   const response = yield fetch(uri); // генераторы это прикольно, но не оч
+//   const data = yield response.json()
+// }
+
+
+export async function pingRouter() {
+  const localhost = "http://localhost:5000/gallery"
+  const response = await fetch(localhost);
+  const json = await response.json();
+  // json.forEach( async (element) => {
+  //   const res = await fetch("http://localhost:5000/gallery/"+element)
+  //   console.log(res)
+  // }); 
+
+}
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
