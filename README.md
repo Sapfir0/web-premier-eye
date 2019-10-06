@@ -1,4 +1,18 @@
 
-На http://localhost:8080 висит клиентская часть, на 5000 различное серверное api
+### Compiles and minifies for production
+```
+npm run build
+```
 
+### Run your tests
+```
+npm run test
+```
 
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
