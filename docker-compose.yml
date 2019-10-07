@@ -9,7 +9,7 @@ services:
   client:
     restart: always
     env_file: .env
-    build: ./client
+    build: ./
     ports:
       - "8080:8080"
 
