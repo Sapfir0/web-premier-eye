@@ -55,26 +55,26 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
-    import CamersList from '../components/CamersList.vue';
+import Vue from 'vue';
+import CamersList from '../components/CamersList.vue';
 
-    export default Vue.extend({
-        data() {
-            return {
-                colors: [
-                    'primary',
-                    'secondary',
-                    'yellow darken-2',
-                    'red',
-                    'orange',
-                ],
-                model: 0,
-                slider: 5,
-                imagesInCamerN: 5,
-            };
-        },
-        components: {
-            CamersList,
-        },
-    });
+export default Vue.extend({
+  data() {
+    return {
+      colors: [
+        'primary',
+        'secondary',
+        'yellow darken-2',
+        'red',
+        'orange',
+      ],
+      model: 0,
+      slider: 5,
+      imagesInCamerN: 5,
+    };
+  },
+  components: {
+    CamersList,
+  },
+});
 </script>
