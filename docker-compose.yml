@@ -2,14 +2,18 @@ version: '3'
 services:
   server:
     restart: always
-    build: ./server
+    env_file: .env
+    build:
+      context: .
+      dockerfile: DockerfileServer
     ports:
       - "5000:5000"
 
   client:
     restart: always
-    env_file: .env
-    build: ./
+    build:
+      context: .
+      dockerfile: DockerfileClient
     ports:
       - "8080:8080"
 

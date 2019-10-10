@@ -20,9 +20,9 @@
 </template>
 
 <script>
-  export default {
-    created () {
-      this.$ssrContext && this.$ssrContext.res.status(404)
-    },
-  }
+export default {
+  created() {
+    this.$ssrContext && this.$ssrContext.res.status(404);
+  },
+};
 </script>
