@@ -6,16 +6,6 @@ import PageNotFound from './components/PageNotFound.vue';
 Vue.use(Router);
 
 
-export async function pingRouter() {
-  const localhost: string = 'http://localhost:5000/gallery';
-  const response = await fetch(localhost);
-  const json = await response.json();
-  json.forEach(async (element) => {
-    const res = await fetch(`http://localhost:5000/gallery/${element}`);
-    console.log(res);
-  });
-}
-
 const routes = [
   {
     path: '*',
