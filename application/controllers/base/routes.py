@@ -17,11 +17,18 @@ def seeAllImages():
     return jsonify(imgList)
 
 
+# @blueprint.route('/lastData', methods=['GET'])
+# def getLastData():
+#
+#     return jsonify(imgList)
+
+
 @blueprint.route('/upload', methods=['POST'])
 def upload_file():
     def allowedFile(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in cfg.ALLOWED_EXTENSIONS
 
+    print(request.form)
     if 'file' not in request.files:
         raise Exception
     file = request.files['file']

@@ -41,6 +41,9 @@ export default {
       this.camers = json;
       this.imagesInCamerN = json.length;
     },
+    async checkChanges() {
+
+    },
   },
   mounted() {
     this.pingRouter();
