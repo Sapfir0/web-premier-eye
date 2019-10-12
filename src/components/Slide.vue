@@ -1,12 +1,26 @@
 <template>
-  <v-flex md6>
-    <v-flex xs12>
 
-      <v-carousel v-model="model" :show-arrows="false" :hide-delimiters="true" :continuous="false" >
+  <v-flex md6>
+    <v-list camers > <!--style="width:30%;" -->
+         <v-list-item v-for="i in camersCount"  >
+                  <v-list-item-content @click="foo(i)">
+                  <v-list-item-title >Камера № {{ i }}</v-list-item-title>
+                  </v-list-item-content>
+         </v-list-item>
+     </v-list>
+    <v-flex xs12>
+      <v-carousel
+        v-model="model"
+        hide-delimiters
+        :show-arrows="false"
+        :continuous="false"
+        style="width:100%">
         <v-carousel-item
           v-for="(camer) in camers"
           :key="camer"
-          :src="`http://localhost:8050/gallery/${camer}`"
+          :src="getImage(camer)"
+          alt="Изображение с камеры"
+          style="width:100%;height:100%;"
           :reverse-transition="false"
           :transition="false"
         >
@@ -31,9 +45,14 @@ export default {
       model: 0,
       slider: 0,
       imagesInCamerN: 1,
+        camersCount: 5,
     };
   },
   methods: {
+      foo(i) {
+          // изменить режим отображения у слайдшоу
+          console.log(i)
+      },
     async pingRouter() {
       const localhost = 'http://localhost:8050/gallery';
       const response = await fetch(localhost);
@@ -42,7 +61,10 @@ export default {
       this.imagesInCamerN = json.length;
     },
     async checkChanges() {
-
+      return 0;
+    },
+    getImage(camer) {
+      return `http://localhost:8050/gallery/${camer}`;
     },
   },
   mounted() {

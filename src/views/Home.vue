@@ -7,10 +7,6 @@
 
     <v-container>
       <v-layout row>
-        <v-flex md6>
-          <CamersList />
-        </v-flex>
-
         <Slide/>
 
       </v-layout>
@@ -30,7 +26,6 @@ export default Vue.extend({
 
   components: {
     Slide,
-    CamersList,
   },
 });
 </script>
