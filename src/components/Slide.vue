@@ -25,7 +25,7 @@
       </v-list>
     </v-card>
         </v-col>
-        <v-col cols="6" md="8">
+        <v-col cols="10" md="6">
           <v-card class="mx-auto" outlined tile>
 
       <v-carousel
@@ -36,11 +36,12 @@
           <v-carousel-item
             v-for="(filename) in camers"
             :key="filename"
-            :src="getImage(filename)"
-            alt="Изображение с камеры"
             :reverse-transition="false"
             :transition="false"
           >
+              <v-img :src="getImage(filename)" contain alt="Изображение с камеры">
+              </v-img>
+
           </v-carousel-item>
       </v-carousel>
 
