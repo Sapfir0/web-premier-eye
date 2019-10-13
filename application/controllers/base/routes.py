@@ -8,32 +8,37 @@ from config import Config as cfg
 
 @blueprint.route('/gallery/<filename>')
 def getImage(filename):
-    return send_from_directory(cfg.UPLOAD_FOLDER, filename)
+    outputPath = os.path.join(cfg.UPLOAD_FOLDER, getOutputDir(filename))
+    if os.path.exists(os.path.split(outputPath)[0]):
+        return send_from_directory(os.path.split(outputPath)[0], filename)
+    else:
+        return "Error while loading image", 404
 
 
 @blueprint.route('/gallery', methods=['GET'])
 def seeAllImages():
-    imgList = [img for img in os.listdir(cfg.UPLOAD_FOLDER)]
-    return jsonify(imgList)
+    return NotImplemented
 
 
 @blueprint.route('/gallery/camera/<cameraId>', methods=['GET'])
 def getLastData(cameraId):
     cameraPath = os.path.join(cfg.UPLOAD_FOLDER, cameraId)
+    if not os.path.exists(cameraPath):
+        return "Error while loading image", 404
     imgList = recursiveSearch(cameraPath)
     return jsonify(imgList)
 
 
-foo = [] # static var
-def recursiveSearch(directory):
-    global foo
+def recursiveSearch(directory, listOfImages=None):
+    if listOfImages is None:
+        listOfImages = []
     for files in os.listdir(directory):
         path = os.path.join(directory, files)
         if os.path.isdir(path):
-            recursiveSearch(path)
+            recursiveSearch(path, listOfImages)
         else:
-            foo.append(files)
-    return foo
+            listOfImages.append(files)
+    return listOfImages
 
 
 

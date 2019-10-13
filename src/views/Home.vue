@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import CamersList from '../components/CamersList.vue';
 import Slide from '../components/Slide.vue';
 
 export default Vue.extend({
