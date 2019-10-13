@@ -1,14 +1,32 @@
 <template>
 
-  <v-flex>
+  <v-flex md12>
 
-      <v-list camers flat>
-           <v-list-item v-for="i in camersCount"  >
-                    <v-list-item-content @click="pingRouter(i)">
-                    <v-list-item-title >Камера № {{ i }}</v-list-item-title>
-                    </v-list-item-content>
-           </v-list-item>
-       </v-list>
+      <v-row no-gutters>
+        <v-col cols="12" sm="6" md="4">
+     <v-card
+      class="mx-auto"
+      max-width="300"
+      outlined
+      tile
+    >
+      <v-list>
+        <v-list-item-group v-model="item" color="primary">
+          <v-list-item
+             v-for="i in camersCount"
+            :key="i"
+             @click="pingRouter(i)"
+          >
+            <v-list-item-content>
+              <v-list-item-title>Камера № {{ i }}</v-list-item-title>
+            </v-list-item-content>
+            </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
+        </v-col>
+        <v-col cols="6" md="8">
+          <v-card class="mx-auto" outlined tile>
 
       <v-carousel
         v-model="model"
@@ -31,6 +49,11 @@
       :max="imagesInCamerN-1"
       @input="model=slider"
       ticks> </v-slider>
+      </v-card>
+        </v-col>
+      </v-row>
+
+
   </v-flex>
 </template>
 
@@ -59,6 +82,7 @@ export default {
       const json = await response.json();
       this.camers = json;
       this.imagesInCamerN = json.length;
+      return true;
     },
     async checkChanges() {
       return 0;
