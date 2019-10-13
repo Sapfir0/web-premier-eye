@@ -8,6 +8,9 @@ services:
       dockerfile: DockerfileServer
     ports:
       - "8050:8050"
+#    volumes:
+#      - "./application/static/uploads:./pyfront/application/static/uploads"
+
 
   client:
     restart: always

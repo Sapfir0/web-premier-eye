@@ -5,4 +5,4 @@ app = createApp(cfg)
 DEBUG = True
 
 if __name__ == '__main__':
-    app.run(debug=DEBUG, port=cfg.PORT)
+    app.run(port=cfg.PORT, host='0.0.0.0')

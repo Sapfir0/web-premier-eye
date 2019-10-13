@@ -1,13 +1,9 @@
 FROM node:carbon
 
-WORKDIR /app
-
-COPY package*.json ./
+COPY . .
 
 RUN npm install @vue/cli -g
 RUN npm install 
 
-COPY . .
-
 EXPOSE 8080
-CMD [ "npm", "run", "build" ]
+CMD [ "npm", "run", "serve" ]
