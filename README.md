@@ -1,18 +1,15 @@
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Premier Eye
 
-### Run your tests
-```
-npm run test
-```
+Run the server-side Flask app in one terminal window:
 
-### Lints and fixes files
-```
-npm run lint
-```
+    pip install -r requirements.txt
+    flask run
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Run the client-side Vue app in a different terminal window:
+
+    npm i
+    npm run serve
+
+
+Navigate to http://localhost:8080
