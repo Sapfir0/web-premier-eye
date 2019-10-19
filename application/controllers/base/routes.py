@@ -20,6 +20,11 @@ def seeAllImages():
     return NotImplemented
 
 
+@blueprint.route('/', methods=['GET'])
+def hi():
+    return "Hey Man"
+
+
 @blueprint.route('/gallery/camera/<cameraId>', methods=['GET'])
 def getLastData(cameraId):
     cameraPath = os.path.join(cfg.UPLOAD_FOLDER, cameraId)

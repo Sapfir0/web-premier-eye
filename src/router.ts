@@ -5,6 +5,22 @@ import PageNotFound from './components/PageNotFound.vue';
 
 Vue.use(Router);
 
+function getImage(filename: string) {
+    return `http://localhost:8050/gallery/${filename}`;
+}
+
+const port = 8050;
+
+async function pingRouter(camerId: number) {
+    const localhost = `http://localhost:${port}/gallery/camera/${camerId}`;
+    const response = await fetch(localhost);
+    const { status } = response;
+    if (status === 404) {
+        const { statusText } = response;
+        console.log('Статус', statusText);
+    }
+    return await response.json()
+}
 
 const routes = [
   {
@@ -28,3 +44,5 @@ export default new Router({
   base: process.env.BASE_URL,
   routes,
 });
+
+export {port, pingRouter};
