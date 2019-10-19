@@ -5,10 +5,12 @@ from application.controllers.base import blueprint
 import os
 from config import Config as cfg
 from application.controllers.base.directory import recursiveSearch
+from application.controllers.base.directory import getOutputDir
+
 
 @blueprint.route('/', methods=['GET'])
 def hi():
-    return "Hey Man"
+    return "Server is up!"
 
 
 @blueprint.route('/gallery/<filename>')
@@ -55,15 +57,5 @@ def upload_file():
         raise Exception
 
 
-def getOutputDir(filename):
-    def getDateOrHours(filename: str):
-        date1 = filename.split("_")[1].split(".")[0]
-        parsedData = date1[0:8]
-        hours1 = date1[8:10]
-        return parsedData, hours1
-    numberOfCam = filename.split("_")[0]
-    date, hours = getDateOrHours(filename)
-    outputFile = os.path.join(cfg.UPLOAD_FOLDER, numberOfCam, date, hours, filename)
-    return outputFile
 
 
