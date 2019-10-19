@@ -25,8 +25,10 @@
                 </v-card>
             </v-col>
             <v-col cols="10" md="6">
-                <v-card class="mx-auto" outlined tile>
-
+                <v-card class="mx-auto"
+                        outlined
+                        tile
+                >
                     <v-carousel
                         v-model="model"
                         hide-delimiters

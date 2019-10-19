@@ -5,10 +5,6 @@ import PageNotFound from './components/PageNotFound.vue';
 
 Vue.use(Router);
 
-function getImage(filename: string) {
-    return `http://localhost:8050/gallery/${filename}`;
-}
-
 const port = 8050;
 
 async function pingRouter(camerId: number) {
@@ -31,11 +27,6 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-  },
-  {
-    path: '/ping',
-    name: 'ping',
-    component: () => import('./components/Ping.vue'),
   },
 ];
 

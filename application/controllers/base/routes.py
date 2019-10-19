@@ -4,6 +4,11 @@ from application.controllers.base import blueprint
 
 import os
 from config import Config as cfg
+from application.controllers.base.directory import recursiveSearch
+
+@blueprint.route('/', methods=['GET'])
+def hi():
+    return "Hey Man"
 
 
 @blueprint.route('/gallery/<filename>')
@@ -17,12 +22,7 @@ def getImage(filename):
 
 @blueprint.route('/gallery', methods=['GET'])
 def seeAllImages():
-    return NotImplemented
-
-
-@blueprint.route('/', methods=['GET'])
-def hi():
-    return "Hey Man"
+    return jsonify(recursiveSearch(cfg.UPLOAD_FOLDER))
 
 
 @blueprint.route('/gallery/camera/<cameraId>', methods=['GET'])
@@ -32,19 +32,6 @@ def getLastData(cameraId):
         return "Error while loading image", 404
     imgList = recursiveSearch(cameraPath)
     return jsonify(imgList)
-
-
-def recursiveSearch(directory, listOfImages=None):
-    if listOfImages is None:
-        listOfImages = []
-    for files in os.listdir(directory):
-        path = os.path.join(directory, files)
-        if os.path.isdir(path):
-            recursiveSearch(path, listOfImages)
-        else:
-            listOfImages.append(files)
-    return listOfImages
-
 
 
 @blueprint.route('/upload', methods=['POST'])
