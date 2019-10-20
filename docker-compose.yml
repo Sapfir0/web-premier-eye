@@ -10,7 +10,8 @@ services:
       - "8050:8050"
     volumes:
       - "./application/static/uploads:/pyfront/application/static/uploads"
-
+    networks:
+      - some-net
 
   client:
     restart: always
@@ -20,4 +21,6 @@ services:
     ports:
       - "8080:80"
 
-
+networks:
+  some-net:
+    driver: bridge
