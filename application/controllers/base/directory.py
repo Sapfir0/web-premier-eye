@@ -1,4 +1,5 @@
 import os
+from config import Config as cfg
 
 
 def recursiveSearch(directory, listOfImages=None):
