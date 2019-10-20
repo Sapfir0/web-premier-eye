@@ -15,25 +15,27 @@ async function pingRouter(camerId: number) {
         const { statusText } = response;
         console.log('Статус', statusText);
     }
-    return await response.json()
+    return response.json();
 }
 
 const routes = [
-  {
-    path: '*',
-    component: PageNotFound,
-  },
-  {
-    path: '/',
-    name: 'home',
-    component: Home,
-  },
+    {
+        path: '*',
+        component: PageNotFound,
+    },
+    {
+        path: '/',
+        name: 'home',
+        component: Home,
+    },
 ];
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes,
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes,
 });
 
-export {port, pingRouter};
+export {
+    port, pingRouter,
+};

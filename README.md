@@ -13,6 +13,7 @@ Run the client-side Vue app in a different terminal window:
 
 Navigate to http://localhost:8080
 
+
 ### OR
 
 Run the docker-compose script

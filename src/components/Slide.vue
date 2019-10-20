@@ -80,7 +80,7 @@
                 this.imagesInCamerN = json.length;
             },
             getImage(filename) {
-                console.log("Loading image ", filename) ;
+                console.log('Loading image ', filename) ;
                 return `http://localhost:${routing.port}/gallery/${filename}`;
 
             },
