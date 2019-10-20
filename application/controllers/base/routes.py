@@ -47,6 +47,7 @@ def upload_file():
     if file.filename == '':
         raise Exception
     if file and allowedFile(file.filename):
+        print(file.filename)
         filename = secure_filename(file.filename)
         outputPath = os.path.join(cfg.UPLOAD_FOLDER, getOutputDir(filename))
         if not os.path.exists(os.path.split(outputPath)[0]):

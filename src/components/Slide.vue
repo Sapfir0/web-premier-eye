@@ -60,8 +60,8 @@
 </template>
 
 <script>
-    const port = require("../router")
-    const {pingRouter} = require("../router")
+    const routing = require('../router')
+
     export default {
         name: 'Slide',
         data() {
@@ -75,12 +75,14 @@
         },
         methods: {
             async pingRouter(camerId) {
-                const json = await pingRouter(camerId);
+                const json = await routing.pingRouter(camerId);
                 this.imagesList = json;
                 this.imagesInCamerN = json.length;
             },
             getImage(filename) {
-                return `http://localhost:${port.port}/gallery/${filename}`;
+                console.log("Loading image ", filename) ;
+                return `http://localhost:${routing.port}/gallery/${filename}`;
+
             },
         },
         mounted() {
