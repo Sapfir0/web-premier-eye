@@ -15,7 +15,7 @@ npm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
+*.db
 package-lock.json
 __pycache__
 application/static/uploads/*

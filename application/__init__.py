@@ -2,6 +2,7 @@ from importlib import import_module
 from flask import Flask, url_for
 from flask_cors import CORS
 from config import Config
+import application.database
 
 
 def registerBlueprints(app):
