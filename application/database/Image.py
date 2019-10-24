@@ -17,8 +17,8 @@ class Image(Base):
     path = Column(String)
     filename = Column(String)
     numberOfCam = Column(Integer)
-    #fixationDatetime = Column(DateTime, unique=True)  # TODO вылетает ошибка типов
-    fixationDatetime = Column(String, unique=True)
+    fixationDatetime = Column(DateTime, unique=True)  # TODO вылетает ошибка типов
+    #fixationDatetime = Column(Float)
     hasObjects = Column(Boolean)
 
     def __init__(self, imagePath: str, filename: str, numberOfCam: int, fixationDatetime, hasObjects: bool):
@@ -28,6 +28,6 @@ class Image(Base):
         self.path = imagePath
         self.filename = filename
         self.numberOfCam = numberOfCam
-        self.fixationDatetime = fixationDatetime,
+        self.fixationDatetime = fixationDatetime
         self.hasObjects = hasObjects
 
