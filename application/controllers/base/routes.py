@@ -52,23 +52,18 @@ def getJsonInfo(filename):
     res = conn.execute(select_stmt).fetchone()
     return jsonify(dict(res))
 
-def parseJson(deserjson) -> dict:
+def parseJson(deserjson):
     """
     Фактически, эта функция занимается приведением типов, т.к. в джсоне все прилетает строками,
     и мы тут восстанавиваем правильные типы и возвращаем словарь
     :param jsonPremier:
-    :return: some dict
+    :return:
     """
     hasObjects = '0' in deserjson  # 0 - первый найденный на кадре объект, опеределено на другой стороне
-    dateTime = datetime.datetime.strptime(deserjson['fixationDatetime'], '%Y-%m-%d %H:%M:%S')
+    #dateTime = datetime.datetime.strptime(deserjson['fixationDatetime'], '%Y-%m-%d %H:%M:%S')
+    dateTime = deserjson['fixationDatetime']
     numberOfCam = int(deserjson['numberOfCam'])
     filename: str = deserjson['filename']
-    # keys = deserjson.keys()
-    # values = [filename, numberOfCam, dateTime, hasObjects]  # важен порядок
-    # newDict = dict(zip(keys, values))
-    # print(deserjson)
-    # print(newDict)
-
     return filename, numberOfCam, dateTime, hasObjects
 
 
@@ -117,7 +112,8 @@ def upload_file():
     deserjson: dict = json.loads(rowjson)
 
     args = parseJson(deserjson)
-    image = Image(outputPath, *args)
+    hasObjects = '0' in deserjson  # 0 - первый найденный на кадре объект, опеределено на другой стороне
+    image = Image(outputPath, deserjson['filename'], deserjson['numberOfCam'], deserjson['fixationDatetime'], hasObjects)
     session.add(image)  # TODO вынести работу с БД в другой поток, она долгая
     print(deserjson)
     addObjectToSession(deserjson)
