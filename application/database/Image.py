@@ -17,20 +17,15 @@ class Image(Base):
     path = Column(String)
     filename = Column(String)
     numberOfCam = Column(Integer)
-    #fixationDatetime = Column(DateTime, unique=True) # TODO вылетает ошибка типов
+    fixationDatetime = Column(DateTime(), unique=True)  # TODO вылетает ошибка типов
     hasObjects = Column(Boolean)
 
     def __init__(self, imagePath: str, filename: str, numberOfCam: int, fixationDatetime, hasObjects: bool):
         self.init_db()
+        print("Записываю дату", fixationDatetime)
         self.path = imagePath
         self.filename = filename
         self.numberOfCam = numberOfCam
         self.fixationDatetime = fixationDatetime,
         self.hasObjects = hasObjects
 
-
-def writeInfoForObjectInDB(imagePath, numberOfCam, fixationDatetime):
-    objN = Image(imagePath, numberOfCam, fixationDatetime)
-    session.add(objN)
-    session.commit()
-    session.flush()  # можно один раз добавить

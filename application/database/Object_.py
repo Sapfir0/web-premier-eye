@@ -23,6 +23,7 @@ class Object_(Base):
     imageId = Column(Integer, ForeignKey('image.id'))
 
     def __init__(self, scores, coord, coordCD, typeOfObjectId, imageId):
+        print("Записываю координаты", coord)
         self.scores = scores
         self.LDx = coord[0]
         self.LDy = coord[1]

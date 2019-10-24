@@ -7,9 +7,8 @@ Vue.use(Router);
 
 const port = 8050;
 
-async function pingRouter(camerId: number) {
-    const localhost = `http://localhost:${port}/gallery/camera/${camerId}`;
-    const response = await fetch(localhost);
+async function fetchTo(url: string) {
+    const response = await fetch(url);
     const { status } = response;
     if (status === 404) {
         const { statusText } = response;
@@ -37,5 +36,5 @@ export default new Router({
 });
 
 export {
-    port, pingRouter,
+    port, fetchTo,
 };
