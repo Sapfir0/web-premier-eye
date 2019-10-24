@@ -1,5 +1,8 @@
 import os
 from config import Config as cfg
+from datetime import datetime
+
+datetimePattern = '%Y%m%d%H%M%S.jpg'
 
 
 def recursiveSearch(directory, listOfImages=None):
@@ -15,12 +18,9 @@ def recursiveSearch(directory, listOfImages=None):
 
 
 def getOutputDir(filename):
-    def getDateOrHours(filename: str):
-        date1 = filename.split("_")[1].split(".")[0]
-        parsedData = date1[0:8]
-        hours1 = date1[8:10]
-        return parsedData, hours1
-    numberOfCam = filename.split("_")[0]
-    date, hours = getDateOrHours(filename)
-    outputFile = os.path.join(cfg.UPLOAD_FOLDER, numberOfCam, date, hours, filename)
+    numberOfCam, dateTime = filename.split("_")
+    dateTime = datetime.strptime(dateTime, datetimePattern)
+    date = dateTime.date()
+    hours = dateTime.hour
+    outputFile = os.path.join(cfg.UPLOAD_FOLDER, numberOfCam, str(date), str(hours), filename)
     return outputFile
