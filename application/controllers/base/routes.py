@@ -10,6 +10,7 @@ from config import Config as cfg
 from application.controllers.base.directory import recursiveSearch, getOutputDir
 
 from application.database.Image import Image, session, engine
+from application.database.Object_ import Object_
 
 
 @blueprint.route('/', methods=['GET'])
@@ -44,12 +45,19 @@ def getLastData(cameraId):
 def getJsonInfo(filename):
     from sqlalchemy import select
     conn = engine.connect()
-    select_stmt = select([Image]) \
-        .where(Image.filename == filename)
+    select_stmt = select([Image]).where(Image.filename == filename)
     res = conn.execute(select_stmt).fetchone()
     if res is None:
         raise ValueError("Image not found")
-    return jsonify(dict(res))
+    imageInfo = dict(res)
+    if imageInfo['hasObjects']:
+        from sqlalchemy import and_
+        objectN = select([Object_]).where(and_(Image.filename == filename, Object_.imageId == Image.id))
+        objectInfo = conn.execute(objectN).fetchall()  # т.к. объектов может быть много
+        for i, obj in enumerate(objectInfo):
+            imageInfo.update({str(i): dict(obj)})
+    #print(dict(imageInfo))
+    return jsonify(dict(imageInfo))
 
 
 @blueprint.route('/upload', methods=['POST'])

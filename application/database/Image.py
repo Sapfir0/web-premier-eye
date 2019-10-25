@@ -17,14 +17,11 @@ class Image(Base):
     path = Column(String)
     filename = Column(String)
     numberOfCam = Column(Integer)
-    fixationDatetime = Column(DateTime, unique=True)  # TODO вылетает ошибка типов
-    #fixationDatetime = Column(Float)
+    fixationDatetime = Column(DateTime, unique=True)
     hasObjects = Column(Boolean)
 
     def __init__(self, imagePath: str, filename: str, numberOfCam: int, fixationDatetime, hasObjects: bool):
         self.init_db()
-        print("Записываю дату", type(fixationDatetime), fixationDatetime)
-        print(isinstance(fixationDatetime, datetime))
         self.path = imagePath
         self.filename = filename
         self.numberOfCam = numberOfCam

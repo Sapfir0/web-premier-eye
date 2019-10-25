@@ -1,11 +1,5 @@
 from sqlalchemy import Table, Column, Integer, String, MetaData, Enum, ForeignKey, Float, UnicodeText, literal_column, DateTime, Boolean, or_
 from application.database import Base
-import enum
-
-
-class typeOfObject(enum.Enum):
-    car = 1
-    person = 2
 
 
 class Object_(Base):
@@ -19,10 +13,9 @@ class Object_(Base):
     RUy = Column(Integer)
     CDx = Column(Integer)  # Center Down
     CDy = Column(Integer)
-    typeOfObjectId = Column(Enum(typeOfObject))
     imageId = Column(Integer, ForeignKey('image.id'))
 
-    def __init__(self, scores, coord, coordCD, typeOfObjectId, imageId):
+    def __init__(self, scores, coord, coordCD, imageId):
         self.scores = scores
         self.LDx = coord[0]
         self.LDy = coord[1]
@@ -30,5 +23,4 @@ class Object_(Base):
         self.RUy = coord[3]
         self.CDx = coordCD[0]
         self.CDy = coordCD[1]
-        self.typeOfObjectId = typeOfObjectId
         self.imageId = imageId

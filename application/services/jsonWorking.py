@@ -20,18 +20,17 @@ def parseJson(deserjson):
 
 
 def addObjectToSession(deserializedJson):
-    from application.database.Object_ import typeOfObject as t
     countOfImagesInDB = session.query(Image).count() + 1  # imageId
     # +1 т.к. у нас возвращается текущее колво строк, а мы будем инсертить еще одну
     countOfObjectsInDB = session.query(Object_).count() + 1  # objectId
     for key, value in deserializedJson.items():
         if key.isdigit():
             if value['type'] == 'car':  # TODO кал
-                Object = Object_(value['scores'], value['coordinates'], value['CD'], t.car, countOfImagesInDB)
+                Object = Object_(value['scores'], value['coordinates'], value['CD'], countOfImagesInDB)
                 car = Car(value['licenseNumber'], countOfObjectsInDB)
                 session.add(car)
             elif value['type'] == 'person':
-                Object = Object_(value['scores'], value['coordinates'], value['CD'], t.person, countOfImagesInDB)
+                Object = Object_(value['scores'], value['coordinates'], value['CD'], countOfImagesInDB)
                 person = Person(countOfObjectsInDB)
                 session.add(person)
             else:
