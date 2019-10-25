@@ -10,6 +10,7 @@ services:
       - "8050:8050"
     volumes:
       - "./application/static/uploads:/pyfront/application/static/uploads"
+      - "./data.db:/pyfront/data.db"
     networks:
       - some-net
 

@@ -20,10 +20,7 @@
                 </v-card>
             </v-col>
             <v-col cols="10" md="6">
-                <v-card class="mx-auto"
-                        outlined
-                        tile
-                >
+                <v-card class="mx-auto" outlined tile>
                     <v-carousel
                         v-model="model"
                         hide-delimiters
@@ -35,9 +32,7 @@
                             :reverse-transition="false"
                             :transition="false"
                         >
-                            <v-img :src="getImage(filename)" contain alt="Изображение с камеры">
-                            </v-img>
-
+                            <v-img :src="getImage(filename)" contain alt="Изображение с камеры" />
                         </v-carousel-item>
                     </v-carousel>
 
@@ -51,9 +46,7 @@
             <v-card class="mx-auto" outlined tile>
                 <v-list>
                     <v-subheader>{{ this.info.filename}}</v-subheader>
-                    <v-list-item>
-                        <v-list-item-title> {{this.info.fixationDatetime}}</v-list-item-title>
-                    </v-list-item>
+                    <v-list-item>{{this.info.fixationDatetime}} </v-list-item>
                     <v-list-item>Снято с камеры №{{this.info.numberOfCam}} </v-list-item>
                     <v-list-item v-if="!this.info.objects">Объектов нет</v-list-item>
 
@@ -94,7 +87,7 @@
         methods: {
             async getInfoFromImage() {
                 this.model= this.slider;
-                this.info = await this.getInfoAboutImage(this.filename)
+                this.info = await this.getInfoAboutImage(this.filename);
                 console.log(this.info)
             },
             async pingRouter(camerId) {
