@@ -17,7 +17,7 @@ class Image(Base):
     path = Column(String)
     filename = Column(String)
     numberOfCam = Column(Integer)
-    fixationDatetime = Column(DateTime, unique=True)
+    fixationDatetime = Column(DateTime)  # , unique=True
     hasObjects = Column(Boolean)
 
     def __init__(self, imagePath: str, filename: str, numberOfCam: int, fixationDatetime, hasObjects: bool):

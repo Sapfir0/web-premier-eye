@@ -1,8 +1,9 @@
+import datetime
 from application.database.Car import Car
 from application.database.Person import Person
 from application.database.Object_ import Object_
 from application.database.Image import Image, session
-import datetime
+from application.controllers.extensions.coordinatesCenter import getCenterOfDown
 
 
 def parseJson(deserjson):
@@ -19,21 +20,19 @@ def parseJson(deserjson):
     return filename, numberOfCam, dateTime, hasObjects
 
 
-
-
-
 def addObjectToSession(deserializedJson):
     countOfImagesInDB = session.query(Image).count() + 1  # imageId
     # +1 т.к. у нас возвращается текущее колво строк, а мы будем инсертить еще одну
     countOfObjectsInDB = session.query(Object_).count() + 1  # objectId
     for key, value in deserializedJson.items():
         if key.isdigit():
+            CDcoordinates = getCenterOfDown(value['coordinates'])
             if value['type'] == 'car':  # TODO кал
-                Object = Object_(value['scores'], value['coordinates'], value['CD'],  "car", countOfImagesInDB)
+                Object = Object_(value['scores'], value['coordinates'], CDcoordinates,  "car", countOfImagesInDB)
                 car = Car(value['licenseNumber'], countOfObjectsInDB)
                 session.add(car)
             elif value['type'] == 'person':
-                Object = Object_(value['scores'], value['coordinates'], value['CD'], "person", countOfImagesInDB)
+                Object = Object_(value['scores'], value['coordinates'], CDcoordinates, "person", countOfImagesInDB)
                 person = Person(countOfObjectsInDB)
                 session.add(person)
             else:
