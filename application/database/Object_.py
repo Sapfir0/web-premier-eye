@@ -13,9 +13,10 @@ class Object_(Base):
     RUy = Column(Integer)
     CDx = Column(Integer)  # Center Down
     CDy = Column(Integer)
+    typeOfObject = Column(String)
     imageId = Column(Integer, ForeignKey('image.id'))
 
-    def __init__(self, scores, coord, coordCD, imageId):
+    def __init__(self, scores, coord, coordCD, typeOfObject, imageId):
         self.scores = scores
         self.LDx = coord[0]
         self.LDy = coord[1]
@@ -23,4 +24,5 @@ class Object_(Base):
         self.RUy = coord[3]
         self.CDx = coordCD[0]
         self.CDy = coordCD[1]
+        self.typeOfObject = typeOfObject
         self.imageId = imageId

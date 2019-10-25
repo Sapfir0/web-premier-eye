@@ -54,9 +54,10 @@ def getJsonInfo(filename):
         from sqlalchemy import and_
         objectN = select([Object_]).where(and_(Image.filename == filename, Object_.imageId == Image.id))
         objectInfo = conn.execute(objectN).fetchall()  # т.к. объектов может быть много
+        imageInfo.update({"objects": []})
         for i, obj in enumerate(objectInfo):
-            imageInfo.update({str(i): dict(obj)})
-    #print(dict(imageInfo))
+            imageInfo['objects'].append(dict(obj))
+    print(dict(imageInfo))
     return jsonify(dict(imageInfo))
 
 

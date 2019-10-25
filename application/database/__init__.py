@@ -18,5 +18,3 @@ session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=en
 Base = declarative_base()
 Base.query = session.query_property()
 Base.metadata.create_all(bind=engine)
-
-print("Database run")
