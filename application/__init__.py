@@ -6,7 +6,7 @@ import application.database
 
 
 def registerBlueprints(app):
-    modules = ['base']
+    modules = ['base', 'gallery']
     for moduleName in modules:
         module = import_module(f'application.controllers.{moduleName}.routes')
         app.register_blueprint(module.blueprint)

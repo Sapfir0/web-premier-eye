@@ -3,7 +3,7 @@ from application.database.Car import Car
 from application.database.Person import Person
 from application.database.Object_ import Object_
 from application.database.Image import Image, session
-from application.controllers.extensions.coordinatesCenter import getCenterOfDown
+from application.services.coordinatesCenter import getCenterOfDown
 
 
 def parseJson(deserjson):
