@@ -1,4 +1,4 @@
-from flask import jsonify, redirect, request, send_from_directory
+from flask import redirect, request
 from werkzeug.utils import secure_filename
 from application.controllers.base import blueprint
 
@@ -7,9 +7,9 @@ import json
 
 from application.services.jsonWorking import parseJson, addObjectToSession
 from config import Config as cfg
-from application.services.directory import recursiveSearch, getOutputDir
+from application.services.directory import getOutputDir
 
-from application.database.Image import Image, session
+from application.database.models.Image import Image, session
 
 
 @blueprint.route('/', methods=['GET'])

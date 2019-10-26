@@ -1,5 +1,4 @@
-from application.database.Object_  import Object_
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, Float, UnicodeText, literal_column, DateTime, Boolean, or_
+from sqlalchemy import Column, Integer, String, ForeignKey
 from application.database import Base
 
 

@@ -1,12 +1,10 @@
-from flask import jsonify, send_from_directory
-from application.controllers.base import blueprint
-
 import os
 
-from config import Config as cfg
+from flask import jsonify, send_from_directory
+from application.controllers.base import blueprint
 from application.services.directory import recursiveSearch, getOutputDir
-from application.database.Image import Image, session, engine
-from application.database.Object_ import Object_
+from application.database.dbAPI import getInfoAboutObjects, getImageByFilename
+from config import Config as cfg
 
 
 @blueprint.route('/gallery/<filename>')
@@ -25,18 +23,14 @@ def seeAllImages():
 
 @blueprint.route('/gallery/<filename>/info')
 def getJsonInfo(filename):
-    from sqlalchemy import select
-    from sqlalchemy import and_
+    res = getImageByFilename(filename)
 
-    conn = engine.connect()
-    select_stmt = select([Image]).where(Image.filename == filename)
-    res = conn.execute(select_stmt).fetchone()
     if res is None:
         raise ValueError("Image not found")
     imageInfo = dict(res)
+
     if imageInfo['hasObjects']:
-        objectN = select([Object_]).where(and_(Image.filename == filename, Object_.imageId == Image.id))
-        objectInfo = conn.execute(objectN).fetchall()  # т.к. объектов может быть много
+        objectInfo = getInfoAboutObjects(filename)
         imageInfo.update({"objects": []})
         for i, obj in enumerate(objectInfo):
             imageInfo['objects'].append(dict(obj))

@@ -1,22 +1,22 @@
 import sqlalchemy as sql
 from datetime import datetime
-from application.services.coordinatesCenter import getCenterOfDown, getCenterOfDownOfRectangle
+from application.database.models.Image import Image, session
 
 
 def getConcentration(highlightedRect, startTime: datetime, endTime: datetime):
     """
-
     :param highlightedRect: координаты прямоугольника, в котором начинаем искать объекты
     :param startTime:
     :param endTime:
     :return:
     """
     foundedObjects = []
-    a = db.Objects.fixationDatetime >= startTime
-    b = db.Objects.fixationDatetime <= endTime
-    for obj in db.session.query(db.Objects).filter(sql.and_(a, b)).all():
+
+    a = Image.fixationDatetime >= startTime
+    b = Image.fixationDatetime <= endTime
+    for obj in session.query(Image).filter(sql.and_(a, b)).all():
         minRect = [obj.LDy, obj.LDx, obj.RUy, obj.RUx]
-        if (self.hasOnePointInside(highlightedRect, minRect)):
+        if hasOnePointInside(highlightedRect, minRect):
             foundedObjects.append(obj)
 
     return foundedObjects  # массив координат всех объектов в кадре
@@ -38,9 +38,9 @@ def hasOnePointInside(bigRect, minRect):  # хотя бы одна точка л
 
 def isCompletelyInside(bigRect, minRect):  # объект полностью внутри прямоугольника
     y1, x1, y2, x2 = bigRect
-    minX = x1;
+    minX = x1
     minY = y1  # вроде верно
-    maxX = x2;
+    maxX = x2
     maxY = y2
 
     y1, x1, y2, x2 = minRect
