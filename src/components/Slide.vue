@@ -6,7 +6,7 @@
                 <CamersList @click="changeActiveCameraTo($event)"></CamersList>
             </v-col>
             <v-col cols="10" md="6">
-                <ImageView :images-list="imagesList" @nameChanged="imageViewController($event)" />
+                <ImageView :images-list="imagesList" @nameChanged="getInfoImage($event)" />
             </v-col>
             <v-col cols="10" md="3">
                 <ImageInfo :info="info" />
@@ -36,11 +36,8 @@
             ImageView, CamersList, ImageInfo
         },
         methods: {
-            imageViewController(filename) {
-                this.filename = filename
-                this.getInfoFromImage(filename)
-            },
-            async getInfoFromImage(filename) {
+            async getInfoImage(filename) {
+                this.filename = filename;
                 const url = `http://localhost:${routing.port}/gallery/${filename}/info`;
                 this.info = await routing.fetchTo(url);
             },
@@ -49,11 +46,11 @@
                 const json = await routing.fetchTo(url);
                 this.imagesList = json; // список изображений тут
                 this.filename = json[0];
-                await this.getInfoFromImage(this.filename)
+                await this.getInfoImage(this.filename)
             },
 
         },
-        mounted() {
+        created() {
             this.changeActiveCameraTo(1);
         },
     };
