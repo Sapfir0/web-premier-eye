@@ -3,7 +3,7 @@
     <v-flex md12>
         <v-row no-gutters>
             <v-col cols="12" sm="6" md="2">
-                <CamersList @click="pingRouter($event)"></CamersList>
+                <CamersList @click="changeActiveCameraTo($event)"></CamersList>
             </v-col>
             <v-col cols="10" md="6">
                 <v-card class="mx-auto" outlined tile>
@@ -24,8 +24,8 @@
 
                     <v-slider v-model="slider"
                               :min="0"
-                              :max="imagesInCamerN-1"
-                              @input="getInfoFromImage(filename)"
+                              :max="imagesList.length - 1"
+                              @input="sliderController(slider)"
                               ticks> </v-slider>
                 </v-card>
             </v-col>
@@ -67,43 +67,41 @@
         name: 'Slide',
         data() {
             return {
-                imagesList: [],
+                imagesList: [],  // длина этого списка = длина слайдера
                 model: 0,
                 slider: 0,
-                imagesInCamerN: 1,
                 camersCount: 5,
                 filename: 'emptyFilename',
-                info: {},
-            };
+                info: {}
+             };
         },
         components: {
             CamersList,
         },
         methods: {
-            async getInfoFromImage() {
-                this.model= this.slider;
-                this.info = await this.getInfoAboutImage(this.filename);
-                console.log(this.info)
+            async getInfoFromImage(filename) {
+                // console.log("имя", filename)
+                const url = `http://localhost:${routing.port}/gallery/${filename}/info`;
+                this.info = await routing.fetchTo(url);
             },
-            async pingRouter(camerId) {
-                const url = `http://localhost:${routing.port}/gallery/camera/${camerId}`;
+            async changeActiveCameraTo(cameraId) {
+                const url = `http://localhost:${routing.port}/gallery/camera/${cameraId}`;
                 const json = await routing.fetchTo(url);
-                this.imagesList = json;
-                this.imagesInCamerN = json.length;
+                this.imagesList = json; // список изображений тут
                 this.filename = json[0];
-                this.getInfoFromImage()
+                await this.getInfoFromImage(this.filename)
             },
             getImage(filename) {
-                this.filename = filename;
                 return `http://localhost:${routing.port}/gallery/${filename}`;
             },
-            async getInfoAboutImage(filename) {
-                const url = `http://localhost:${routing.port}/gallery/${this.filename}/info`;
-                return routing.fetchTo(url)
+            async sliderController(slider) {
+                this.model= this.slider;
+                this.filename = this.imagesList[slider];
+                this.getInfoFromImage(this.filename)
             },
         },
         mounted() {
-            this.pingRouter(1);
+            this.changeActiveCameraTo(1);
         },
     };
 </script>
