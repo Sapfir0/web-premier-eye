@@ -3,22 +3,7 @@
     <v-flex md12>
         <v-row no-gutters>
             <v-col cols="12" sm="6" md="2">
-                <v-card class="mx-auto" max-width="300" outlined tile>
-                    <v-list>
-                        <v-list-item-group color="primary">
-                            <v-list-item
-                                v-for="i in camersCount"
-                                :key="i"
-                                @click="pingRouter(i)"
-                            >
-                                <v-list-item-content>
-                                    <v-list-item-title>Камера № {{ i }}</v-list-item-title>
-                                </v-list-item-content>
-
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list>
-                </v-card>
+                <CamersList @click="pingRouter($event)"></CamersList>
             </v-col>
             <v-col cols="10" md="6">
                 <v-card class="mx-auto" outlined tile>
@@ -76,6 +61,7 @@
 
 <script>
     const routing = require('../router');
+    import CamersList from '@/components/CamersList';
 
     export default {
         name: 'Slide',
@@ -89,6 +75,9 @@
                 filename: 'emptyFilename',
                 info: {},
             };
+        },
+        components: {
+            CamersList,
         },
         methods: {
             async getInfoFromImage() {
