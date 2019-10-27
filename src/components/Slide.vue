@@ -16,9 +16,8 @@
                 <ImageInfo :info="info" />
             </v-col>
         </v-row>
-
-
     </v-flex>
+
 </template>
 
 <script>
@@ -59,6 +58,7 @@
 
                 this.imagesList = json; // список изображений тут
                 this.filename = json[0];
+                
                 await this.getInfoImage(this.filename)
             },
 

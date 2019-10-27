@@ -21,10 +21,12 @@
 
     export default {
         name: 'CamersList',
+        props: {
+            cameraNotFound: String
+        },
         data() {
             return {
                 camersCount: routing.camersCount,
-                camersNotFound: ''
             };
         },
         methods: {
