@@ -7,9 +7,8 @@
                     :key="i"
                     @click="itemChangedTo(i)"
                 >
-                    <v-list-item-content>
-                        <v-list-item-title>Камера № {{ i }}</v-list-item-title>
-                    </v-list-item-content>
+                    <v-list-item-icon><v-icon>mdi-filmstrip</v-icon></v-list-item-icon>
+                    <v-list-item-title>Камера № {{ i }}</v-list-item-title>
 
                 </v-list-item>
             </v-list-item-group>
@@ -18,17 +17,20 @@
 </template>
 
 <script>
+    const routing = require('../router');
+
     export default {
         name: 'CamersList',
         data() {
             return {
-                camersCount: 5,
+                camersCount: routing.camersCount,
+                camersNotFound: ''
             };
         },
         methods: {
             itemChangedTo(index) {
                 this.$emit('click', index)
-            }
+            },
         }
     }
 </script>

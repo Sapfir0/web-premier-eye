@@ -11,7 +11,24 @@
                 :reverse-transition="false"
                 :transition="false"
             >
-                <v-img :src="getImage(filename)" contain alt="Изображение с камеры" />
+                <v-sheet
+                    v-show="cameraNotFound"
+                    color="red"
+                    height="100%">
+                    <v-row
+                        class="fill-height"
+                        align="center"
+                        justify="center"
+                    >
+                        <div class="display-1"> {{cameraNotFound}}</div>
+
+                    </v-row>
+                </v-sheet>
+<!--                мб норм что я не указываю условное отображение у изображения, а только у цвета поверх-->
+                <v-img
+                    :src="getImage(filename)"
+                    contain
+                    alt="Изображение с камеры" />
             </v-carousel-item>
         </v-carousel>
 
@@ -27,9 +44,10 @@
     const routing = require('../router');
 
     export default {
-        name: "ImageView",
+        name: 'ImageView',
         props: {
-            imagesList: Array
+            imagesList: Array,
+            cameraNotFound: String
         },
         data() {
             return {

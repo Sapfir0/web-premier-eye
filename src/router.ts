@@ -6,6 +6,7 @@ import PageNotFound from './components/PageNotFound.vue';
 Vue.use(Router);
 
 const port = 8050;
+const camersCount = 5;
 
 async function fetchTo(url: string) {
     const response = await fetch(url);
@@ -36,5 +37,5 @@ export default new Router({
 });
 
 export {
-    port, fetchTo,
+    port, fetchTo, camersCount
 };
