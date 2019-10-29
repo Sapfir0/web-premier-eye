@@ -21,6 +21,7 @@
 </template>
 
 <script>
+    const cfg = require('../config');
     const routing = require('../router');
     import CamersList from '@/components/CamersList';
     import ImageInfo from '@/components/ImageInfo';
@@ -42,11 +43,12 @@
         methods: {
             async getInfoImage(filename) {
                 this.filename = filename;
-                const url = `http://localhost:${routing.port}/gallery/${filename}/info`;
+                const url = `${cfg.server}/gallery/${filename}/info`;
                 this.info = await routing.fetchTo(url);
             },
             async changeActiveCameraTo(cameraId) {
-                const url = `http://localhost:${routing.port}/gallery/camera/${cameraId}`;
+                const url = `${cfg.server}/gallery/camera/${cameraId}`;
+
                 let json = '';
                 try {
                     json = await routing.fetchTo(url);
@@ -58,7 +60,7 @@
 
                 this.imagesList = json; // список изображений тут
                 this.filename = json[0];
-                
+
                 await this.getInfoImage(this.filename)
             },
 

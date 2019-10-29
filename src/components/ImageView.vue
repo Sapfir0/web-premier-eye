@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    const routing = require('../router');
+    const cfg = require('../config');
 
     export default {
         name: 'ImageView',
@@ -58,7 +58,7 @@
         },
         methods: {
             getImage(filename) {
-                return `http://localhost:${routing.port}/gallery/${filename}`;
+                return `${cfg.server}/gallery/${filename}`;
             },
             async sliderController(slider) {
                 this.model= this.slider;

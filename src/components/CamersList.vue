@@ -17,13 +17,13 @@
 </template>
 
 <script>
-    const routing = require('../router');
+    const cfg = require('../config');
 
     export default {
         name: 'CamersList',
         data() {
             return {
-                camersCount: routing.camersCount,
+                camersCount: cfg.camersCount,
             };
         },
         methods: {
