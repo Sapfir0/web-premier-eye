@@ -6,8 +6,8 @@ from application.database import engine
 from datetime import datetime
 
 
-class Image(Base):
-    __tablename__ = "image"
+class Images(Base):
+    __tablename__ = "images"
 
     def init_db(self):
         Base.metadata.create_all(bind=engine)

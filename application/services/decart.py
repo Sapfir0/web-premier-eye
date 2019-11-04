@@ -1,6 +1,6 @@
 import sqlalchemy as sql
 from datetime import datetime
-from application.database.models.Image import Image, session
+from application.database.models.Images import Image, session
 
 
 def getConcentration(highlightedRect, startTime: datetime, endTime: datetime):

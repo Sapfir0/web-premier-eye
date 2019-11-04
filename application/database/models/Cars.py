@@ -3,8 +3,8 @@ from application.database import Base
 from datetime import datetime
 
 
-class Car(Base):
-    __tablename__ = "car"
+class Cars(Base):
+    __tablename__ = "cars"
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     carNumber = Column(String(15))

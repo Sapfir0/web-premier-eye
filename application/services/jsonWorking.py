@@ -1,8 +1,8 @@
 import datetime
-from application.database.models.Car import Car
-from application.database.models.Person import Person
-from application.database.models.Object_ import Object_
-from application.database.models.Image import Image, session
+from application.database.models.Cars import Car
+from application.database.models.Persons import Persons
+from application.database.models.Objects_ import Object_
+from application.database.models.Images import Image, session
 from application.services.coordinatesCenter import getCenterOfDown
 
 
@@ -33,7 +33,7 @@ def addObjectToSession(deserializedJson):
                 session.add(car)
             elif value['type'] == 'person':
                 Object = Object_(value['scores'], value['coordinates'], CDcoordinates, "person", countOfImagesInDB)
-                person = Person(countOfObjectsInDB)
+                person = Persons(countOfObjectsInDB)
                 session.add(person)
             else:
                 raise Exception("Undefined object")

@@ -3,8 +3,8 @@ from application.database import Base
 from datetime import datetime
 
 
-class Person(Base):
-    __tablename__ = "person"
+class Persons(Base):
+    __tablename__ = "persons"
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     objectId = Column(Integer)

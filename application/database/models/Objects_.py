@@ -3,8 +3,8 @@ from application.database import Base
 from datetime import datetime
 
 
-class Object_(Base):
-    __tablename__ = "object"
+class Objects_(Base):
+    __tablename__ = "objects"
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     scores = Column(Float)

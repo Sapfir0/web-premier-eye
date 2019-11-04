@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy import and_
-from application.database.models.Image import Image, engine
-from application.database.models.Object_ import Object_
+from application.database.models.Images import Image, engine
+from application.database.models.Objects_ import Object_
 
 
 def getImageByFilename(filename):

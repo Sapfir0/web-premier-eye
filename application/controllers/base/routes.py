@@ -9,7 +9,7 @@ from application.services.jsonWorking import parseJson, addObjectToSession
 from config import Config as cfg
 from application.services.directory import getOutputDir
 
-from application.database.models.Image import Image, session
+from application.database.models.Images import Image, session
 
 
 @blueprint.route('/', methods=['GET'])
