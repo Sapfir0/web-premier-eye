@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String, MetaData, Enum, ForeignKey, Float, UnicodeText, literal_column, DateTime, Boolean, or_
 from application.database import Base
-import datetime
+from datetime import datetime
+
 
 class Object_(Base):
     __tablename__ = "object"
@@ -13,10 +14,10 @@ class Object_(Base):
     RUy = Column(Integer)
     CDx = Column(Integer)  # Center Down
     CDy = Column(Integer)
-    typeOfObject = Column(String)
-    imageId = Column(Integer, ForeignKey('image.id'))
-    # createdAt = Column(DateTime, default=datetime.datetime.now())
-    # updatedAt = Column(DateTime, default=datetime.datetime.now())
+    typeOfObjectId = Column(Integer)
+    imageId = Column(Integer)
+    createdAt = Column(DateTime, default=datetime.now())
+    updatedAt = Column(DateTime, default=datetime.now())
 
     def __init__(self, scores, coord, coordCD, typeOfObject, imageId):
         self.scores = scores

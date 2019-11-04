@@ -14,11 +14,13 @@ class Image(Base):
         session.commit()
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
-    path = Column(String)
+    path = Column(String(250))
     filename = Column(String(30))
     numberOfCam = Column(Integer)
     fixationDatetime = Column(DateTime)  # , unique=True
     hasObjects = Column(Boolean)
+    createdAt = Column(DateTime, default=datetime.now())
+    updatedAt = Column(DateTime, default=datetime.now())
 
     def __init__(self, imagePath: str, filename: str, numberOfCam: int, fixationDatetime, hasObjects: bool):
         self.init_db()

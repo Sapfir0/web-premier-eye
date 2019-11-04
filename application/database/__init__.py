@@ -31,8 +31,7 @@ def checkConcordance():
             uploadedImages.append(file)
 
     imagesInDB = getAllFilenames()
-    # difference = list(set(imagesInDB) ^ set(uploadedImages))  # XOR идеален, но нет
-    difference = list(set(uploadedImages) - set(imagesInDB))
+    difference = list(set(uploadedImages) - set(imagesInDB)) # XOR идеален, но нет
     # думаю самое просто сказать удалите из папки с загрузками лишние изображения
     # т.к. лучше когда есть информация, но изображения нет
     # т.к. юзер не увидит изображения которых нет на диске
@@ -40,4 +39,4 @@ def checkConcordance():
         raise Exception("Images from the database and from the folder do not match. Delete image: ", difference)
 
 
-checkConcordance()
+#checkConcordance()

@@ -12,7 +12,7 @@ class DatabaseConfig(object):
     APP_PATH = ''
 
     def __init__(self, APP_PATH):
-        self.DATABASE = self.getDatabasePath(databasesDialect.sqlite)
+        self.DATABASE = self.getDatabasePath(databasesDialect.mysql)
         self.APP_PATH = APP_PATH
 
     def getDatabasePath(self, dialect: databasesDialect):
