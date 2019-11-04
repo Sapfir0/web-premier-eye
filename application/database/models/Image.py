@@ -15,7 +15,7 @@ class Image(Base):
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     path = Column(String)
-    filename = Column(String)
+    filename = Column(String(30))
     numberOfCam = Column(Integer)
     fixationDatetime = Column(DateTime)  # , unique=True
     hasObjects = Column(Boolean)

@@ -11,6 +11,14 @@ def getImageByFilename(filename):
     return res
 
 
+def getAllFilenames():
+    conn = engine.connect()
+    selectStmt = select([Image.filename])
+    res = conn.execute(selectStmt).fetchall()
+    stringRes = [i[0] for i in res]
+    return stringRes
+
+
 def getInfoAboutObjects(filename):
     conn = engine.connect()
     selectStmt = select([Object_]).where(and_(Image.filename == filename, Object_.imageId == Image.id))

@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from config import Config as cfg
+from application.database.config import DatabaseConfig
 
 engine_parameters = {
     "convert_unicode": True,
@@ -9,12 +10,34 @@ engine_parameters = {
     "pool_recycle": 3600,
     "echo": False,
 }
+# TODO этот файл вызывается дважды, и все функции гоняются дважды!
+dbconfig = DatabaseConfig(cfg.APP_PATH)
 
-
-engine = create_engine(cfg.DATABASE, **engine_parameters)
+engine = create_engine(dbconfig.DATABASE, **engine_parameters)
 
 session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
 Base.query = session.query_property()
 Base.metadata.create_all(bind=engine)
+
+
+def checkConcordance():
+    import os
+    from application.database.dbAPI import getAllFilenames
+    uploadedImages = []
+    for address, dirs, files in os.walk(cfg.UPLOAD_FOLDER):
+        for file in files:
+            uploadedImages.append(file)
+
+    imagesInDB = getAllFilenames()
+    # difference = list(set(imagesInDB) ^ set(uploadedImages))  # XOR идеален, но нет
+    difference = list(set(uploadedImages) - set(imagesInDB))
+    # думаю самое просто сказать удалите из папки с загрузками лишние изображения
+    # т.к. лучше когда есть информация, но изображения нет
+    # т.к. юзер не увидит изображения которых нет на диске
+    if difference:
+        raise Exception("Images from the database and from the folder do not match. Delete image: ", difference)
+
+
+checkConcordance()
