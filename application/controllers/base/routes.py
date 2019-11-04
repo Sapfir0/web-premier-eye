@@ -53,7 +53,6 @@ def upload_file():
 
     image = Image(outputPath, *parseJson(deserializedJson))
     session.add(image)  # TODO вынести работу с БД в другой поток, она долгая
-    # print(deserializedJson)
     addObjectToSession(deserializedJson)
 
     session.commit()

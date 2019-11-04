@@ -8,24 +8,15 @@ class Objects_(Base):
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     scores = Column(Float)
-    LDx = Column(Integer)  # Left Down
-    LDy = Column(Integer)
-    RUx = Column(Integer)  # Right Up
-    RUy = Column(Integer)
-    CDx = Column(Integer)  # Center Down
-    CDy = Column(Integer)
-    typeOfObjectId = Column(Integer)
+
+    typesOfObjectId = Column(Integer)
     imageId = Column(Integer)
+    coordinatesId = Column(Integer)
     createdAt = Column(DateTime, default=datetime.now())
     updatedAt = Column(DateTime, default=datetime.now())
 
-    def __init__(self, scores, coord, coordCD, typeOfObject, imageId):
+    def __init__(self, scores, typeOfObject, imageId, coordinatesId):
         self.scores = scores
-        self.LDx = coord[0]
-        self.LDy = coord[1]
-        self.RUx = coord[2]
-        self.RUy = coord[3]
-        self.CDx = coordCD[0]
-        self.CDy = coordCD[1]
         self.typeOfObject = typeOfObject
         self.imageId = imageId
+        self.coordinatesId = coordinatesId

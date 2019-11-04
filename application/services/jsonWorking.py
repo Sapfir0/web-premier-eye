@@ -1,8 +1,8 @@
 import datetime
-from application.database.models.Cars import Car
+from application.database.models.Cars import Cars
 from application.database.models.Persons import Persons
-from application.database.models.Objects_ import Object_
-from application.database.models.Images import Image, session
+from application.database.models.Objects_ import Objects_
+from application.database.models.Images import Images, session
 from application.services.coordinatesCenter import getCenterOfDown
 
 
@@ -21,18 +21,17 @@ def parseJson(deserjson):
 
 
 def addObjectToSession(deserializedJson):
-    countOfImagesInDB = session.query(Image).count() + 1  # imageId
+    countOfImagesInDB = session.query(Images).count() + 1  # imageId
     # +1 т.к. у нас возвращается текущее колво строк, а мы будем инсертить еще одну
-    countOfObjectsInDB = session.query(Object_).count() + 1  # objectId TODO
+    countOfObjectsInDB = session.query(Objects_).count() + 1  # objectId TODO
     for key, value in deserializedJson.items():
         if key.isdigit():
-            CDcoordinates = getCenterOfDown(value['coordinates'])
             if value['type'] == 'car':  # TODO кал
-                Object = Object_(value['scores'], value['coordinates'], CDcoordinates,  "car", countOfImagesInDB)
-                car = Car(value['licenseNumber'], countOfObjectsInDB)
+                Object = Objects_(value['scores'], value['coordinates'], "car", countOfImagesInDB)
+                car = Cars(value['licenseNumber'], countOfObjectsInDB)
                 session.add(car)
             elif value['type'] == 'person':
-                Object = Object_(value['scores'], value['coordinates'], CDcoordinates, "person", countOfImagesInDB)
+                Object = Objects_(value['scores'], value['coordinates'], "person", countOfImagesInDB)
                 person = Persons(countOfObjectsInDB)
                 session.add(person)
             else:

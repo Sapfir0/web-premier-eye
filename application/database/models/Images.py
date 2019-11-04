@@ -1,5 +1,4 @@
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, Float, UnicodeText, literal_column, \
-    DateTime, Boolean, or_, DATETIME, TIMESTAMP
+from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, Float, DateTime, Boolean, or_, DATETIME, TIMESTAMP
 from application.database import Base
 from application.database import session
 from application.database import engine

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime
+from sqlalchemy import Column, Integer, DateTime, String
 from application.database import Base
 from datetime import datetime
 
@@ -7,9 +7,7 @@ class TypesOfObject(Base):
     __tablename__ = "typesOfObject"
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
-    objectId = Column(Integer)
-    createdAt = Column(DateTime, default=datetime.now())
-    updatedAt = Column(DateTime, default=datetime.now())
+    name = Column(String(50))
 
-    def __init__(self, objectId):
-        self.objectId = objectId
+    def __init__(self, name):
+        self.name = name
