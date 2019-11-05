@@ -11,5 +11,5 @@ class Persons(Base):
     createdAt = Column(DateTime, default=datetime.now())
     updatedAt = Column(DateTime, default=datetime.now())
 
-    def __init__(self, objectId):
+    def __init__(self, objectId=objectId):
         self.objectId = objectId

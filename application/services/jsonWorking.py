@@ -25,17 +25,19 @@ def addObjectToSession(deserializedJson):
     # +1 т.к. у нас возвращается текущее колво строк, а мы будем инсертить еще одну
     countOfObjectsInDB = session.query(Objects_).count() + 1  # objectId TODO
     for key, value in deserializedJson.items():
-        if key.isdigit():
+        if key.isdigit():  # навзания объектов будут в таком виде
+            coordinates = Coordinates(value['coordinates'])
+            Object = Objects_(scores=value['scores'], typesOfObject=value['type'],
+                              imageId=countOfImagesInDB, coordinatesId=countOfObjectsInDB)
+
             if value['type'] == 'car':  # TODO кал
-                coordinates = Coordinates(value['coordinates'])
-                countOfCoordinates = countOfObjectsInDB
-                Object = Objects_(value['scores'], "car", countOfImagesInDB, countOfObjectsInDB)
-                car = Cars(value['licenseNumber'], countOfObjectsInDB)
+                car = Cars(carNumber=value['licenseNumber'], objectId=countOfObjectsInDB)
                 session.add(car)
             elif value['type'] == 'person':
-                Object = Objects_(value['scores'], value['coordinates'], "person", countOfImagesInDB)
-                person = Persons(countOfObjectsInDB)
+                person = Persons(objectId=countOfObjectsInDB)
                 session.add(person)
             else:
                 raise Exception("Undefined object")
+
+            session.add(coordinates)
             session.add(Object)

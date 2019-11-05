@@ -15,8 +15,8 @@ class Objects_(Base):
     createdAt = Column(DateTime, default=datetime.now())
     updatedAt = Column(DateTime, default=datetime.now())
 
-    def __init__(self, scores, typeOfObject, imageId, coordinatesId):
+    def __init__(self, scores=scores, typesOfObject=typesOfObject, imageId=imageId, coordinatesId=coordinatesId):
         self.scores = scores
-        self.typeOfObject = typeOfObject
+        self.typesOfObject = typesOfObject
         self.imageId = imageId
         self.coordinatesId = coordinatesId
