@@ -4,7 +4,7 @@ from application.database.models.Persons import Persons
 from application.database.models.Objects_ import Objects_
 from application.database.models.Images import Images, session
 from application.services.coordinatesCenter import getCenterOfDown
-
+from application.database.models.Coordinates import Coordinates
 
 def parseJson(deserjson):
     """
@@ -27,7 +27,9 @@ def addObjectToSession(deserializedJson):
     for key, value in deserializedJson.items():
         if key.isdigit():
             if value['type'] == 'car':  # TODO кал
-                Object = Objects_(value['scores'], value['coordinates'], "car", countOfImagesInDB)
+                coordinates = Coordinates(value['coordinates'])
+                countOfCoordinates = countOfObjectsInDB
+                Object = Objects_(value['scores'], "car", countOfImagesInDB, countOfObjectsInDB)
                 car = Cars(value['licenseNumber'], countOfObjectsInDB)
                 session.add(car)
             elif value['type'] == 'person':

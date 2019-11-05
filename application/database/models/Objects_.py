@@ -9,7 +9,7 @@ class Objects_(Base):
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     scores = Column(Float)
 
-    typesOfObjectId = Column(Integer)
+    typesOfObject = Column(String(20))
     imageId = Column(Integer)
     coordinatesId = Column(Integer)
     createdAt = Column(DateTime, default=datetime.now())

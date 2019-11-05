@@ -9,7 +9,7 @@ from application.services.jsonWorking import parseJson, addObjectToSession
 from config import Config as cfg
 from application.services.directory import getOutputDir
 
-from application.database.models.Images import Image, session
+from application.database.models.Images import Images, session
 
 
 @blueprint.route('/', methods=['GET'])
@@ -51,7 +51,7 @@ def upload_file():
     # один из типов получение джсона(тут немного странный), я записываю джсон в файл на другой стороне, а тут ситываю
     deserializedJson: dict = json.loads(rawJson)
 
-    image = Image(outputPath, *parseJson(deserializedJson))
+    image = Images(outputPath, *parseJson(deserializedJson))
     session.add(image)  # TODO вынести работу с БД в другой поток, она долгая
     addObjectToSession(deserializedJson)
 

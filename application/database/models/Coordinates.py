@@ -14,9 +14,12 @@ class Coordinates(Base):
     createdAt = Column(DateTime, default=datetime.now())
     updatedAt = Column(DateTime, default=datetime.now())
 
-    def __init__(self, carNumber, objectId):
-        self.carNumber = carNumber
-        self.objectId = objectId
+    def __init__(self, coord):
+        self.LDx = coord[0]
+        self.LDy = coord[1]
+        self.RUx = coord[2]
+        self.RUy = coord[3]
+
 
 
 
