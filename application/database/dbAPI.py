@@ -22,6 +22,6 @@ def getAllFilenames():
 
 def getInfoAboutObjects(filename):
     conn = engine.connect()
-    selectStmt = select([Object_]).where(and_(Image.filename == filename, Object_.imageId == Image.id))
+    selectStmt = select([Object_]).where(and_(Object_.imageId == Image.id, Image.filename == filename))
     objectsInfo = conn.execute(selectStmt).fetchall()  # т.к. объектов может быть много
     return objectsInfo

@@ -34,7 +34,6 @@ def getJsonInfo(filename):
         imageInfo.update({"objects": []})
         for i, obj in enumerate(objectInfo):
             imageInfo['objects'].append(dict(obj))
-    # print(dict(imageInfo))
     return jsonify(dict(imageInfo))
 
 
