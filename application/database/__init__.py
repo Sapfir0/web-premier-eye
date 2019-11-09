@@ -10,7 +10,7 @@ engine_parameters = {
     "pool_recycle": 3600,
     "echo": False,
 }
-# TODO этот файл вызывается дважды, и все функции гоняются дважды!
+
 dbconfig = DatabaseConfig(cfg.APP_PATH)
 
 engine = create_engine(dbconfig.DATABASE, **engine_parameters)

@@ -7,3 +7,11 @@ blueprint = Blueprint(
     template_folder='templates',
     static_folder='static'
 )
+
+
+routes = {
+    'getImage': '/gallery/<filename>',
+    'getAllImages': '/gallery',
+    'getJsonInfo': '/gallery/<filename>/info',
+    'getInfoFromCamera': '/gallery/camera/<cameraId>'
+}

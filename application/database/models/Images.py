@@ -13,10 +13,10 @@ class Images(Base):
         session.commit()
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
-    path = Column(String(250))
-    filename = Column(String(30))
+    path = Column(String(250), unique=True)
+    filename = Column(String(30), unique=True)
     numberOfCam = Column(Integer)
-    fixationDatetime = Column(DateTime)  # , unique=True
+    fixationDatetime = Column(DateTime, unique=True)
     hasObjects = Column(Boolean)
     createdAt = Column(DateTime, default=datetime.now())
     updatedAt = Column(DateTime, default=datetime.now())
