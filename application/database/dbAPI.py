@@ -6,16 +6,20 @@ from application.database.models.Objects_ import Objects_ as Object_
 from application.database.models.Coordinates import Coordinates
 from datetime import datetime
 
-conn = engine.connect()
+
 
 
 def getImageByFilename(filename):
+    conn = engine.connect()
     selectStmt = select([Image]).where(Image.filename == filename)
     res = conn.execute(selectStmt).fetchone()  # можно сделать fetchall и если будет больше одного результата, вернуть фолс
+    if res is None:
+        raise ValueError(f"Image {filename} not found on database")
     return dict(res)
 
 
 def getAllFilenames():
+    conn = engine.connect()
     selectStmt = select([Image.filename])
     res = conn.execute(selectStmt).fetchall()
     stringRes = [i[0] for i in res]
@@ -23,6 +27,7 @@ def getAllFilenames():
 
 
 def getObjects(filename):
+    conn = engine.connect()
     selectStmt = select([Object_]).where(and_(Object_.imageId == Image.id, Image.filename == filename))
     objectsInfo = conn.execute(selectStmt).fetchall()  # т.к. объектов может быть много
     stringRes = [dict(i) for i in objectsInfo]
@@ -30,6 +35,7 @@ def getObjects(filename):
 
 
 def getImageBetweenDatesFromCamera(cameraId, startDate: datetime, endDate: datetime):
+    conn = engine.connect()
     selectStmt = select([Image]).where(and_(Image.numberOfCam == cameraId,
                                             Image.fixationDatetime >= startDate,
                                             Image.fixationDatetime <= endDate))
@@ -39,6 +45,7 @@ def getImageBetweenDatesFromCamera(cameraId, startDate: datetime, endDate: datet
 
 
 def getCoord(filename):
+    conn = engine.connect()
     idImage = select([Image.id]).where(filename == Image.filename)
     coordinates = select([Coordinates.LDx, Coordinates.LDy,
                           Coordinates.RUx, Coordinates.RUy])\

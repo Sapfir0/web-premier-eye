@@ -12,7 +12,6 @@ engine_parameters = {
 }
 
 dbconfig = DatabaseConfig(cfg.APP_PATH)
-
 engine = create_engine(dbconfig.DATABASE, **engine_parameters)
 
 session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))

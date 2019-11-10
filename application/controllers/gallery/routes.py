@@ -55,6 +55,9 @@ def getInfoFromCamera(cameraId):
 def getImageBetweenDatesFromCamera(cameraId):
     from application.services.directory import datetimePattern
     req = request.form
+    if not req['startDate'] or req['endDate']:
+        return "Uncorrected query. Need to set start and end date.", 404
+
     start = datetime.strptime(req['startDate'], datetimePattern)
     end = datetime.strptime(req['endDate'], datetimePattern)
     obj = db.getImageBetweenDatesFromCamera(cameraId, start, end)

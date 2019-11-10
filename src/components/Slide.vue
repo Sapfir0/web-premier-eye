@@ -42,9 +42,20 @@
         },
         methods: {
             async getInfoImage(filename) {
+                if (filename === undefined) {
+                    console.error('Информация об изображении ' + filename + 'не найдена2');
+                    return;
+                }
                 this.filename = filename;
                 const url = `${cfg.server}/gallery/${filename}/info`;
-                this.info = await routing.fetchTo(url);
+
+                try {
+                    this.info = await routing.fetchTo(url);
+                }
+                catch (err) {
+                    console.error('Информация об изображении не найдена');
+                    return;
+                }
             },
             async changeActiveCameraTo(cameraId) {
                 const url = `${cfg.server}/gallery/camera/${cameraId}`;

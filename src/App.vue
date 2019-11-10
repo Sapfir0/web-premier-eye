@@ -10,6 +10,7 @@
         text
         href="https://github.com/Sapfir0/premier-eye"
         target="_blank"
+        color="primary"
       >
         <span class="mr-2">Source</span>
         <v-icon>open_in_new</v-icon>

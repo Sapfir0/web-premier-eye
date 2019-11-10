@@ -61,6 +61,13 @@
                 return `${cfg.server}/gallery/${filename}`;
             },
             async sliderController(slider) {
+                if (slider < 0) {
+                    this.slider = 0;
+                    this.model = 0;
+                    console.log(this.slider);
+                    console.warn('Непонятная ситуация, слайдер отрицательный, отклоню действие');
+                    return;
+                }
                 this.model= this.slider;
                 this.filename = this.imagesList[slider];
                 this.$emit('nameChanged', this.filename)

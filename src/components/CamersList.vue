@@ -1,7 +1,7 @@
 <template>
-    <v-card class="mx-auto" max-width="300" outlined tile>
+    <v-card class="mx-auto" max-width="300" outlined tile >
         <v-list>
-            <v-list-item-group color="primary">
+            <v-list-item-group color="primary" >
                 <v-list-item
                     v-for="i in camersCount"
                     :key="i"

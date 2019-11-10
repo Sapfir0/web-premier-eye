@@ -7,16 +7,16 @@ class databasesDialect(Enum):
     mysql = "mysql"
 
 
-class DatabaseConfig(object):
+class DatabaseConfig:
     DATABASE = ''
     APP_PATH = ''
 
     def __init__(self, APP_PATH):
-        self.DATABASE = self.getDatabasePath(databasesDialect.mysql)
+        self.DATABASE = self.getDatabasePath(databasesDialect.sqlite)
         self.APP_PATH = APP_PATH
 
     def getDatabasePath(self, dialect: databasesDialect):
-        if dialect.sqlite == dialect:  # не будет работать очевидно
+        if dialect.sqlite == dialect:
             database = "sqlite:///" + os.path.join(self.APP_PATH, 'data.db')
         elif dialect.mysql == dialect:
             username = os.environ.get("DB_USERNAME")
