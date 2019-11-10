@@ -1,25 +1,5 @@
-import sqlalchemy as sql
-from datetime import datetime
-from application.database.models.Images import Images, session
-
-
-def getConcentration(highlightedRect, startTime: datetime, endTime: datetime):
-    """
-    :param highlightedRect: координаты прямоугольника, в котором начинаем искать объекты
-    :param startTime:
-    :param endTime:
-    :return:
-    """
-    foundedObjects = []
-
-    a = Images.fixationDatetime >= startTime
-    b = Images.fixationDatetime <= endTime
-    for obj in session.query(Images).filter(sql.and_(a, b)).all():
-        minRect = [obj.LDy, obj.LDx, obj.RUy, obj.RUx]
-        if hasOnePointInside(highlightedRect, minRect):
-            foundedObjects.append(obj)
-
-    return foundedObjects  # массив координат всех объектов в кадре
+import os
+import tempfile
 
 
 def hasOnePointInside(bigRect, minRect):  # хотя бы одна точка лежит внутри
@@ -70,4 +50,67 @@ def isPartiallyInside(bigRect, minRect, innerPercent=0.5):  # объект ча�
         minRDx = bigRDx
     inObjSquare = (minLUy - minRDy) * (minRDx - minLUx)
     return inObjSquare / fullSquare >= innerPercent
+
+
+def createGraphic(imagePath: str, searchRect: list, objectsListRect: list):
+    import matplotlib.pyplot as plt
+    from PIL import Image
+    import numpy as np
+    import matplotlib.patches as patches
+
+    im = np.array(Image.open(imagePath), dtype=np.uint8)
+    fig, ax = plt.subplots(1)
+    ax.imshow(im)
+
+    bigRect = Rectangle(searchRect)
+    minRects = [Rectangle(i) for i in objectsListRect]
+
+    rect = patches.Rectangle(*bigRect.getMTparam(),
+                             linewidth=1, edgecolor='g', facecolor='None')
+    ax.add_patch(rect)
+
+    for i in minRects:
+        rect = patches.Rectangle(*i.getMTparam(),
+                                 linewidth=1, edgecolor='r', facecolor='none')
+        ax.add_patch(rect)
+
+    temp = tempfile.NamedTemporaryFile()
+    path = os.path.join(os.getcwd(), temp.name)
+    plt.savefig(path)
+
+    return os.path.split(temp.name + ".png")
+
+
+class Rectangle:
+    LDx = 0
+    LDy = 0
+    RUx = 0
+    RUy = 0
+
+    def __init__(self, coordinates: list):
+        if len(coordinates) != 4:
+            raise ValueError("Нужно подавать координаты(х,у) двух противоложных вершин")
+        if coordinates[0] >= coordinates[2] or coordinates[1] >= coordinates[3]:
+            raise ValueError(
+                "Неверно заданы вершины, сначала подаются 2 координаты нижнего левого угла, потом верхнего правого")
+        self.LDx, self.LDy, self.RUx, self.RUy = coordinates
+
+    def getWitdh(self):
+        return self.RUx - self.LDx
+
+    def getHeight(self):
+        return self.RUy - self.LDy
+
+    def getLUx(self):
+        return self.LDx
+
+    def getLUy(self):
+        return self.RUy
+
+    def getMTparam(self):
+        return ((self.getLUy(), self.getLUx()),  # почему -? я не знаю
+                -self.getHeight(), self.getWitdh())  # все абсолютно в другом порядке, чем должно быть? что ха дринся
+
+    def getCenterOfDown(self):
+        return [(self.LDx + self.RUx) / 2, self.LDy]
 

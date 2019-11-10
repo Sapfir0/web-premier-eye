@@ -3,8 +3,8 @@ from application.database.models.Cars import Cars
 from application.database.models.Persons import Persons
 from application.database.models.Objects_ import Objects_
 from application.database.models.Images import Images, session
-from application.services.coordinatesCenter import getCenterOfDown
 from application.database.models.Coordinates import Coordinates
+
 
 def parseJson(deserjson):
     """

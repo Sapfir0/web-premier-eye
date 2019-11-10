@@ -18,12 +18,6 @@ def hi():
     return "Server is up!"
 
 
-# @blueprint.route('/gallery/get')
-# # подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него
-# @blueprint.route('/')
-# # получаем информацию об конкретном объекте, где он был на прошлых фреймах
-
-
 @blueprint.route(routes['uploadFile'], methods=['POST'])
 def uploadFile():
     def allowedFile(filename):

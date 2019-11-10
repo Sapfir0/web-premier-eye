@@ -60,7 +60,7 @@ def getImageBetweenDatesFromCamera(cameraId):
 
 
 @blueprint.route(routes['getObjectsFromRectangleOnImage'], methods=['POST'])
-def getObjectsFromRectangleOnImage(filename):
+def getObjectsFromRectangleFromImage(filename):
     """
         подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него
     """
@@ -69,5 +69,20 @@ def getObjectsFromRectangleOnImage(filename):
     bigRect = list(map(int, bigRect))
     coord = db.getCoord(filename)
     a = [isCompletelyInside(bigRect, coordObj) for coordObj in coord]
-
     return jsonify(a)
+
+
+@blueprint.route(routes['getObjectsFromRectangleOnImageVisualize'], methods=['POST'])
+def getObjectsFromRectangleOnImageVisualize(filename):
+    """
+        подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него
+    """
+    from application.services.decart import isCompletelyInside
+    from application.services.decart import createGraphic
+    path = getOutputDir(filename)
+
+    bigRect = list(request.form['rectangle'].split(", "))
+    bigRect = list(map(int, bigRect))
+    coord = db.getCoord(filename)
+    path = createGraphic(path, bigRect, coord)
+    return send_from_directory(*path)
