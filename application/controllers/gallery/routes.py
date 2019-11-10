@@ -59,8 +59,11 @@ def getImageBetweenDatesFromCamera(cameraId):
     return jsonify(obj)
 
 
-@blueprint.route('/gallery/<filename>/objects', methods=['POST'])
+@blueprint.route(routes['getObjectsFromRectangleOnImage'], methods=['POST'])
 def getObjectsFromRectangleOnImage(filename):
+    """
+        подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него
+    """
     from application.services.decart import isCompletelyInside
     bigRect = list(request.form['rectangle'].split(", "))
     bigRect = list(map(int, bigRect))
@@ -68,4 +71,3 @@ def getObjectsFromRectangleOnImage(filename):
     a = [isCompletelyInside(bigRect, coordObj) for coordObj in coord]
 
     return jsonify(a)
-# подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него

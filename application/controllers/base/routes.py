@@ -8,11 +8,12 @@ import json
 from application.services.jsonWorking import parseJson, addObjectToSession
 from config import Config as cfg
 from application.services.directory import getOutputDir
+from application.controllers.base import routes
 
 from application.database.models.Images import Images, session
 
 
-@blueprint.route('/', methods=['GET'])
+@blueprint.route(routes['hi'], methods=['GET'])
 def hi():
     return "Server is up!"
 
@@ -23,8 +24,8 @@ def hi():
 # # получаем информацию об конкретном объекте, где он был на прошлых фреймах
 
 
-@blueprint.route('/upload', methods=['POST'])
-def upload_file():
+@blueprint.route(routes['uploadFile'], methods=['POST'])
+def uploadFile():
     def allowedFile(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in cfg.ALLOWED_EXTENSIONS
 
