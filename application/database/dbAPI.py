@@ -1,8 +1,9 @@
 from sqlalchemy import select
 from sqlalchemy import and_
 from application.database.models.Images import Images as Image
-from application.database.models.Images import  engine
+from application.database.models.Images import engine
 from application.database.models.Objects_ import Objects_ as Object_
+from application.database.models.Coordinates import Coordinates
 from datetime import datetime
 
 
@@ -10,7 +11,7 @@ def getImageByFilename(filename):
     conn = engine.connect()
     selectStmt = select([Image]).where(Image.filename == filename)
     res = conn.execute(selectStmt).fetchone()  # можно сделать fetchall и если будет больше одного результата, вернуть фолс
-    return res
+    return dict(res)
 
 
 def getAllFilenames():
@@ -21,11 +22,12 @@ def getAllFilenames():
     return stringRes
 
 
-def getInfoAboutObjects(filename):
+def getObjects(filename):
     conn = engine.connect()
     selectStmt = select([Object_]).where(and_(Object_.imageId == Image.id, Image.filename == filename))
     objectsInfo = conn.execute(selectStmt).fetchall()  # т.к. объектов может быть много
-    return objectsInfo
+    stringRes = [list(i) for i in objectsInfo]
+    return stringRes
 
 
 def getImageBetweenDatesFromCamera(cameraId, startDate: datetime, endDate: datetime):
@@ -36,3 +38,19 @@ def getImageBetweenDatesFromCamera(cameraId, startDate: datetime, endDate: datet
     images = conn.execute(selectStmt).fetchall()
     stringRes = [list(i) for i in images]
     return stringRes
+
+
+def getCoord(filename):
+    conn = engine.connect()
+    idImage = select([Image.id]).where(filename==Image.filename)
+    coordinates = select([Coordinates.RUy, Coordinates.RUx,
+                          Coordinates.LDy, Coordinates.LDx])\
+        .where(and_(idImage == Object_.imageId,
+               Coordinates.id == Object_.id))
+
+    objectsInfo = conn.execute(coordinates).fetchall()
+    stringRes = [list(i) for i in objectsInfo]
+    return stringRes
+
+
+

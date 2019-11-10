@@ -1,6 +1,6 @@
 import sqlalchemy as sql
 from datetime import datetime
-from application.database.models.Images import Image, session
+from application.database.models.Images import Images, session
 
 
 def getConcentration(highlightedRect, startTime: datetime, endTime: datetime):
@@ -12,9 +12,9 @@ def getConcentration(highlightedRect, startTime: datetime, endTime: datetime):
     """
     foundedObjects = []
 
-    a = Image.fixationDatetime >= startTime
-    b = Image.fixationDatetime <= endTime
-    for obj in session.query(Image).filter(sql.and_(a, b)).all():
+    a = Images.fixationDatetime >= startTime
+    b = Images.fixationDatetime <= endTime
+    for obj in session.query(Images).filter(sql.and_(a, b)).all():
         minRect = [obj.LDy, obj.LDx, obj.RUy, obj.RUx]
         if hasOnePointInside(highlightedRect, minRect):
             foundedObjects.append(obj)

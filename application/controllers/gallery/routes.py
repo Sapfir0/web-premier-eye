@@ -22,17 +22,18 @@ def getImage(filename):
 def getAllImages():
     return jsonify(recursiveSearch(cfg.UPLOAD_FOLDER))
 
+# функции, работающие с фс
+
 
 @blueprint.route(routes['getJsonInfo'])
 def getJsonInfo(filename):
-    res = db.getImageByFilename(filename)
+    imageInfo = db.getImageByFilename(filename)
 
-    if res is None:
+    if imageInfo is None:
         raise ValueError("Image not found")
-    imageInfo = dict(res)
 
     if imageInfo['hasObjects']:
-        objectInfo = db.getInfoAboutObjects(filename)
+        objectInfo = db.getObjects(filename)
         imageInfo.update({"objects": []})
         for i, obj in enumerate(objectInfo):
             imageInfo['objects'].append(dict(obj))
@@ -48,12 +49,23 @@ def getInfoFromCamera(cameraId):
     return jsonify(imgList)
 
 
-@blueprint.route('/gallery/cameraDelta<cameraId>', methods=['POST'])
+@blueprint.route(routes['getImageBetweenDatesFromCamera'], methods=['POST'])
 def getImageBetweenDatesFromCamera(cameraId):
     req = request.form
     pattern = '%Y-%m-%d %H:%M:%S'
     start = datetime.strptime(req['startDate'], pattern)
     end = datetime.strptime(req['endDate'], pattern)
     obj = db.getImageBetweenDatesFromCamera(cameraId, start, end)
-    print("foo", type(obj), obj)
     return jsonify(obj)
+
+
+@blueprint.route('/gallery/<filename>/objects', methods=['POST'])
+def getObjectsFromRectangleOnImage(filename):
+    from application.services.decart import isCompletelyInside
+    bigRect = list(request.form['rectangle'].split(", "))
+    bigRect = list(map(int, bigRect))
+    coord = db.getCoord(filename)
+    a = [isCompletelyInside(bigRect, coordObj) for coordObj in coord]
+
+    return jsonify(a)
+# подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него

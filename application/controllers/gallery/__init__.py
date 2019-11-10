@@ -13,5 +13,6 @@ routes = {
     'getImage': '/gallery/<filename>',
     'getAllImages': '/gallery',
     'getJsonInfo': '/gallery/<filename>/info',
-    'getInfoFromCamera': '/gallery/camera/<cameraId>'
+    'getInfoFromCamera': '/gallery/camera/<cameraId>',
+    'getImageBetweenDatesFromCamera': '/gallery/cameraDelta<cameraId>'
 }

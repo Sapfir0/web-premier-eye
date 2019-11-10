@@ -17,10 +17,6 @@ def hi():
     return "Server is up!"
 
 
-# @blueprint.route('/gallery/date', methods=['POST'])
-# # получаем изображения с и до определенной даты
-# @blueprint.route('/gallery/date/camera<cameraId>')
-# # получаем изображения с и до определенной даты с определенной камеры
 # @blueprint.route('/gallery/get')
 # # подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него
 # @blueprint.route('/')
