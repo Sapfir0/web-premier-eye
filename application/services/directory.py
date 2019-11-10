@@ -19,7 +19,10 @@ def recursiveSearch(directory, listOfImages=None):
 
 def getOutputDir(filename):
     numberOfCam, dateTime = filename.split("_")
-    dateTime = datetime.strptime(dateTime, datetimePattern)
+    try:
+        dateTime = datetime.strptime(dateTime, datetimePattern)
+    except ValueError:
+        raise ValueError("Uncorrected filename")
     date = dateTime.date()
     hours = dateTime.hour
     outputFile = os.path.join(cfg.UPLOAD_FOLDER, numberOfCam, str(date), str(hours), filename)

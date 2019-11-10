@@ -95,7 +95,7 @@ class Rectangle:
                 "Неверно заданы вершины, сначала подаются 2 координаты нижнего левого угла, потом верхнего правого")
         self.LDx, self.LDy, self.RUx, self.RUy = coordinates
 
-    def getWitdh(self):
+    def getWidth(self):
         return self.RUx - self.LDx
 
     def getHeight(self):
@@ -109,7 +109,7 @@ class Rectangle:
 
     def getMTparam(self):
         return ((self.getLUy(), self.getLUx()),  # почему -? я не знаю
-                -self.getHeight(), self.getWitdh())  # все абсолютно в другом порядке, чем должно быть? что ха дринся
+                -self.getHeight(), self.getWidth())  # все абсолютно в другом порядке, чем должно быть? что ха дринся
 
     def getCenterOfDown(self):
         return [(self.LDx + self.RUx) / 2, self.LDy]

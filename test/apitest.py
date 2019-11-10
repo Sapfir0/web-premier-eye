@@ -1,4 +1,6 @@
 import unittest
+from application.controllers.base import routes
+from application.controllers.gallery import routes
 
 
 class MyTestCase(unittest.TestCase):

@@ -25,7 +25,7 @@ def getAllFilenames():
 def getObjects(filename):
     selectStmt = select([Object_]).where(and_(Object_.imageId == Image.id, Image.filename == filename))
     objectsInfo = conn.execute(selectStmt).fetchall()  # т.к. объектов может быть много
-    stringRes = [list(i) for i in objectsInfo]
+    stringRes = [dict(i) for i in objectsInfo]
     return stringRes
 
 

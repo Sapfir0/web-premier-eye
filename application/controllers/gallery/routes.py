@@ -1,5 +1,4 @@
 import os
-
 from flask import jsonify, send_from_directory, request
 from application.controllers.base import blueprint
 from application.services.directory import recursiveSearch, getOutputDir
@@ -11,7 +10,11 @@ from datetime import datetime
 
 @blueprint.route(routes['getImage'])
 def getImage(filename):
-    outputPath = os.path.join(cfg.UPLOAD_FOLDER, getOutputDir(filename))
+    try:
+        outputPath = os.path.join(cfg.UPLOAD_FOLDER, getOutputDir(filename))
+    except ValueError as err:
+        return str(err), 404
+
     if os.path.exists(os.path.split(outputPath)[0]):
         return send_from_directory(os.path.split(outputPath)[0], filename)
     else:
@@ -30,13 +33,12 @@ def getJsonInfo(filename):
     imageInfo = db.getImageByFilename(filename)
 
     if imageInfo is None:
-        raise ValueError("Image not found")
+        return "Image not found", 404
 
     if imageInfo['hasObjects']:
         objectInfo = db.getObjects(filename)
-        imageInfo.update({"objects": []})
-        for i, obj in enumerate(objectInfo):
-            imageInfo['objects'].append(dict(obj))
+        imageInfo.update({"objects": objectInfo})
+
     return jsonify(dict(imageInfo))
 
 
@@ -51,10 +53,10 @@ def getInfoFromCamera(cameraId):
 
 @blueprint.route(routes['getImageBetweenDatesFromCamera'], methods=['POST'])
 def getImageBetweenDatesFromCamera(cameraId):
+    from application.services.directory import datetimePattern
     req = request.form
-    pattern = '%Y-%m-%d %H:%M:%S'
-    start = datetime.strptime(req['startDate'], pattern)
-    end = datetime.strptime(req['endDate'], pattern)
+    start = datetime.strptime(req['startDate'], datetimePattern)
+    end = datetime.strptime(req['endDate'], datetimePattern)
     obj = db.getImageBetweenDatesFromCamera(cameraId, start, end)
     return jsonify(obj)
 
@@ -75,9 +77,8 @@ def getObjectsFromRectangleFromImage(filename):
 @blueprint.route(routes['getObjectsFromRectangleOnImageVisualize'], methods=['POST'])
 def getObjectsFromRectangleOnImageVisualize(filename):
     """
-        подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него
+        подаем координаты прямоугольника, вовращается размеченное изображение
     """
-    from application.services.decart import isCompletelyInside
     from application.services.decart import createGraphic
     path = getOutputDir(filename)
 
@@ -86,3 +87,4 @@ def getObjectsFromRectangleOnImageVisualize(filename):
     coord = db.getCoord(filename)
     path = createGraphic(path, bigRect, coord)
     return send_from_directory(*path)
+
