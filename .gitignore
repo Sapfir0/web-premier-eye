@@ -19,3 +19,7 @@ npm-debug.log*
 package-lock.json
 __pycache__
 application/static/uploads/*
+
+bin
+Debug
+obj
