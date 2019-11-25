@@ -23,6 +23,10 @@ def uploadFile():
     def allowedFile(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in cfg.ALLOWED_EXTENSIONS
 
+    print(request.form)
+    print(request.files)
+    print(request.args)
+
     if 'file' not in request.files and request.files['file'].filename == '':
         raise Exception("No image")
     if 'json' not in request.files:

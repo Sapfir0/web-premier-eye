@@ -6,10 +6,10 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace serverTest {
-    public class Gallery : Base  {
-        static readonly HttpClient Client = new HttpClient();
-
-        [TestCase(ServerUrl + "gallery")]
+    public class Gallery : Base {
+        private const string routeUrl = ServerUrl + "gallery";
+        
+        [TestCase(routeUrl)]
         public async Task GetAllImagesNotEmpty(string route) {
             string response = await Client.GetStringAsync(route);
             var imagesList = JsonConvert.DeserializeObject<List<string>>(response);
@@ -17,7 +17,7 @@ namespace serverTest {
             
         }
         
-        [TestCase(ServerUrl + "gallery")]
+        [TestCase(routeUrl)]
         public async Task GetAllImagesHaveSameElements(string route) {
             string response = await Client.GetStringAsync(route);
             var imagesList = JsonConvert.DeserializeObject<List<string>>(response);
