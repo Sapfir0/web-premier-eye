@@ -1,53 +1,93 @@
 import unittest
 from tests.Base import Base
 import requests
+import os
 
 
 class UploadImage(Base):
-    def uploadImageWithInfoAreCorrectly(self):
-        serverUrl = "http://localhost:8050/"
-        routeUrl = serverUrl + "upload"
+    routeUrl = Base.serverUrl + "upload"
+    imageName = "1_20190718144434.jpg"
+    imagePath = os.path.join(Base.APP_PATH, "res", imageName)
+    jsonName = "test.json"
+    jsonPath = os.path.join(Base.APP_PATH, "res", jsonName)
 
-        imageName = "1_20190718144434.jpg"
-        imagePath = "./test/test/res/1_20190718144434.jpg"
-        jsonPath = "./test/test/res/test.json"
-        files = [
-            ('file', (imageName, open(imagePath, 'rb'), 'image/jpg')),
-            ('json', ("test.json", open(jsonPath, 'rb'), 'application/json'))]
+    def addJson(self, files: list, jsonPath):
+        files.append(('json', (self.jsonName, open(self.jsonPath, 'rb'), 'application/json')))
+        return files
 
-        r = requests.post(routeUrl, files=files)
+    def addImage(self, files: list):
+        files.append(('file', (self.imageName, open(self.imagePath, 'rb'), 'image/jpg')))
+        return files
 
-        self.assertEqual(r.status_code, 200)
+    def test_uploadImageWithInfoAreCorrectly(self):
+        files = []
+        files = self.addImage(files)
+        files = self.addJson(files, self.jsonPath)
+        r = requests.post(self.routeUrl, files=files)
+        self.assertEqual(200, r.status_code)
 
-
-    def TimeTestInCorrectSituation(self):
+    def test_TimeTestInCorrectSituation(self):
         pass
 
-    def NoImageJsonHere(self):
+    def test_NoImageHere(self):
+        files = []
+        files = self.addJson(files, self.jsonPath)
+        r = requests.post(self.routeUrl, files=files)
+        self.assertNotEqual(200, r.status_code)
+
+    def test_NoJsonHere(self):
+        files = []
+        files = self.addImage(files)
+        r = requests.post(self.routeUrl, files=files)
+        self.assertNotEqual(200, r.status_code)
+
+    def test_NoImageNoJson(self):
+        files = []
+        r = requests.post(self.routeUrl, files=files)
+        self.assertNotEqual(200, r.status_code)
+
+    def test_IncorrectJsonImageFilename(self):
+        files = []
+        jsonPath = os.path.join(self.APP_PATH, "res", "incorrectJsonImageFilename.json")
+        files = self.addImage(files)
+        files = self.addJson(files, jsonPath)
+        r = requests.post(self.routeUrl, files=files)
+        self.assertNotEqual(200, r.status_code)
+
+    def test_IncorrectJsonImageFixationDatetime(self):
+        files = []
+        jsonPath = os.path.join(self.APP_PATH, "res", "incorrectJsonFixa.json")
+        files = self.addImage(files)
+        files = self.addJson(files, jsonPath)
+        r = requests.post(self.routeUrl, files=files)
+        self.assertNotEqual(200, r.status_code)
+
+    def test_IncorrectJsonImageNumberOfCamera(self):
+        files = []
+        jsonPath = os.path.join(self.APP_PATH, "res", "incorrectJsonNumberOfCamera.json")
+        files = self.addImage(files)
+        files = self.addJson(files, jsonPath)
+        r = requests.post(self.routeUrl, files=files)
+        self.assertNotEqual(200, r.status_code)
+
+    def test_IncorrectImageFilename(self):
+        files = []
+        jsonPath = os.path.join(self.APP_PATH, "res", "incorrectJsonImageFilename.json")
+        files = self.addImage(files)
+        files = self.addJson(files, jsonPath)
+        r = requests.post(self.routeUrl, files=files)
+        self.assertNotEqual(200, r.status_code)
+
+    def test_ImageFilenameFromTheFutureMustBeDenied(self):
         pass
 
-    def NoJsonImageHere(self):
+    def test_IncorrectImageExtension(self):
         pass
 
-    def NoImageNoJson(self):
+    def test_JsonNotInUtf8(self):
         pass
 
-    def IncorrectJson(self):
-        pass
-
-    def IncorrectImageFilename(self):
-        pass
-
-    def ImageFilenameFromTheFutureMustBeDenied(self):
-        pass
-
-    def IncorrectImageExtension(self):
-        pass
-
-    def JsonNotInUtf8(self):
-        pass
-
-    def IncorrectPostBodySpecifier(self):
+    def test_IncorrectPostBodySpecifier(self):
         pass
 
 if __name__ == '__main__':
