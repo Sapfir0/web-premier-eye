@@ -11,9 +11,7 @@ def hasOnePointInside(bigRect, minRect):  # хотя бы одна точка л
     c = (minY <= y2 <= maxY)
     d = (minX <= x2 <= maxX)
 
-    if a or b or c or d:
-        return True
-    return False
+    return  a or b or c or d
 
 
 def isCompletelyInside(bigRect, minRect):  # объект полностью внутри прямоугольника
@@ -30,9 +28,7 @@ def isCompletelyInside(bigRect, minRect):  # объект полностью в�
     c = (minY <= y2 <= maxY)
     d = (minX <= x2 <= maxX)
 
-    if a and b and c and d:
-        return True  # объект полностью внутри большого прямоугольника
-    return False
+    return a and b and c and d # если тру, то объект полностью внутри большого прямоугольника
 
 
 def isPartiallyInside(bigRect, minRect, innerPercent=0.5):  # объект частично внутри прямоугольника
@@ -65,13 +61,11 @@ def createGraphic(imagePath: str, searchRect: list, objectsListRect: list):
     bigRect = Rectangle(searchRect)
     minRects = [Rectangle(i) for i in objectsListRect]
 
-    rect = patches.Rectangle(*bigRect.getMTparam(),
-                             linewidth=1, edgecolor='g', facecolor='None')
+    rect = patches.Rectangle(*bigRect.getMTparam(), linewidth=1, edgecolor='g', facecolor='None')
     ax.add_patch(rect)
 
     for i in minRects:
-        rect = patches.Rectangle(*i.getMTparam(),
-                                 linewidth=1, edgecolor='r', facecolor='none')
+        rect = patches.Rectangle(*i.getMTparam(), linewidth=1, edgecolor='r', facecolor='none')
         ax.add_patch(rect)
 
     temp = tempfile.NamedTemporaryFile()

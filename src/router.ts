@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import PageNotFound from './components/PageNotFound.vue';
+import Settings from './views/Settings.vue';
 
 Vue.use(Router);
 
@@ -25,6 +26,11 @@ const routes = [
         path: '/',
         name: 'home',
         component: Home,
+    },
+    {
+        path: '/settings',
+        name: 'settings',
+        component: Settings,
     },
 ];
 

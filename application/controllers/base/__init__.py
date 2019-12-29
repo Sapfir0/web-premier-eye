@@ -10,5 +10,6 @@ blueprint = Blueprint(
 
 routes = {
     'uploadFile': '/upload',
-    'hi': '/'
+    'hi': '/',
+    'detectionList': '/detectionList'
 }
