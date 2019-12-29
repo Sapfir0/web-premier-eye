@@ -9,6 +9,8 @@ class Config(object):
     HOST = '0.0.0.0'
     APP_PATH = Path(__file__).parents[0]
 
+    detectionProgramUrl = "http://localhost:8010"
+
     UPLOAD_FOLDER = os.path.join(APP_PATH, "application", "static", "uploads")
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)

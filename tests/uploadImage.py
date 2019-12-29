@@ -6,7 +6,7 @@ import os
 
 class UploadImage(Base):
     routeUrl = Base.serverUrl + "upload"
-    imageName = "1_20190718144434.jpg"
+    imageName = "1_20190718144434.jpg" # учитывай, что этого изображения быть в базе не должно
     imagePath = os.path.join(Base.APP_PATH, "res", imageName)
     jsonName = "test.json"
     jsonPath = os.path.join(Base.APP_PATH, "res", jsonName)

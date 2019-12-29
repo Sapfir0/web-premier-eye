@@ -13,6 +13,7 @@ from application.controllers.base import routes
 from application.database.models.Images import Images, session
 import requests
 
+
 @blueprint.route(routes['hi'], methods=['GET'])
 def hi():
     return "Server is up!"
@@ -20,8 +21,7 @@ def hi():
 
 @blueprint.route(routes['detectionList'], methods=['GET'])
 def detectionList():
-    serverUrl = "http://localhost:8010"
-    return requests.get(serverUrl + routes['detectionList']).content
+    return requests.get(cfg.detectionProgramUrl + routes['detectionList']).content
 
 
 @blueprint.route(routes['uploadFile'], methods=['POST'])

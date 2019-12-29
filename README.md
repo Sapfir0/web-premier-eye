@@ -19,3 +19,8 @@ Navigate to http://localhost:8080
 Run the docker-compose script
 
     docker-compose up --build
+    
+    
+## Detection side
+
+[Link](https://github.com/Sapfir0/premier-eye)
