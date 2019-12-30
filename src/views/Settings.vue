@@ -1,47 +1,42 @@
 <template>
-    <v-card>
-        Тут можно настроить сервис распознавания
+    <v-container>
+        <v-layout
+            text-center
+            wrap
+        >
 
-        checkOldProcessedFrames = False  # если True, обработанные файлы второй раз не попадут в очередь на обработку
-    SAVE_COLORMAP = False
-    CAR_NUMBER_DETECTOR: bool = bool(os.environ['ENABLE_CAR_DETECTOR'])  # детекировать номер машины(только для камер №1, №2)
-    AVAILABLE_OBJECTS = ['car', 'person', 'truck']  # искомые объекты
+            <v-container>
+                <v-layout row>
+                    <v-card>
+                        Тут можно настроить сервис распознавания
 
-        Обнаруживаемые объекты:
-        <v-list>
-             <v-list-item-group >
-                 <v-list-item
-                     v-for="(item, i) in detectionsList"
-                     :key="i">
-                     <v-list-item-content>
-                         <v-list-item-title v-text="i"> </v-list-item-title>
-                     </v-list-item-content>
-                     <v-switch :v-model="item"></v-switch>
-                 </v-list-item>
-             </v-list-item-group>
-        </v-list>
+                        <v-switch label="SAVE_COLORMAP"/>
+                        <v-switch label="CAR_NUMBER_DETECTOR"/>
 
-        Дебаг функции
-<!--        <v-list>-->
-<!--            <v-list-group>-->
-<!--                sendRequestToServer-->
-<!--                      <v-switch-->
-<!--                       v-model="switch1"-->
+                        <v-list>
+                            <v-list-group color="primary" value="false">
+                                <template v-slot:activator>
+                                    <v-list-item-title>Опознавание объектов</v-list-item-title>
+                                </template>
+                                <template v-for="(item, i) in this.detectionsList">
+                                    <v-list-item :key="i">
+                                        <v-switch :input-value="item" :label="i"/>
+                                    </v-list-item>
+                                </template>
 
-<!--                      ></v-switch>-->
-<!--            </v-list-group>-->
-<!--            <v-list-group>-->
-<!--                        Обработанные файлы второй раз не попадут в очередь на обработку-->
-
-<!--                      <v-switch-->
-<!--                       v-model="switch1"-->
-
-<!--                      ></v-switch>-->
-<!--            </v-list-group>-->
-<!--        </v-list>-->
+                            </v-list-group>
+                        </v-list>
 
 
-    </v-card>
+                    </v-card>
+
+
+                </v-layout>
+            </v-container>
+
+
+        </v-layout>
+    </v-container>
 
 </template>
 
