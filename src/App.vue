@@ -2,10 +2,10 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <v-btn href="/" class="font-weight-light">Premier-eye </v-btn>
+        <v-btn href="/" class="font-weight-light" outlined>Premier-eye </v-btn>
       </v-toolbar-title>
         <v-spacer />
-        <v-btn class="ma-2" href="/settings" color="white">
+        <v-btn class="ma-2" href="/settings" outlined>
           <v-icon dark>mdi-wrench</v-icon>
         </v-btn>
     </v-app-bar>

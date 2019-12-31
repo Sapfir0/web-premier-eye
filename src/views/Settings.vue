@@ -13,20 +13,7 @@
                         <v-switch label="SAVE_COLORMAP"/>
                         <v-switch label="CAR_NUMBER_DETECTOR"/>
 
-                        <v-list>
-                            <v-list-group color="primary" value="false">
-                                <template v-slot:activator>
-                                    <v-list-item-title>Опознавание объектов</v-list-item-title>
-                                </template>
-                                <template v-for="(item, i) in this.detectionsList">
-                                    <v-list-item :key="i">
-                                        <v-switch :input-value="item" :label="i"/>
-                                    </v-list-item>
-                                </template>
-
-                            </v-list-group>
-                        </v-list>
-
+                        <detections-list />
 
                     </v-card>
 
@@ -40,31 +27,18 @@
 
 </template>
 
-<script>
-    const cfg = require('../config');
-    const routing = require('../router');
+<script lang="ts">
+import Vue from 'vue';
+import DetectionsList  from '../components/DetectionsList.vue';
 
-    export default {
-        name: 'Settings',
-        data() {
-            return {
-                detectionsList: {'лох': true}
-            };
-        },
-        methods: {
-            async detect() {
-                this.detectionList = await routing.fetchTo(cfg.server + '/detectionList')
-                console.log(this.detectionList)
-            }
-        },
+export default Vue.extend({
 
-        created() {
-            this.detect();
-        }
-
-    }
-
+  components: {
+    DetectionsList,
+  },
+});
 </script>
+
 
 
 <style scoped>
