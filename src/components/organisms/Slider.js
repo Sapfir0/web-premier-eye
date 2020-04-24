@@ -40,7 +40,7 @@ class Slider extends React.Component {
         return (
             <div className="slider">
                 <CamerasList onCameraChange={this.handleCameraChange}/> {/* меняет значение выбранной камеры*/}
-                <ImageView images={this.state.imagesList}> </ImageView>
+                <ImageView images={this.state.imagesList} updateStateByInfo={this.updateStateByInfo}> </ImageView>
                 <ImageInfo
                     info={this.state.imageInfo}> </ImageInfo>
             </div>

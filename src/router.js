@@ -15,13 +15,13 @@ async function getCameras() {
 }
 
 export async function getInfoImage(imageName) {
-    return fetchTo("gallery/" + imageName + "/info")
+    return fetchTo(`gallery/${imageName}/info`)
 }
 
 export async function getImagesFromCamera(cameraId) {
-    return fetchTo("gallery/camera/" + cameraId)
+    return fetchTo(`gallery/camera/${cameraId}`)
 }
 
 export function getSrcByImageName(imageName) {
-    return server + "gallery/" + imageName;
+    return `${server}gallery/${imageName}`;
 }
