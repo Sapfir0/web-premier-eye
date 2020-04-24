@@ -8,6 +8,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import {getSrcByImageName} from "../../router";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -65,7 +66,7 @@ function Slide(props) {
         {images.map((step, index) => (
           <div key={step.label}>
             {Math.abs(activeStep - index) <= 2 ? (
-              <img className={classes.img} src={step.imgPath} alt={step.label} />
+              <img key={step} className={classes.img} src={getSrcByImageName(step)} alt={step} />
             ) : null}
           </div>
         ))}

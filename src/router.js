@@ -21,3 +21,7 @@ async function getInfoImage() {
 export async function getImagesFromCamera(cameraId) {
     return fetchTo("gallery/camera/" + cameraId)
 }
+
+export function getSrcByImageName(imageName) {
+    return server + "gallery/" + imageName;
+}

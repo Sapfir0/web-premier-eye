@@ -4,23 +4,29 @@ import ImageInfo from "../molecules/ImageInfo"
 import CamerasList from "../molecules/CamersList"
 import {getImagesFromCamera } from "../../router";
 
+import "./style.css"
 class Slider extends React.Component {
     constructor(props) {
         super(props);
         this.state = {imagesList: [] };
+
+        this.handleCameraChange = this.handleCameraChange.bind(this);
+        this.abstractFunc = this.abstractFunc.bind(this);
+
     }
 
     componentDidMount() {
-        getImagesFromCamera(1).then(res => {
-            this.setState({imagesList: res})
-            console.log(res)
-        })
+        this.abstractFunc(1)
     }
 
     handleCameraChange(cameraId) {
-        getImagesFromCamera(cameraId).then(res => {
-            this.setState({imagesList: res})
-            console.log(res)
+        console.log("Делаем запрос из организма к ", cameraId)
+        this.abstractFunc(cameraId)
+    }
+
+    abstractFunc(cameraId) {
+        getImagesFromCamera(cameraId).then((data) => {
+            this.setState({imagesList: data})
         })
     }
 

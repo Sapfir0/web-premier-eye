@@ -21,10 +21,13 @@ class CamerasList extends React.Component {
     }
 
     handleListItemClick(event, index) {
-        this.props.onCameraChange(event.target.value);
+        this.props.onCameraChange(index);
+        console.log("Кликнули на камеру ", index);
     }
 
     render() {
+              // const classes = useStyles();
+
         let camerasMenu = [];
         for (let i = 1; i < camersCount + 1; i++) {
             camerasMenu.push(
@@ -38,8 +41,7 @@ class CamerasList extends React.Component {
             )
         }
         return (
-            <div>
-                {/*{<div className={classes.root}>}*/}
+            <div className="root">
                 <List component="nav" aria-label="main mailbox folders" subheader="Список камер">
                     {camerasMenu}
                 </List>
