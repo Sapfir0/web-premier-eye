@@ -25,11 +25,11 @@ export default function ImageInfo(props) {
     const classes = useStyles();
 
     const data = props.info;
-
+    console.log(data)
     return (
 
         <div className={classes.root}>
-            <List component="nav" aria-label="main mailbox folders" subheader="Список камер">
+            <List component="nav" aria-label="main mailbox folders" subheader="Информация о кадре">
 
             </List>
 

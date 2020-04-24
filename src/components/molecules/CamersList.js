@@ -35,7 +35,6 @@ class CamerasList extends React.Component {
                     button key={i}
                     onClick={(event) => this.handleListItemClick(event, i)}
                 >
-
                     Camera {i}
                 </ListItem>
             )

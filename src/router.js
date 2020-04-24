@@ -14,8 +14,8 @@ async function fetchTo(url) {
 async function getCameras() {
 }
 
-async function getInfoImage() {
-
+export async function getInfoImage(imageName) {
+    return fetchTo("gallery/" + imageName + "/info")
 }
 
 export async function getImagesFromCamera(cameraId) {
