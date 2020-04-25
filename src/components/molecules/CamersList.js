@@ -4,14 +4,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import {server, camersCount} from "../../config";
 import {getImagesFromCamera} from "../../router"
+import {withStyles} from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
     root: {
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
-}));
+};
 
 
 class CamerasList extends React.Component {
@@ -26,7 +27,7 @@ class CamerasList extends React.Component {
     }
 
     render() {
-              // const classes = useStyles();
+        const {classes} = this.props;
 
         let camerasMenu = [];
         for (let i = 1; i < camersCount + 1; i++) {
@@ -40,7 +41,7 @@ class CamerasList extends React.Component {
             )
         }
         return (
-            <div className="root">
+            <div className={classes.root}>
                 <List component="nav" aria-label="main mailbox folders" subheader="Список камер">
                     {camerasMenu}
                 </List>
@@ -52,4 +53,4 @@ class CamerasList extends React.Component {
 
 }
 
-export default CamerasList
+export default withStyles(styles)(CamerasList)

@@ -36,7 +36,6 @@ class ImageView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {activeStep:0}
-        const {classes} = this.props;
 
         this.handleBack = this.handleBack.bind(this)
         this.handleNext = this.handleNext.bind(this)
@@ -63,9 +62,10 @@ class ImageView extends React.Component {
     render() {
         const images = this.props.images;
         const maxSteps = images.length;
+        const {classes} = this.props;
 
         return (
-            <div className={styles.imageView}>
+            <div className={classes.imageView}>
                 <SwipeableViews
                     index={this.state.activeStep}
                     onChangeIndex={this.handleStepChange}
@@ -74,7 +74,7 @@ class ImageView extends React.Component {
                     {images.map((step, index) => (
                         <div key={step}>
                             {Math.abs(this.state.activeStep - index) <= 2 ? (
-                                <img className={styles.img} src={getSrcByImageName(step)} alt={step}/>
+                                <img className={classes.img} src={getSrcByImageName(step)} alt={step}/>
                             ) : null}
                         </div>
                     ))}
