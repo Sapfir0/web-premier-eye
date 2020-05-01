@@ -1,39 +1,90 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
+import * as icons from '@material-ui/icons';
+import DirectionsCar from '@material-ui/icons/DirectionsCar';
+import PersonIcon from '@material-ui/icons/Person';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+
 import {server, camersCount} from "../../config";
 
-const useStyles = makeStyles((theme) => ({
+const colorForCameras = ['blue', 'red', 'orange', 'purple', 'green']
+
+
+
+const styles = {
     root: {
         width: '100%',
         maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
     },
-}));
+    numberOfCam: {
+        display: 'flex',
 
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-}
+    }
+};
 
-export default function ImageInfo(props) {
-    const classes = useStyles();
 
-    const data = props.info;
-    console.log(data)
-    return (
+class ImageInfo extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { openState: false };
+        this.handleClick = this.handleClick.bind(this)
+    }
 
-        <div className={classes.root}>
-            <List component="nav" aria-label="main mailbox folders" subheader="Информация о кадре">
+    handleClick() {
+        this.setState( (prevOpen, props) => ({
+            openState: !prevOpen.openState
+        }))
+    }
 
-            </List>
+    render() {
+        const data = this.props.info;
+        const {classes} = this.props;
+        console.log(data)
+        let objectListItems = [];
+        const detectionsImages = {
+            'car': {'icon': <DirectionsCar />, 'title': 'Автомобиль' },
+            'person':{'icon':  <PersonIcon/>, 'title': 'Человек' },
+        }
 
-        </div>
-    );
-}
+        if (data.objects) {
+            for(let object of data.objects) {
+                objectListItems.push(<ListItem button onClick={this.handleClick}>
+                    <ListItemIcon> {detectionsImages[object.typesOfObject].icon}</ListItemIcon>
+                    <ListItemText primary={detectionsImages[object.typesOfObject].title} /> {this.state.openState ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>)
+
+                objectListItems.push(<Collapse in={this.state.openState} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem className={classes.nested}>
+                            {/*<ListItemText> Идентификатор объекта: {object.id} </ListItemText>*/}
+                            <ListItemText> Степень уверенности: {object.scores * 100}% </ListItemText>
+                        </ListItem>
+                    </List>
+                </Collapse>)
+            }
+        }
+
+        return (
+            <div className={classes.root}>
+                <List component="nav" aria-label="main mailbox folders" subheader="Информация о кадре">
+                    <ListItem> {data.filename}  </ListItem>
+                    <ListItem style={{color: colorForCameras[data.numberOfCam]}}>  {data.numberOfCam} </ListItem>
+                    <ListItem> {data.createdAt} </ListItem>
+                    <ListItem> {data.fixationDatetime} </ListItem>
+                    {objectListItems}
+                </List>
+
+            </div>
+        );
+    }
+    }
+
+export default withStyles(styles)(ImageInfo)
+
 

@@ -16,13 +16,15 @@ class Slider extends React.Component {
 
     }
 
-    componentDidMount() {
-        this.updateStateByImagesFromCamera(1)
+    async componentDidMount() {
+        await this.updateStateByImagesFromCamera(1)
+        await this.updateStateByInfo(this.state.imagesList[0])
     }
 
-    handleCameraChange(cameraId) {
+    async handleCameraChange(cameraId) {
         console.log("Делаем запрос из организма к ", cameraId)
-        this.updateStateByImagesFromCamera(cameraId)
+        await this.updateStateByImagesFromCamera(cameraId)
+        await this.updateStateByInfo(this.state.imagesList[0])
     }
 
     async updateStateByImagesFromCamera(cameraId) {
