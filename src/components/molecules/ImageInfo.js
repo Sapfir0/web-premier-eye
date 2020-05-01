@@ -45,7 +45,7 @@ class ImageInfo extends React.Component {
     render() {
         const data = this.props.info;
         const {classes} = this.props;
-        console.log(data)
+        // console.log(data)
         let objectListItems = [];
         const detectionsImages = {
             'car': {'icon': <DirectionsCar />, 'title': 'Автомобиль' },

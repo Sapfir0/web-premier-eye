@@ -1,8 +1,7 @@
 import React from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -35,7 +34,7 @@ const styles = {
 class ImageView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {activeStep:0}
+        this.state = {activeStep: 0}
 
         this.handleBack = this.handleBack.bind(this)
         this.handleNext = this.handleNext.bind(this)
@@ -44,14 +43,14 @@ class ImageView extends React.Component {
 
     handleNext = () => {
         this.setState({activeStep: this.state.activeStep+1}, () => {
-            this.props.updateStateByInfo(this.props.images[this.state.activeStep])
+            this.props.updateStateByInfo(this.props.images[this.state.activeStep], this.state.activeStep)
         })
 
     };
 
     handleBack = () => {
         this.setState({activeStep: this.state.activeStep-1}, () => {
-            this.props.updateStateByInfo(this.props.images[this.state.activeStep])
+            this.props.updateStateByInfo(this.props.images[this.state.activeStep], this.state.activeStep)
         })
     };
 
@@ -61,6 +60,7 @@ class ImageView extends React.Component {
 
     render() {
         const images = this.props.images;
+        const activeImages = this.props.activeImages;
         const maxSteps = images.length;
         const {classes} = this.props;
 
