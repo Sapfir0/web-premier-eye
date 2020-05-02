@@ -41,3 +41,7 @@ def addObjectToSession(deserializedJson):
 
             session.add(coordinates)
             session.add(Object)
+
+
+#def getRowFromDb(table, id):
+#    session.query

@@ -24,6 +24,15 @@ def detectionList():
     return requests.get(cfg.detectionProgramUrl + routes['detectionList']).content
 
 
+@blueprint.route(routes['deleteImage'], methods=['GET', 'POST'])
+def deleteImage(filename):
+    session.commit()
+    session.flush()
+# принимает src
+# удалядет запись в бд и из фс
+
+
+
 @blueprint.route(routes['uploadFile'], methods=['POST'])
 def uploadFile():
     def allowedFile(filename):

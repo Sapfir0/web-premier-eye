@@ -1,13 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import DirectionsCar from '@material-ui/icons/DirectionsCar';
 import PersonIcon from '@material-ui/icons/Person';
-import {
-    List,
-    ListItem,
-    ListItemText,
-    Divider,
-    Collapse
-} from "@material-ui/core";
+import {Collapse, Divider, List, ListItem, ListItemText} from "@material-ui/core";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Alert from '@material-ui/lab/Alert';
+
+
+const colorForCameras = ['blue', 'red', 'orange', 'purple', 'green']
 
 
 function getSettings(countOfObjects) {
@@ -18,37 +17,10 @@ function getSettings(countOfObjects) {
     return state;
 }
 
+function getDiffSecond(date1, date2) {
+    return Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / 1000);
+}
 
-// const myData = {
-//     createdAt: "Mon, 25 Nov 2019 20:48:35 GMT",
-//     filename: "1_20190718144434.jpg",
-//     fixationDatetime: "Thu, 18 Jul 2019 14:44:34 GMT",
-//     hasObjects: true,
-//     id: 21,
-//     numberOfCam: 3,
-//     objects: [
-//         {
-//             coordinatesId: 34,
-//             createdAt: "Mon, 25 Nov 2019 20:48:35 GMT",
-//             id: 1,
-//             imageId: 21,
-//             scores: 99.8,
-//             typesOfObject: "car",
-//             updatedAt: "Mon, 25 Nov 2019 20:48:35 GMT"
-//         },
-//         {
-//             coordinatesId: 34,
-//             createdAt: "Mon, 25 Nov 2019 20:48:35 GMT",
-//             id: 2,
-//             imageId: 21,
-//             scores: 98.1,
-//             typesOfObject: "car",
-//             updatedAt: "Mon, 25 Nov 2019 20:48:35 GMT"
-//         }
-//     ],
-//     path: "",
-//     updatedAt: "Mon, 25 Nov 2019 20:48:35 GMT"
-// };
 
 class ImageInfo extends React.Component {
 
@@ -72,6 +44,11 @@ class ImageInfo extends React.Component {
     render() {
         let objects = [];
         const myData = this.props.info
+        const detectionsImages = {
+            'car': {'icon': <DirectionsCar />, 'title': 'Автомобиль' },
+            'person':{'icon':  <PersonIcon/>, 'title': 'Человек' },
+        }
+
 
         if(myData.objects) {
             if (!this.state.settings) {
@@ -87,11 +64,11 @@ class ImageInfo extends React.Component {
                 objects = <List component="nav">
                     {myData.objects.map(each => (
                         <React.Fragment key={each.id}>
-
                             <ListItem button onClick={() => this.handleClick(each.id)}>
-                                <ListItemText inset primary={each.nameHeader} />
-                                {console.log(this.state.settings, each ) }
-                                {this.state.settings.find(item => item.id === each.id).open ? "expanded" : "collapsed"}
+                                <ListItemIcon>{detectionsImages[each.typesOfObject].icon} </ListItemIcon>
+                                <ListItemText inset primary={detectionsImages[each.typesOfObject].title} />
+
+                                {/*{this.state.settings.find(item => item.id === each.id).open ? each.typesOfObject  : "collapsed"}*/}
                             </ListItem>
                             <Divider />
                             <Collapse
@@ -100,8 +77,7 @@ class ImageInfo extends React.Component {
                                 unmountOnExit
                             >
                                 <List component="div" disablePadding>
-                                    <ListItem> {each.scores} </ListItem>
-
+                                    <ListItem> Степень уверенности: {each.scores * 100}%  </ListItem>
                                 </List>
                             </Collapse>
                         </React.Fragment>
@@ -111,13 +87,30 @@ class ImageInfo extends React.Component {
             catch (e) {
                 console.warn("Что-то сломалось", e)
             }
-
-
         }
+
+       const maxDiffBetweenWritingAndFixationDatetime = 60*60
+       const bigDateDiff = getDiffSecond(new Date(myData.createdAt), new Date(myData.fixationDatetime)) > maxDiffBetweenWritingAndFixationDatetime
+        let warningDateDiff;
+        if (bigDateDiff) {
+            warningDateDiff = <Alert severity="warning"/>
+        }
+
 
         return (
             <div style={{ marginRight: "15px" }}>
+                <List component="nav" aria-label="main mailbox folders" subheader="Информация о кадре">
+
+                <ListItem style={{color: colorForCameras[myData.numberOfCam]}}>  {myData.numberOfCam} </ListItem>
+                <ListItem> {myData.filename} </ListItem>
+                <ListItem> {myData.fixationDatetime} </ListItem>
+
+                    {warningDateDiff}
+                <ListItem> {myData.createdAt} </ListItem>
+
+
                 {objects}
+                </List>
             </div>
         );
     }
