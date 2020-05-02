@@ -38,7 +38,6 @@ class ImageView extends React.Component {
 
         this.handleBack = this.handleBack.bind(this)
         this.handleNext = this.handleNext.bind(this)
-
     }
 
     handleNext = () => {
@@ -64,16 +63,19 @@ class ImageView extends React.Component {
         const maxSteps = images.length;
         const {classes} = this.props;
 
+        const activeStep = this.state.activeStep
+        //const activeStep = 0
+
         return (
             <div className={classes.imageView}>
                 <SwipeableViews
-                    index={this.state.activeStep}
+                    index={activeStep}
                     onChangeIndex={this.handleStepChange}
                     enableMouseEvents
                 >
                     {images.map((step, index) => (
                         <div key={step}>
-                            {Math.abs(this.state.activeStep - index) <= 2 ? (
+                            {Math.abs(activeStep - index) <= 2 ? (
                                 <img className={classes.img} src={getSrcByImageName(step)} alt={step}/>
                             ) : null}
                         </div>
@@ -83,15 +85,15 @@ class ImageView extends React.Component {
                     steps={maxSteps}
                     position="static"
                     variant="progress"
-                    activeStep={this.state.activeStep}
+                    activeStep={activeStep}
                     nextButton={
-                        <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === maxSteps - 1}>
+                        <Button size="small" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
                             Next
                              <KeyboardArrowLeft/>
                         </Button>
                     }
                     backButton={
-                        <Button size="small" onClick={this.handleBack} disabled={this.state.activeStep === 0}>
+                        <Button size="small" onClick={this.handleBack} disabled={activeStep === 0}>
                             <KeyboardArrowRight/>
                             Back
                         </Button>

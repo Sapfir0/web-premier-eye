@@ -40,7 +40,8 @@ class Slider extends React.Component {
     async handleCameraChange(cameraId) {
         console.log("Делаем запрос из организма к ", cameraId)
         await this.updateStateByImagesFromCamera(cameraId)
-        const lastImageSrc = this.state.imagesList[this.state.lastSeenedImageForEachCameras[cameraId]]
+        //const lastImageSrc = this.state.imagesList[this.state.lastSeenedImageForEachCameras[cameraId]]
+        const lastImageSrc = this.state.imagesList[0]
 
         console.log(this.state.lastSeenedImageForEachCameras)
         await this.updateStateByInfo(lastImageSrc)
@@ -77,10 +78,6 @@ class Slider extends React.Component {
             lastSeenedImageForEachCameras: newState
         }
         ))
-
-        console.log(indexOfLastCamera)
-        console.log(this.state.lastSeenedImageForEachCameras)
-
 
         const imageInfo = await getInfoImage(src);
         this.setState({imageInfo: imageInfo});

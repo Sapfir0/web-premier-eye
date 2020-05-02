@@ -1,90 +1,125 @@
-import React from 'react';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import * as icons from '@material-ui/icons';
+import React, { Component } from "react";
 import DirectionsCar from '@material-ui/icons/DirectionsCar';
 import PersonIcon from '@material-ui/icons/Person';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import {
+    List,
+    ListItem,
+    ListItemText,
+    Divider,
+    Collapse
+} from "@material-ui/core";
 
-import {server, camersCount} from "../../config";
 
-const colorForCameras = ['blue', 'red', 'orange', 'purple', 'green']
-
-
-
-const styles = {
-    root: {
-        width: '100%',
-        maxWidth: 360,
-    },
-    numberOfCam: {
-        display: 'flex',
-
+function getSettings(countOfObjects) {
+    let state =  [];
+    for(let i=1; i<countOfObjects+1;i++) {
+        state.push({id: i, open: false})
     }
-};
+    return state;
+}
 
+
+// const myData = {
+//     createdAt: "Mon, 25 Nov 2019 20:48:35 GMT",
+//     filename: "1_20190718144434.jpg",
+//     fixationDatetime: "Thu, 18 Jul 2019 14:44:34 GMT",
+//     hasObjects: true,
+//     id: 21,
+//     numberOfCam: 3,
+//     objects: [
+//         {
+//             coordinatesId: 34,
+//             createdAt: "Mon, 25 Nov 2019 20:48:35 GMT",
+//             id: 1,
+//             imageId: 21,
+//             scores: 99.8,
+//             typesOfObject: "car",
+//             updatedAt: "Mon, 25 Nov 2019 20:48:35 GMT"
+//         },
+//         {
+//             coordinatesId: 34,
+//             createdAt: "Mon, 25 Nov 2019 20:48:35 GMT",
+//             id: 2,
+//             imageId: 21,
+//             scores: 98.1,
+//             typesOfObject: "car",
+//             updatedAt: "Mon, 25 Nov 2019 20:48:35 GMT"
+//         }
+//     ],
+//     path: "",
+//     updatedAt: "Mon, 25 Nov 2019 20:48:35 GMT"
+// };
 
 class ImageInfo extends React.Component {
+
     constructor(props) {
-        super(props);
-        this.state = { openState: false };
-        this.handleClick = this.handleClick.bind(this)
+        super(props)
+
+        this.state = {settings: getSettings(10) };
     }
 
-    handleClick() {
-        this.setState( (prevOpen, props) => ({
-            openState: !prevOpen.openState
-        }))
-    }
+    handleClick = id => {
+        this.setState(state => ({
+            ...state,
+            settings: state.settings.map(item =>
+                item.id === id ? { ...item, open: !item.open } : item
+            )
+        }));
+
+    };
+
 
     render() {
-        const data = this.props.info;
-        const {classes} = this.props;
-        // console.log(data)
-        let objectListItems = [];
-        const detectionsImages = {
-            'car': {'icon': <DirectionsCar />, 'title': 'Автомобиль' },
-            'person':{'icon':  <PersonIcon/>, 'title': 'Человек' },
-        }
+        let objects = [];
+        const myData = this.props.info
 
-        if (data.objects) {
-            for(let object of data.objects) {
-                objectListItems.push(<ListItem button onClick={this.handleClick}>
-                    <ListItemIcon> {detectionsImages[object.typesOfObject].icon}</ListItemIcon>
-                    <ListItemText primary={detectionsImages[object.typesOfObject].title} /> {this.state.openState ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>)
-
-                objectListItems.push(<Collapse in={this.state.openState} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItem className={classes.nested}>
-                            {/*<ListItemText> Идентификатор объекта: {object.id} </ListItemText>*/}
-                            <ListItemText> Степень уверенности: {object.scores * 100}% </ListItemText>
-                        </ListItem>
-                    </List>
-                </Collapse>)
+        if(myData.objects) {
+            if (!this.state.settings) {
+                this.setState(
+                    {settings: getSettings(myData.objects.length)}
+                )
             }
+
+            for(let i=0; i<myData.objects.length; i++) {
+                myData.objects[i].id = i+1
+            }
+            try {
+                objects = <List component="nav">
+                    {myData.objects.map(each => (
+                        <React.Fragment key={each.id}>
+
+                            <ListItem button onClick={() => this.handleClick(each.id)}>
+                                <ListItemText inset primary={each.nameHeader} />
+                                {console.log(this.state.settings, each ) }
+                                {this.state.settings.find(item => item.id === each.id).open ? "expanded" : "collapsed"}
+                            </ListItem>
+                            <Divider />
+                            <Collapse
+                                in={this.state.settings.find(item => item.id === each.id).open}
+                                timeout="auto"
+                                unmountOnExit
+                            >
+                                <List component="div" disablePadding>
+                                    <ListItem> {each.scores} </ListItem>
+
+                                </List>
+                            </Collapse>
+                        </React.Fragment>
+                    ))}
+                </List>
+            }
+            catch (e) {
+                console.warn("Что-то сломалось", e)
+            }
+
+
         }
 
         return (
-            <div className={classes.root}>
-                <List component="nav" aria-label="main mailbox folders" subheader="Информация о кадре">
-                    <ListItem> {data.filename}  </ListItem>
-                    <ListItem style={{color: colorForCameras[data.numberOfCam]}}>  {data.numberOfCam} </ListItem>
-                    <ListItem> {data.createdAt} </ListItem>
-                    <ListItem> {data.fixationDatetime} </ListItem>
-                    {objectListItems}
-                </List>
-
+            <div style={{ marginRight: "15px" }}>
+                {objects}
             </div>
         );
     }
-    }
-
-export default withStyles(styles)(ImageInfo)
-
-
+}
+export default ImageInfo;
