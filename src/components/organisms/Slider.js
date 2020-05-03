@@ -5,7 +5,24 @@ import CamerasList from "../molecules/CamersList"
 import {getImagesFromCamera, getInfoImage} from "../../router";
 import "./style.css"
 import {camersCount} from "../../config"
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 
+
+const styles = {
+    root: {
+        display: 'flex'
+    },
+};
+
+function indexOfCamera(cameraId, block) {
+    let i=0;
+    for (let field of block) {
+        if (field.cameraId == cameraId) {
+            return i;
+        }
+        i++;
+    }
+}
 
 class Slider extends React.Component {
     startCameraId = 1
@@ -55,15 +72,6 @@ class Slider extends React.Component {
 
 
     async updateStateByInfo(src, lastActiveImage) {
-        function indexOfCamera(cameraId, block) {
-            let i=0;
-            for (let field of block) {
-                if (field.cameraId == cameraId) {
-                    return i;
-                }
-                i++;
-            }
-        }
 
         const newState = this.state.lastSeenedImageForEachCameras;
         const indexOfLastCamera = indexOfCamera(this.state.lastCamera, newState)
@@ -71,11 +79,9 @@ class Slider extends React.Component {
         newState[indexOfLastCamera].active = lastActiveImage
 
 
-        this.setState((prevState, props) => (
-        {
+        this.setState(prevState => ({
             lastSeenedImageForEachCameras: newState
-        }
-        ))
+        }))
 
         const imageInfo = await getInfoImage(src);
         this.setState({imageInfo: imageInfo});
@@ -83,8 +89,10 @@ class Slider extends React.Component {
     }
 
     render() {
+        const {classes} = this.props;
+
         return (
-            <div className="slider">
+            <div className={classes.root}>
                 <CamerasList onCameraChange={this.handleCameraChange}/> {/* меняет значение выбранной камеры*/}
                 <ImageView images={this.state.imagesList} updateStateByInfo={this.updateStateByInfo}> </ImageView>
                 <ImageInfo
@@ -95,4 +103,4 @@ class Slider extends React.Component {
 }
 
 
-export default Slider;
+export default withStyles(styles)(Slider);
