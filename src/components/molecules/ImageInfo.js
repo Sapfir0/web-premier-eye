@@ -3,10 +3,21 @@ import DirectionsCar from '@material-ui/icons/DirectionsCar';
 import PersonIcon from '@material-ui/icons/Person';
 import {Collapse, Divider, List, ListItem, ListItemText} from "@material-ui/core";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Alert from '@material-ui/lab/Alert';
-
+import WarningIcon from '@material-ui/icons/Warning';
+import Tooltip from "@material-ui/core/Tooltip";
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 
 const colorForCameras = ['blue', 'red', 'orange', 'purple', 'green']
+const styles = {
+    root: {
+        width: '100%',
+        maxWidth: 360,
+    },
+    numberOfCam: {
+        display: 'flex',
+
+    }
+};
 
 
 function getSettings(countOfObjects) {
@@ -93,7 +104,10 @@ class ImageInfo extends React.Component {
        const bigDateDiff = getDiffSecond(new Date(myData.createdAt), new Date(myData.fixationDatetime)) > maxDiffBetweenWritingAndFixationDatetime
         let warningDateDiff;
         if (bigDateDiff) {
-            warningDateDiff = <Alert severity="warning"/>
+            const longText = "Запись в базе данных появилась " + myData.createdAt + "."
+            warningDateDiff = <Tooltip title={longText} aria-label="add">
+                <WarningIcon  style={{ color: "orange"}} />
+            </Tooltip>
         }
 
 
@@ -101,12 +115,12 @@ class ImageInfo extends React.Component {
             <div style={{ marginRight: "15px" }}>
                 <List component="nav" aria-label="main mailbox folders" subheader="Информация о кадре">
 
-                <ListItem style={{color: colorForCameras[myData.numberOfCam]}}>  {myData.numberOfCam} </ListItem>
+                    <Tooltip title="Номер камеры" aria-label="add">
+                <ListItem style={{ color: colorForCameras[myData.numberOfCam]}}>  {myData.numberOfCam} </ListItem>
+                    </Tooltip>
                 <ListItem> {myData.filename} </ListItem>
-                <ListItem> {myData.fixationDatetime} </ListItem>
+                <ListItem> {myData.fixationDatetime} {warningDateDiff}</ListItem>
 
-                    {warningDateDiff}
-                <ListItem> {myData.createdAt} </ListItem>
 
 
                 {objects}
@@ -115,4 +129,5 @@ class ImageInfo extends React.Component {
         );
     }
 }
-export default ImageInfo;
+
+export default withStyles(styles)(ImageInfo)
