@@ -48,21 +48,19 @@ class ImageView extends React.Component {
         this.handleNext = this.handleNext.bind(this)
     }
 
-    handleNext = () => {
-        this.setState({activeStep: this.state.activeStep+1}, () => {
-            this.props.updateStateByInfo(this.props.images[this.state.activeStep], this.state.activeStep)
-        })
-
+    handleNext = () => { // для кнопок
+        this.handleStepChange(this.state.activeStep+1)
     };
 
-    handleBack = () => {
-        this.setState({activeStep: this.state.activeStep-1}, () => {
-            this.props.updateStateByInfo(this.props.images[this.state.activeStep], this.state.activeStep)
-        })
+    handleBack = () => { // для кнопок
+        this.handleStepChange(this.state.activeStep-1)
+
     };
 
     handleStepChange = (step) => {
-        console.log(step, "is a step")
+        this.setState({activeStep: step}, () => {
+            this.props.updateStateByInfo(this.props.images[this.state.activeStep], this.state.activeStep)
+        })
     };
 
     render() {
