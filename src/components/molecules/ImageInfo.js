@@ -40,6 +40,8 @@ class ImageInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {settings: getSettings(10)}; // учет максимум 10 объектов на кадре
+        this.parseObject = this.parseObject.bind(this)
+        this.warningIfBigDiffBetweenDates = this.warningIfBigDiffBetweenDates.bind(this)
     }
 
     handleClick = id => {
@@ -51,59 +53,69 @@ class ImageInfo extends React.Component {
         }));
     };
 
-    render() {
+    parseObject(data) {
         let objects = [];
-        const myData = this.props.info
-        const {classes} = this.props;
 
-        if (myData.objects) {
-            if (!this.state.settings) {
-                this.setState({
-                        settings: getSettings(myData.objects.length)
-                    }
-                )
-            }
-
-            for (let i = 0; i < myData.objects.length; i++) { // фиксим объект, нам было бы удобно, чтобы у него был порядковый номер
-                myData.objects[i].id = i + 1
-            }
-            try {
-                objects = <List component="nav">
-                    {myData.objects.map(each => (
-                        <React.Fragment key={each.id}>
-                            <ListItem button onClick={() => this.handleClick(each.id)}>
-                                <ListItemIcon>{detectionsImages[each.typesOfObject].icon} </ListItemIcon>
-                                <ListItemText inset primary={detectionsImages[each.typesOfObject].title}/>
-
-                                {/*{this.state.settings.find(item => item.id === each.id).open ? each.typesOfObject  : "collapsed"}*/}
-                            </ListItem>
-                            <Divider/>
-                            <Collapse
-                                in={this.state.settings.find(item => item.id === each.id).open}
-                                timeout="auto"
-                                unmountOnExit
-                            >
-                                <List component="div" disablePadding>
-                                    <ListItem> Степень уверенности: {each.scores * 100}% </ListItem>
-                                </List>
-                            </Collapse>
-                        </React.Fragment>
-                    ))}
-                </List>
-            } catch (e) {
-                console.warn("Что-то сломалось", e)
-            }
+        if (!this.state.settings) {
+            this.setState({
+                    settings: getSettings(data.length)
+                }
+            )
         }
 
-        const maxDiffBetweenWritingAndFixationDatetime = 60 * 60
-        const bigDateDiff = getDiffSecond(new Date(myData.createdAt), new Date(myData.fixationDatetime)) > maxDiffBetweenWritingAndFixationDatetime
+        for (let i = 0; i < data.length; i++) { // фиксим объект, нам было бы удобно, чтобы у него был порядковый номер
+            data[i].id = i + 1
+        }
+
+        try {
+            objects = <List component="nav">
+                {data.map(each => (
+                    <React.Fragment key={each.id}>
+                        <ListItem button onClick={() => this.handleClick(each.id)}>
+                            <ListItemIcon>{detectionsImages[each.typesOfObject].icon} </ListItemIcon>
+                            <ListItemText inset primary={detectionsImages[each.typesOfObject].title}/>
+                        </ListItem>
+                        <Divider/>
+                        <Collapse
+                            in={this.state.settings.find(item => item.id === each.id).open}
+                            timeout="auto"
+                            unmountOnExit
+                        >
+                            <List component="div" disablePadding>
+                                <ListItem> Степень уверенности: {each.scores * 100}% </ListItem>
+                            </List>
+                        </Collapse>
+                    </React.Fragment>
+                ))}
+            </List>
+            return objects
+        } catch (e) {
+            console.warn("Что-то сломалось", e)
+        }
+    }
+
+    warningIfBigDiffBetweenDates(createdDate, fixationDate, maxDiff = 60 * 60) {
+        const bigDateDiff = getDiffSecond(createdDate, fixationDate) > maxDiff
         let warningDateDiff;
         if (bigDateDiff) {
-            const longText = `Запись в базе данных появилась ${myData.createdAt}.`
+            const longText = `Запись в базе данных появилась ${createdDate}.`
             warningDateDiff = <Tooltip title={longText} aria-label="add">
                 <WarningIcon style={{color: "orange"}}/>
             </Tooltip>
         }
+        return warningDateDiff
+    }
+
+    render() {
+        const myData = this.props.info
+        const {classes} = this.props;
+
+        let objects = []
+        if (myData.objects) {
+            objects = this.parseObject(myData.objects)
+        }
+
+        const warningDateDiff = this.warningIfBigDiffBetweenDates(new Date(myData.createdAt), new Date(myData.fixationDatetime));
 
 
         return (
@@ -116,7 +128,6 @@ class ImageInfo extends React.Component {
                     </Tooltip>
                     <ListItem> {myData.filename} </ListItem>
                     <ListItem> {myData.fixationDatetime} {warningDateDiff}</ListItem>
-
 
                     {objects}
                 </List>
