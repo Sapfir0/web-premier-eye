@@ -28,7 +28,15 @@ const styles = {
         maxWidth: 400,
         overflow: 'hidden',
         width: '100%',
+
+        backgroundColor: 'red',
+        color: 'white',
+
+
     },
+    error: {
+
+    }
 }
 
 class ImageView extends React.Component {
@@ -59,46 +67,54 @@ class ImageView extends React.Component {
 
     render() {
         const images = this.props.images;
-        const activeImages = this.props.activeImages;
         const maxSteps = images.length;
         const {classes} = this.props;
 
         const activeStep = this.state.activeStep
-        //const activeStep = 0
+
+        let slideBlock;
+        if(images.hasOwnProperty("error")) {
+            slideBlock = <div className={classes.img}> К сожалению, изображения с этой камеры не найдена </div>
+        }
+        else {
+            slideBlock = <> <SwipeableViews
+                index={activeStep}
+                onChangeIndex={this.handleStepChange}
+                enableMouseEvents
+            >
+                {images.map((step, index) => (
+                    <div key={step}>
+                        {Math.abs(activeStep - index) <= 2 ? (
+                            <img className={classes.img} src={getSrcByImageName(step)} alt={step}/>
+                        ) : null}
+                    </div>
+                ))}
+            </SwipeableViews>
+            <MobileStepper
+                steps={maxSteps}
+                position="static"
+                variant="progress"
+                activeStep={activeStep}
+                nextButton={
+                    <Button size="small" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
+                        Next
+                        <KeyboardArrowLeft/>
+                    </Button>
+                }
+                backButton={
+                    <Button size="small" onClick={this.handleBack} disabled={activeStep === 0}>
+                        <KeyboardArrowRight/>
+                        Back
+                    </Button>
+                }
+            />
+            </>
+        }
+
 
         return (
             <div className={classes.imageView}>
-                <SwipeableViews
-                    index={activeStep}
-                    onChangeIndex={this.handleStepChange}
-                    enableMouseEvents
-                >
-                    {images.map((step, index) => (
-                        <div key={step}>
-                            {Math.abs(activeStep - index) <= 2 ? (
-                                <img className={classes.img} src={getSrcByImageName(step)} alt={step}/>
-                            ) : null}
-                        </div>
-                    ))}
-                </SwipeableViews>
-                <MobileStepper
-                    steps={maxSteps}
-                    position="static"
-                    variant="progress"
-                    activeStep={activeStep}
-                    nextButton={
-                        <Button size="small" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
-                            Next
-                             <KeyboardArrowLeft/>
-                        </Button>
-                    }
-                    backButton={
-                        <Button size="small" onClick={this.handleBack} disabled={activeStep === 0}>
-                            <KeyboardArrowRight/>
-                            Back
-                        </Button>
-                    }
-                />
+                {slideBlock}
             </div>
         );
     }

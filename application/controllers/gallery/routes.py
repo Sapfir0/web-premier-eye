@@ -18,7 +18,7 @@ def getImage(filename):
     if os.path.exists(os.path.split(outputPath)[0]):
         return send_from_directory(os.path.split(outputPath)[0], filename)
     else:
-        return "Error while loading image", 404
+        return jsonify({"error": "Error while loading image"}), 404
 
 
 @blueprint.route(routes['getAllImages'], methods=['GET'])
@@ -46,7 +46,7 @@ def getJsonInfo(filename):
 def getInfoFromCamera(cameraId):
     cameraPath = os.path.join(cfg.UPLOAD_FOLDER, cameraId)
     if not os.path.exists(cameraPath):
-        return "Error while loading image", 404
+        return jsonify({"error": "Error while loading camera"}), 404
     imgList = recursiveSearch(cameraPath)
     return jsonify(imgList)
 

@@ -43,10 +43,8 @@ class Slider extends React.Component {
         //const lastImageSrc = this.state.imagesList[this.state.lastSeenedImageForEachCameras[cameraId]]
         const lastImageSrc = this.state.imagesList[0]
 
-        console.log(this.state.lastSeenedImageForEachCameras)
         await this.updateStateByInfo(lastImageSrc)
         this.setState({lastCamera: cameraId})
-
     }
 
     async updateStateByImagesFromCamera(cameraId) {
