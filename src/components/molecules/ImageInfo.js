@@ -6,6 +6,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import WarningIcon from '@material-ui/icons/Warning';
 import Tooltip from "@material-ui/core/Tooltip";
 import {makeStyles, withStyles} from '@material-ui/core/styles';
+import TitledWarning from "../atoms/TitledWarning";
 
 const colorForCameras = ['blue', 'red', 'orange', 'purple', 'green']
 
@@ -99,9 +100,7 @@ class ImageInfo extends React.Component {
         let warningDateDiff;
         if (bigDateDiff) {
             const longText = `Запись в базе данных появилась ${createdDate}.`
-            warningDateDiff = <Tooltip title={longText} aria-label="add">
-                <WarningIcon style={{color: "orange"}}/>
-            </Tooltip>
+            warningDateDiff = <TitledWarning text={longText} />
         }
         return warningDateDiff
     }

@@ -8,6 +8,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import {getSrcByImageName} from "../../router";
 import {withStyles} from "@material-ui/core/styles";
+import NotFoundImage from "../atoms/NotFoundImage";
 
 
 const styles = {
@@ -31,12 +32,8 @@ const styles = {
 
         backgroundColor: 'red',
         color: 'white',
-
-
     },
-    error: {
 
-    }
 }
 
 class ImageView extends React.Component {
@@ -72,7 +69,7 @@ class ImageView extends React.Component {
 
         let slideBlock;
         if(images.hasOwnProperty("error")) {
-            slideBlock = <div className={classes.img}> К сожалению, изображения с этой камеры не найдена </div>
+            slideBlock = <NotFoundImage />
         }
         else {
             slideBlock = <> <SwipeableViews

@@ -45,7 +45,6 @@ class CamerasList extends React.Component {
                 <List component="nav" aria-label="main mailbox folders" subheader="Список камер">
                     {camerasMenu}
                 </List>
-
             </div>
         );
     }

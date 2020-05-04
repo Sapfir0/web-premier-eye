@@ -3,10 +3,8 @@ import ImageView from '../molecules/ImageView'
 import ImageInfo from "../molecules/ImageInfo"
 import CamerasList from "../molecules/CamersList"
 import {getImagesFromCamera, getInfoImage} from "../../router";
-import "./style.css"
 import {camersCount} from "../../config"
 import {makeStyles, withStyles} from '@material-ui/core/styles';
-
 
 const styles = {
     root: {
@@ -69,10 +67,7 @@ class Slider extends React.Component {
         this.setState({imagesList: imagesList})
     }
 
-
-
     async updateStateByInfo(src, lastActiveImage) {
-
         const newState = this.state.lastSeenedImageForEachCameras;
         const indexOfLastCamera = indexOfCamera(this.state.lastCamera, newState)
 
