@@ -11,12 +11,16 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        alignItems: "flex-end"
     },
     menuButton: {
         marginRight: theme.spacing(2),
+        alignItems: "flex-end"
     },
     title: {
         flexGrow: 1,
+        textDecoration: "none",
+        color: 'white'
     },
 }));
 
@@ -29,13 +33,13 @@ export default function ButtonAppBar() {
             <AppBar position="static">
                 <Toolbar>
                     <Link to="/">
-                        <Button className={classes.title} variant="h6">
+                        <Button className={classes.title}>
                             Home
                         </Button>
                     </Link>
 
                     <Link to="/settings">
-                        <SettingsIcon color="inherit">Настройки</SettingsIcon>
+                        <SettingsIcon className={classes.menuButton} color="inherit">Настройки</SettingsIcon>
                     </Link>
                 </Toolbar>
 

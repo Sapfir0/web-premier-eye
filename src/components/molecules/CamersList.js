@@ -1,9 +1,7 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import {server, camersCount} from "../../config";
-import {getImagesFromCamera} from "../../router"
 import {withStyles} from "@material-ui/core/styles";
 
 const styles = {

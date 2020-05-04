@@ -106,7 +106,6 @@ class ImageView extends React.Component {
             </>
         }
 
-
         return (
             <div className={classes.imageView}>
                 {slideBlock}
