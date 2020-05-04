@@ -4,7 +4,7 @@ import ImageInfo from "../molecules/ImageInfo"
 import CamerasList from "../molecules/CamersList"
 import {getImagesFromCamera, getInfoImage} from "../../router";
 import {camersCount} from "../../config"
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
     root: {

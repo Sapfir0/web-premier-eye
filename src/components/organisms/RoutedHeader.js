@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import ButtonAppBar from "./Header";
 import Settings from "../pages/Settings";
 import React from "react";

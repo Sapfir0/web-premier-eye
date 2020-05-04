@@ -3,9 +3,7 @@ import DirectionsCar from '@material-ui/icons/DirectionsCar';
 import PersonIcon from '@material-ui/icons/Person';
 import {Collapse, Divider, List, ListItem, ListItemText} from "@material-ui/core";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import WarningIcon from '@material-ui/icons/Warning';
-import Tooltip from "@material-ui/core/Tooltip";
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import TitledWarning from "../atoms/TitledWarning";
 import TitledCameraNumber from "../atoms/TitledCameraNumber";
 
@@ -42,7 +40,6 @@ class ImageInfo extends React.Component {
         super(props)
         this.state = {settings: getSettings(10)}; // учет максимум 10 объектов на кадре
         this.parseObject = this.parseObject.bind(this)
-        this.warningIfBigDiffBetweenDates = this.warningIfBigDiffBetweenDates.bind(this)
     }
 
     handleClick = id => {
@@ -54,7 +51,7 @@ class ImageInfo extends React.Component {
         }));
     };
 
-    parseObject(data) {
+    parseObject = (data) => {
         let objects = [];
 
         if (!this.state.settings) {
@@ -95,7 +92,7 @@ class ImageInfo extends React.Component {
         }
     }
 
-    warningIfBigDiffBetweenDates(createdDate, fixationDate, maxDiff = 60 * 60) {
+    warningIfBigDiffBetweenDates = (createdDate, fixationDate, maxDiff = 60 * 60) => {
         const bigDateDiff = getDiffSecond(createdDate, fixationDate) > maxDiff
         let warningDateDiff;
         if (bigDateDiff) {
