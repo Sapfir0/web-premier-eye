@@ -39,7 +39,6 @@ class ImageInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {settings: getSettings(10)}; // учет максимум 10 объектов на кадре
-        this.parseObject = this.parseObject.bind(this)
     }
 
     handleClick = id => {

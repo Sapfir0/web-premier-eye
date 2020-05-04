@@ -11,9 +11,6 @@ async function fetchTo(url) {
 }
 
 
-async function getCameras() {
-}
-
 export async function getInfoImage(imageName) {
     return fetchTo(`gallery/${imageName}/info`)
 }
