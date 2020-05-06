@@ -1,13 +1,13 @@
 import unittest
-from tests.Base import Base
+import config as cfg
 import requests
 
 
-class Camera(Base):
-    routeUrl = Base.serverUrl + "gallery/camera"
+class Camera(unittest.TestCase):
+    routeUrl = cfg.serverUrl + "gallery/camera"
 
     camersCount = 5
-    def IsAllCamerasAvailable(self):
+    def test_IsAllCamerasAvailable(self):
         for camera in range(self.camersCount):
             r = requests.get(f"{self.routeUrl}/{camera}")
             if r.status_code != 200:

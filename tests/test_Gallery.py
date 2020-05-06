@@ -1,16 +1,16 @@
 import unittest
-from tests.Base import Base
+import config as cfg
 import requests
 
 
-class Gallery(Base):
-    routeUrl = Base.serverUrl + "gallery"
+class Gallery(unittest.TestCase):
+    routeUrl = cfg.serverUrl + "gallery"
 
-    def GetAllImagesNotEmpty(self):
+    def test_GetAllImagesNotEmpty(self):
         r = requests.get(self.routeUrl)
         self.assertTrue(r.content)
 
-    def GetAllImagesHaveSameElements(self):
+    def test_GetAllImagesHaveSameElements(self):
         r = requests.get(self.routeUrl)
         self.assertTrue(r.content)
 

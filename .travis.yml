@@ -16,9 +16,7 @@ before_script:
   - docker-compose up -d --build
 
 script:
-  - docker-compose exec server python3 tests/Base.py
-  - docker-compose exec server python3 tests/Gallery.py
-  - docker-compose exec server python3 tests/Camera.py
+  - docker-compose exec server python3 -m unittest discover
 
 after_script:
   - docker-compose down

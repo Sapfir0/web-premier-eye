@@ -1,15 +1,15 @@
 import unittest
-from tests.Base import Base
+import config as cfg
 import requests
 import os
 
 
-class UploadImage(Base):
-    routeUrl = Base.serverUrl + "upload"
+class UploadImage(unittest.TestCase):
+    routeUrl = cfg.serverUrl + "upload"
     imageName = "1_20190718144434.jpg" # учитывай, что этого изображения быть в базе не должно
-    imagePath = os.path.join(Base.APP_PATH, "res", imageName)
+    imagePath = os.path.join(cfg.APP_PATH, "res", imageName)
     jsonName = "test.json"
-    jsonPath = os.path.join(Base.APP_PATH, "res", jsonName)
+    jsonPath = os.path.join(cfg.APP_PATH, "res", jsonName)
 
     def addJson(self, files: list, jsonPath):
         files.append(('json', (self.jsonName, open(self.jsonPath, 'rb'), 'application/json')))
