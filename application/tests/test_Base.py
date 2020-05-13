@@ -1,5 +1,6 @@
 import unittest
-import config as cfg
+
+from application.config import Config as cfg
 import requests
 
 

@@ -1,5 +1,5 @@
 from application import createApp
-from config import Config as cfg
+from application.config import Config as cfg
 
 app = createApp(cfg)
 

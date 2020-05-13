@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
     error: {
 
     },
+    img: {
+
+    }
 
 }));
 

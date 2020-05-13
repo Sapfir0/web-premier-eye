@@ -1,17 +1,17 @@
 import unittest
-import config as cfg
+from application.config import Config as cfg
 import requests
 
 
 class Camera(unittest.TestCase):
     routeUrl = cfg.serverUrl + "gallery/camera"
 
-    camersCount = 5
+    camerasList = [1,2,3]
+
     def test_IsAllCamerasAvailable(self):
-        for camera in range(self.camersCount):
+        for camera in self.camerasList:
             r = requests.get(f"{self.routeUrl}/{camera}")
-            if r.status_code != 200:
-                self.assertTrue()
+            self.assertEqual(200, r.status_code)
 
 
 if __name__ == '__main__':

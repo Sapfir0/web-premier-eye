@@ -4,9 +4,9 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
-import {getSrcByImageName} from "../../router";
+import {getSrcByImageName} from "../../../router";
 import {withStyles} from "@material-ui/core/styles";
-import NotFoundImage from "../atoms/NotFoundImage";
+import NotFoundImage from "../../atoms/NotFoundImage";
 
 
 const styles = {
@@ -34,8 +34,18 @@ const styles = {
 
 }
 
-class ImageView extends React.Component {
-    constructor(props) {
+interface IProps {
+    images: Array<string>,
+    classes: any,
+    updateStateByInfo: (src: string) => void
+}
+
+interface IState {
+    activeStep: number
+}
+
+class ImageView extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
         this.state = {activeStep: 0}
     }
@@ -49,9 +59,9 @@ class ImageView extends React.Component {
 
     };
 
-    handleStepChange = (step) => {
+    handleStepChange = (step: number) => {
         this.setState({activeStep: step}, () => {
-            this.props.updateStateByInfo(this.props.images[this.state.activeStep], this.state.activeStep)
+            this.props.updateStateByInfo(this.props.images[this.state.activeStep])
         })
     };
 
@@ -72,7 +82,7 @@ class ImageView extends React.Component {
                 onChangeIndex={this.handleStepChange}
                 enableMouseEvents
             >
-                {images.map((step, index) => (
+                {images.map((step: string, index: number) => (
                     <div key={step}>
                         {Math.abs(activeStep - index) <= 2 ? (
                             <img className={classes.img} src={getSrcByImageName(step)} alt={step}/>

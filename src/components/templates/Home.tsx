@@ -6,11 +6,14 @@ const useStyles = makeStyles((theme) => ({
     content: {
         marginTop: "40px"
     },
+    header: {
+
+    }
 
 }));
 
 
-export default function Home(props) {
+export default function Home(props: { header: React.ReactNode; content: React.ReactNode; footer: React.ReactNode; }) {
     const classes = useStyles();
     return (
         <>

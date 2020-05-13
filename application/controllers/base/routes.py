@@ -6,7 +6,7 @@ import os
 import json
 
 from application.services.jsonWorking import parseJson, addObjectToSession
-from config import Config as cfg
+from application.config import Config as cfg
 from application.services.directory import getOutputDir
 from application.controllers.base import routes
 

@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
-from config import Config as cfg
+from application.config import Config as cfg
 from application.database.config import DatabaseConfig
 
 engine_parameters = {

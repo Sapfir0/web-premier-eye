@@ -2,7 +2,7 @@ import os
 from flask import jsonify, send_from_directory, request
 from application.controllers.base import blueprint
 from application.services.directory import recursiveSearch, getOutputDir
-from config import Config as cfg
+from application.config import Config as cfg
 from application.controllers.gallery import routes
 import application.database.dbAPI as db
 from datetime import datetime

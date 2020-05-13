@@ -5,7 +5,7 @@ services:
     env_file: .env
     build:
       context: .
-      dockerfile: DockerfileServer
+      dockerfile: application/Dockerfile
     ports:
       - "8050:8050"
     volumes:
@@ -18,9 +18,10 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: DockerfileClient
+      dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "5000:80"
+    stdin_open: true
 
 networks:
   some-net:
