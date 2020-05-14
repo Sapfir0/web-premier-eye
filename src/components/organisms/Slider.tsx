@@ -3,7 +3,6 @@ import ImageView from '../molecules/ImageView/ImageView'
 import ImageInfo from "../molecules/ImageInfo/ImageInfo"
 import CamerasList from "../molecules/CamerasList/CamerasList"
 import {getImagesFromCamera, getInfoImage} from "../../router";
-import {camersCount} from "../../config"
 import {withStyles} from '@material-ui/core/styles';
 import {IImageInfo} from "../molecules/ImageInfo/IImageInfo";
 

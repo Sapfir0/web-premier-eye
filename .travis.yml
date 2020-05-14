@@ -18,6 +18,9 @@ before_script:
 script:
   -  docker-compose exec server python3 -m unittest discover
 
+after_success:
+  - ./.travis/docker_deploy.sh
+
 after_script:
   -  docker-compose down
 

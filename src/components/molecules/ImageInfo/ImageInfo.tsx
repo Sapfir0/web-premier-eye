@@ -15,6 +15,8 @@ const  styles = {
     },
     numberOfCam: {
         display: 'flex',
+    },
+    error: {
     }
 };
 
@@ -113,6 +115,10 @@ class ImageInfo extends React.Component<IProps, IState> {
         }
 
         const warningDateDiff = this.warningIfBigDiffBetweenDates(new Date(myData.createdAt), new Date(myData.fixationDatetime));
+        if (myData.numberOfCam < 0) {
+            return <div className={classes.error}> Информация с камеры недоступна </div>
+        }
+
 
         return (
             <div className={classes.root}>

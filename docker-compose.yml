@@ -3,6 +3,7 @@ services:
   server:
     restart: always
     env_file: .env
+    image: sapfir0/web-premier-eye:server
     build:
       context: .
       dockerfile: application/Dockerfile
@@ -16,6 +17,7 @@ services:
 
   client:
     restart: always
+    image: sapfir0/web-premier-eye:client
     build:
       context: .
       dockerfile: Dockerfile

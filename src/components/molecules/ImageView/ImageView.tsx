@@ -98,12 +98,12 @@ class ImageView extends React.Component<IProps, IState> {
                 nextButton={
                     <Button size="small" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
                         Next
-                        <KeyboardArrowLeft/>
+                        <KeyboardArrowRight/>
                     </Button>
                 }
                 backButton={
                     <Button size="small" onClick={this.handleBack} disabled={activeStep === 0}>
-                        <KeyboardArrowRight/>
+                        <KeyboardArrowLeft/>
                         Back
                     </Button>
                 }
