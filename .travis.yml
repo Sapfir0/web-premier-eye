@@ -20,4 +20,9 @@ after_success:
   - docker push sapfir0/web-premier-eye:server
 
 
+deploy:
+  provider: heroku
+  api_key:
+    secure: "5bce83ac-ef97-4fb5-910c-5e95e6af1520"
+    app: web-premier-eye
 
