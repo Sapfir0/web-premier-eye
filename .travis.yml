@@ -23,6 +23,6 @@ after_success:
 deploy:
   provider: heroku
   api_key:
-    secure: "5bce83ac-ef97-4fb5-910c-5e95e6af1520"
+    secure: 5bce83ac-ef97-4fb5-910c-5e95e6af1520
     app: web-premier-eye
 
