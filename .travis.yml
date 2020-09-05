@@ -1,28 +1,16 @@
 sudo: required
 language: node_js
-
 services:
-  - docker
-
-
+- docker
 before_script:
-  - cd application && docker build -t sapfir0/web-premier-eye:server .
-  - cd ../SPA && docker build -t sapfir0/web-premier-eye:client .
-
-#script:
-#  - docker run -p 8050:8050 sapfir0/web-premier-eye:server
-#  - docker run -p 5000:80 sapfir0/web-premier-eye:client
-
-
+- cd application && docker build -t sapfir0/web-premier-eye:server .
+- cd ../SPA && docker build -t sapfir0/web-premier-eye:client .
 after_success:
-  - docker login --username $DOCKER_USER --password $DOCKER_PASS
-  - docker push sapfir0/web-premier-eye:client
-  - docker push sapfir0/web-premier-eye:server
-
-
+- docker login --username $DOCKER_USER --password $DOCKER_PASS
+- docker push sapfir0/web-premier-eye:client
+- docker push sapfir0/web-premier-eye:server
 deploy:
   provider: heroku
+  skip_cleanup: true
   api_key:
-    secure: "b63b55e1-cd0d-439a-aa5a-94e6f816d5fb"
-    app: web-premier-eye
-
+    secure: $HEROKU_API_KEY
