@@ -1,5 +1,5 @@
 import os
-from application.config import Config as cfg
+from config import Config as cfg
 from datetime import datetime
 
 datetimePattern = '%Y%m%d%H%M%S.jpg'

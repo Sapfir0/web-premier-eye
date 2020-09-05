@@ -1,27 +1,23 @@
 sudo: required
+language: node_js
 
 services:
   - docker
 
-env:
-  DOCKER_COMPOSE_VERSION: 1.23.2
-
-before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - docker-compose up -d --build
+  - cd application && docker build -t sapfir0/web-premier-eye:server .
+  - cd ../SPA && docker build -t sapfir0/web-premier-eye:client .
 
-script:
-  -  docker-compose exec server python3 -m unittest discover
+#script:
+#  - docker run -p 8050:8050 sapfir0/web-premier-eye:server
+#  - docker run -p 5000:80 sapfir0/web-premier-eye:client
+
 
 after_success:
-  - ./.travis/docker_deploy.sh
+  - docker login --username $DOCKER_USER --password $DOCKER_PASS
+  - docker push sapfir0/web-premier-eye:client
+  - docker push sapfir0/web-premier-eye:server
 
-after_script:
-  -  docker-compose down
 
 

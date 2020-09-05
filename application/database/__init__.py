@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
-from application.config import Config as cfg
-from application.database.config import DatabaseConfig
+from config import Config as cfg
+from database.config import DatabaseConfig
 
 engine_parameters = {
     "convert_unicode": True,
@@ -23,7 +23,7 @@ Base.metadata.create_all(bind=engine)
 
 def checkConcordance():
     import os
-    from application.database.dbAPI import getAllFilenames
+    from database.dbAPI import getAllFilenames
     uploadedImages = []
     for address, dirs, files in os.walk(cfg.UPLOAD_FOLDER):
         for file in files:

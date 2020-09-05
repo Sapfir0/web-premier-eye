@@ -1,16 +1,16 @@
 from flask import redirect, request
 from werkzeug.utils import secure_filename
-from application.controllers.base import blueprint
+from controllers.base import blueprint
 
 import os
 import json
 
-from application.services.jsonWorking import parseJson, addObjectToSession
-from application.config import Config as cfg
-from application.services.directory import getOutputDir
-from application.controllers.base import routes
+from services.jsonWorking import parseJson, addObjectToSession
+from config import Config as cfg
+from services.directory import getOutputDir
+from controllers.base import routes
 
-from application.database.models.Images import Images, session
+from database.models.Images import Images, session
 import requests
 
 

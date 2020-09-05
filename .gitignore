@@ -5,6 +5,9 @@ node_modules
 .env.local
 .env.*.local
 
+build
+dist
+yarn.lock
 # Log files
 npm-debug.log*
 

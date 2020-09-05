@@ -1,5 +1,5 @@
 from sqlalchemy import Table, Column, Integer, String, MetaData, Enum, ForeignKey, Float, UnicodeText, literal_column, DateTime, Boolean, or_
-from application.database import Base
+from database import Base
 from datetime import datetime
 
 

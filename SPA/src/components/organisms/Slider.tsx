@@ -2,7 +2,6 @@ import React from 'react';
 import ImageView from '../molecules/ImageView/ImageView'
 import ImageInfo from "../molecules/ImageInfo/ImageInfo"
 import CamerasList from "../molecules/CamerasList/CamerasList"
-import {getImagesFromCamera, getInfoImage} from "../../router";
 import {withStyles} from '@material-ui/core/styles';
 import {IImageInfo} from "../molecules/ImageInfo/IImageInfo";
 
@@ -40,19 +39,18 @@ class Slider extends React.Component<IProps, IState> {
     }
 
     handleCameraChange = async (cameraId: number) => {
-        console.log("Делаем запрос из организма к ", cameraId)
         await this.updateStateByImagesFromCamera(cameraId)
         await this.updateStateByInfo(this.state.imagesList[0])
     }
 
      updateStateByImagesFromCamera = async (cameraId: number) => {
-        const imagesList = await getImagesFromCamera(cameraId);
-        this.setState({imagesList: imagesList})
+        //const imagesList = await getImagesFromCamera(cameraId);
+        //this.setState({imagesList: imagesList})
     }
 
     updateStateByInfo = async (src: string) => {
-        const imageInfo = await getInfoImage(src);
-        this.setState({imageInfo: imageInfo});
+        //const imageInfo = await getInfoImage(src);
+        //this.setState({imageInfo: imageInfo});
         console.log("Обновлена инфа по изображению ", src)
     }
 

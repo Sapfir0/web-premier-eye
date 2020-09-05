@@ -2,16 +2,16 @@ version: '3'
 services:
   server:
     restart: always
-    env_file: .env
+    env_file: application/.env
     image: sapfir0/web-premier-eye:server
     build:
-      context: .
-      dockerfile: application/Dockerfile
+      context: application
+      dockerfile: Dockerfile
     ports:
       - "8050:8050"
     volumes:
       - "./application/static/uploads:/pyfront/application/static/uploads"
-      - "./data.db:/pyfront/data.db"
+      - "./data.db:/pyfront/application/data.db"
     networks:
       - some-net
 
@@ -19,7 +19,7 @@ services:
     restart: always
     image: sapfir0/web-premier-eye:client
     build:
-      context: .
+      context: SPA
       dockerfile: Dockerfile
     ports:
       - "5000:80"

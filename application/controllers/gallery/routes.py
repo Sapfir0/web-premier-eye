@@ -1,10 +1,10 @@
 import os
 from flask import jsonify, send_from_directory, request
-from application.controllers.base import blueprint
-from application.services.directory import recursiveSearch, getOutputDir
-from application.config import Config as cfg
-from application.controllers.gallery import routes
-import application.database.dbAPI as db
+from controllers.base import blueprint
+from services.directory import recursiveSearch, getOutputDir
+from config import Config as cfg
+from controllers.gallery import routes
+import database.dbAPI as db
 from datetime import datetime
 
 
@@ -53,7 +53,7 @@ def getInfoFromCamera(cameraId):
 
 @blueprint.route(routes['getImageBetweenDatesFromCamera'], methods=['POST'])
 def getImageBetweenDatesFromCamera(cameraId):
-    from application.services.directory import datetimePattern
+    from services.directory import datetimePattern
     req = request.form
     if not req['startDate'] or req['endDate']:
         return "Uncorrected query. Need to set start and end date.", 404
@@ -69,7 +69,7 @@ def getObjectsFromRectangleFromImage(filename):
     """
         подаем координаты прямоугоьника, возвращаются все события/объекты в дельтта окрестности от него
     """
-    from application.services.decart import isCompletelyInside
+    from services.decart import isCompletelyInside
     bigRect = list(request.form['rectangle'].split(", "))
     bigRect = list(map(int, bigRect))
     coord = db.getCoord(filename)
@@ -82,7 +82,7 @@ def getObjectsFromRectangleOnImageVisualize(filename):
     """
         подаем координаты прямоугольника, вовращается размеченное изображение
     """
-    from application.services.decart import createGraphic
+    from services.decart import createGraphic
     path = getOutputDir(filename)
 
     bigRect = list(request.form['rectangle'].split(", "))

@@ -1,9 +1,9 @@
 from sqlalchemy import select
 from sqlalchemy import and_
-from application.database.models.Images import Images as Image
-from application.database.models.Images import engine
-from application.database.models.Objects_ import Objects_ as Object_
-from application.database.models.Coordinates import Coordinates
+from database.models.Images import Images as Image
+from database.models.Images import engine
+from database.models.Objects_ import Objects_ as Object_
+from database.models.Coordinates import Coordinates
 from datetime import datetime
 
 
