@@ -99,7 +99,7 @@ module.exports = (env) => {
         },
         devServer: {
             contentBase: path.join(__dirname, 'public'),
-            port: 5000,
+            port: 3000,
             watchContentBase: true,
             progress: true,
             compress: true,
