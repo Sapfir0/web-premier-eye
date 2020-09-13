@@ -1,5 +1,5 @@
 import ApiHelper from "../services/ApiHelper";
-import {TYPES} from "../services/typings/types";
+import {TYPES} from "../typings/types";
 import {IApiHelper, IApiInteractionService, IBaseInteractionService} from "../services/typings/ApiTypes";
 import {Container} from "inversify";
 import BaseInteractionService from "../services/BaseInteractionService";
@@ -12,3 +12,6 @@ myContainer.bind<IApiHelper>(TYPES.ApiHelper).to(ApiHelper)
 myContainer.bind<IBaseInteractionService>(TYPES.BaseInteractionService).to(BaseInteractionService)
 
 myContainer.bind<IApiInteractionService>(TYPES.ApiInteractionService).to(ApiInteractionService)
+
+
+export { myContainer }

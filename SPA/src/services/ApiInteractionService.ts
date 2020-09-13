@@ -1,6 +1,6 @@
 import {API_URL, ApiRoutes} from "../config/apiRoutes";
 import {inject, injectable} from "inversify";
-import {TYPES} from "./typings/types";
+import {TYPES} from "../typings/types";
 import {Either} from "@sweet-monads/either";
 import {IApiInteractionService, IBaseInteractionService} from "./typings/ApiTypes";
 import BaseInteractionService from "./BaseInteractionService";

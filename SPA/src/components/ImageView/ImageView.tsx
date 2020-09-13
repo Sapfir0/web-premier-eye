@@ -5,8 +5,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import {withStyles} from "@material-ui/core/styles";
-import NotFoundImage from "../../atoms/NotFoundImage";
-import {ApiRoutes} from "../../../config/apiRoutes";
+import NotFoundImage from "../atoms/NotFoundImage";
+import {ApiRoutes} from "../../config/apiRoutes";
 
 
 const styles = {
@@ -18,8 +18,6 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         height: 50,
-        // paddingLeft: theme.spacing(4),
-        // backgroundColor: theme.palette.background.default,
     },
     img: {
         height: 255,

@@ -2,10 +2,10 @@ import React from "react";
 import {Collapse, Divider, List, ListItem, ListItemText} from "@material-ui/core";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import {withStyles} from '@material-ui/core/styles';
-import TitledWarning from "../../atoms/TitledWarning";
-import TitledCameraNumber from "../../atoms/TitledCameraNumber";
+import TitledWarning from "../atoms/TitledWarning";
+import TitledCameraNumber from "../atoms/TitledCameraNumber";
 import {ObjectInfo, IImageInfo } from "./IImageInfo";
-import {getDiffSecond} from "./Time";
+import {getDiffSecond} from "../../services/Time";
 import {getSettings, Settings} from "./SettingsHelper";
 import {detectionsImages} from "./ObjectsImages";
 

@@ -1,14 +1,13 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import {camersCount} from "../../../config/app";
+import {camersCount} from "../../config/app";
 import {withStyles} from "@material-ui/core/styles";
 
 const styles = {
     root: {
         width: '100%',
         maxWidth: 360,
-        //backgroundColor: theme.palette.background.paper,
     },
 };
 

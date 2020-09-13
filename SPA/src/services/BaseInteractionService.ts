@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import ApiHelper from "./ApiHelper";
 import {inject, injectable} from "inversify";
-import {TYPES} from "./typings/types";
+import {TYPES} from "../typings/types";
 import {NetworkError} from "./Errors/NetworkError";
 import * as qs from "querystring"
 import {Either} from "@sweet-monads/either";

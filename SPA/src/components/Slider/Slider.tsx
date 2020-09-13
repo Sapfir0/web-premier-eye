@@ -1,9 +1,10 @@
 import React from 'react';
-import ImageView from '../molecules/ImageView/ImageView'
-import ImageInfo from "../molecules/ImageInfo/ImageInfo"
-import CamerasList from "../molecules/CamerasList/CamerasList"
+import ImageView from '../ImageView/ImageView'
+import ImageInfo from "../ImageInfo/ImageInfo"
+import CamerasList from "../CamerasList/CamerasList"
 import {withStyles} from '@material-ui/core/styles';
-import {IImageInfo} from "../molecules/ImageInfo/IImageInfo";
+import {IImageInfo} from "../ImageInfo/IImageInfo";
+import {ISliderPublicAction} from "../../typings/IAction";
 
 const styles = {
     root: {
@@ -14,23 +15,17 @@ const styles = {
 
 interface IProps {
     classes: any
-}
-
-interface IState {
     imagesList: Array<any>,
     imageInfo: IImageInfo
+    actions: ISliderPublicAction
 }
 
-class Slider extends React.Component<IProps, IState> {
+
+class Slider extends React.Component<IProps> {
     startCameraId = 1
 
     constructor(props: IProps) {
         super(props);
-
-        this.state = {
-            imagesList: [],
-            imageInfo: {numberOfCam: -1, filename: "", createdAt: new Date(), fixationDatetime: new Date(), objects: []},
-        };
     }
 
     async componentDidMount() {
@@ -44,13 +39,13 @@ class Slider extends React.Component<IProps, IState> {
     }
 
      updateStateByImagesFromCamera = async (cameraId: number) => {
-        //const imagesList = await getImagesFromCamera(cameraId);
-        //this.setState({imagesList: imagesList})
+        this.props.actions.getImagesFromCamera(cameraId)
     }
 
     updateStateByInfo = async (src: string) => {
         //const imageInfo = await getInfoImage(src);
         //this.setState({imageInfo: imageInfo});
+        this.props.actions.getInfoImage(src)
         console.log("Обновлена инфа по изображению ", src)
     }
 
