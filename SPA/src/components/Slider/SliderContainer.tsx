@@ -24,6 +24,8 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
             ...bindActionCreators({
                 getImagesFromCamera: actions.getImagesFromCamera,
                 getInfoImage: actions.getInfoImage,
+                changeCurrentStep: actions.changeCurrentStep,
+                changeCurrentCamera: actions.changeCurrentCamera,
             }, dispatch)
         }
     }
@@ -33,6 +35,9 @@ const authAction = (state: RootStore) => {
     return {
         imageInfo: state.slider.imageInfo,
         imagesList: state.slider.imagesList,
+        currentCameraId: state.slider.currentCameraId,
+        stepsStore: state.slider.stepsStore,
+        stepMap: state.slider.stepMap
     }
 }
 

@@ -7,6 +7,7 @@ import SwipeableViews from 'react-swipeable-views';
 import {withStyles} from "@material-ui/core/styles";
 import NotFoundImage from "../atoms/NotFoundImage";
 import {API_URL, ApiRoutes} from "../../config/apiRoutes";
+import {ISliderPublicAction} from "../../typings/IAction";
 
 
 const styles = {
@@ -36,71 +37,63 @@ interface IProps {
     images: Array<string>,
     classes: any,
     updateStateByInfo: (src: string) => void
+    changeCurrentStep: (step: number) => void
+    currentStep: number
 }
 
-interface IState {
-    activeStep: number
-}
 
-class ImageView extends React.Component<IProps, IState> {
+
+class ImageView extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
-        this.state = {activeStep: 0}
     }
 
     handleNext = () => { // для кнопок
-        this.handleStepChange(this.state.activeStep+1)
+        this.props.changeCurrentStep(this.props.currentStep+1)
     };
 
     handleBack = () => { // для кнопок
-        this.handleStepChange(this.state.activeStep-1)
-
+        this.props.changeCurrentStep(this.props.currentStep-1)
     };
 
     handleStepChange = (step: number) => {
-        this.setState({activeStep: step}, () => {
-            this.props.updateStateByInfo(this.props.images[this.state.activeStep])
-        })
+        this.props.changeCurrentStep(step)
     };
 
     render() {
-        const images = this.props.images;
-        const maxSteps = images.length;
         const {classes} = this.props;
 
-        const activeStep = this.state.activeStep
-
         let slideBlock;
-        if(images.hasOwnProperty("error")) {
+        if(this.props.images.hasOwnProperty("error")) {
             slideBlock = <NotFoundImage />
         }
         else {
             slideBlock = <> <SwipeableViews
-                index={activeStep}
+                index={this.props.currentStep}
                 onChangeIndex={this.handleStepChange}
                 enableMouseEvents
             >
-                {images.map((step: string, index: number) => (
-                    <div key={step}>
-                        {Math.abs(activeStep - index) <= 2 ? (
-                            <img className={classes.img} src={API_URL + ApiRoutes.GALLERY.GET_IMAGE(step)} alt={step}/>
+                {this.props.images.map((src: string, index: number) => (
+                    <div key={src}>
+                        {Math.abs(this.props.currentStep - index) <= 2 ? (
+                            <img className={classes.img} src={API_URL + ApiRoutes.GALLERY.GET_IMAGE(src)} alt={src}/>
                         ) : null}
                     </div>
                 ))}
             </SwipeableViews>
             <MobileStepper
-                steps={maxSteps}
+                steps={this.props.images.length}
                 position="static"
                 variant="progress"
-                activeStep={activeStep}
+                activeStep={this.props.currentStep}
                 nextButton={
-                    <Button size="small" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
+                    <Button size="small" onClick={this.handleNext} disabled={this.props.currentStep === this.props.images.length - 1}>
                         Next
                         <KeyboardArrowRight/>
                     </Button>
                 }
                 backButton={
-                    <Button size="small" onClick={this.handleBack} disabled={activeStep === 0}>
+                    <Button size="small" onClick={this.handleBack} disabled={this.props.currentStep === 0}>
                         <KeyboardArrowLeft/>
                         Back
                     </Button>

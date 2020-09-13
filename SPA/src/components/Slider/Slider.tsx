@@ -6,41 +6,38 @@ import {withStyles} from '@material-ui/core/styles';
 import {IImageInfo} from "../ImageInfo/IImageInfo";
 import {ISliderPublicAction} from "../../typings/IAction";
 import "./Slider.pcss"
+import StepDataStructure from "../../services/DataStructure/StepDataStructure";
 
 export interface ISlider {
 
     imagesList: Array<string>,
     imageInfo: IImageInfo | null
     actions: ISliderPublicAction
+    currentCameraId: number
+    stepMap: Map<number, number>
 }
 
 
 class Slider extends React.Component<ISlider> {
-    startCameraId = 1
 
     constructor(props: ISlider) {
         super(props);
     }
 
-    async componentDidMount() {
-        await this.updateStateByImagesFromCamera(this.startCameraId)
-        //await this.updateStateByInfo(this.state.imagesList[0])
+    componentDidMount() {
+        this.props.actions.getImagesFromCamera(this.props.currentCameraId)
+        this.props.actions.changeCurrentStep(this.props.currentCameraId, 0)
     }
 
-    handleCameraChange = async (cameraId: number) => {
-        await this.updateStateByImagesFromCamera(cameraId)
-        await this.updateStateByInfo(this.props.imagesList[0])
-    }
-
-     updateStateByImagesFromCamera = async (cameraId: number) => {
+    handleCameraChange = (cameraId: number) => {
         this.props.actions.getImagesFromCamera(cameraId)
+        this.props.actions.changeCurrentCamera(cameraId)
+        const currentStep = this.props.stepMap.get(cameraId) === undefined ? 0 : this.props.stepMap.get(cameraId)
+        this.props.actions.changeCurrentStep(cameraId, currentStep!)
     }
 
-    updateStateByInfo = async (src: string) => {
-        //const imageInfo = await getInfoImage(src);
-        //this.setState({imageInfo: imageInfo});
-        this.props.actions.getInfoImage(src)
-        console.log("Обновлена инфа по изображению ", src)
+    handleCurrentStepChange = (step: number) => {
+        this.props.actions.changeCurrentStep(this.props.currentCameraId, step)
     }
 
     render() {
@@ -50,11 +47,20 @@ class Slider extends React.Component<ISlider> {
                 <CamerasList onCameraChange={this.handleCameraChange}/>
                 {
                     this.props.imagesList &&
-                    <ImageView images={this.props.imagesList} updateStateByInfo={this.updateStateByInfo}> </ImageView>
-
+                    <ImageView
+                        currentStep={this.props.stepMap.get(this.props.currentCameraId)!}
+                        changeCurrentStep={this.handleCurrentStepChange}
+                        images={this.props.imagesList}
+                        updateStateByInfo={this.props.actions.getInfoImage}
+                    />
                 }
-                {/*<ImageInfo*/}
-                {/*    info={this.props.imageInfo}> </ImageInfo>*/}
+                {
+                    this.props.imageInfo &&
+                    <ImageInfo
+                        info={this.props.imageInfo}
+                    />
+                }
+
             </div>
         );
     }
