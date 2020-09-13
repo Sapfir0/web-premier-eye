@@ -7,6 +7,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Settings from "../pages/Settings";
 import HomePage from "../pages/HomePage";
+import ClientRoutes from "../../config/clientRoutes";
 
 
 
@@ -33,17 +34,11 @@ export default function ButtonAppBar() {
         <div className={classes.root}>
 
             <AppBar position="static">
-                <Toolbar>
-                    <Link to="/">
-                        <Button className={classes.title}>
-                            Home
-                        </Button>
-                    </Link>
-
-                    <Link to="/settings">
-                        <SettingsIcon className={classes.menuButton} color="inherit">Настройки</SettingsIcon>
-                    </Link>
-                </Toolbar>
+                <Link to={ClientRoutes.Index}>
+                    <Button className={classes.title}>
+                        Home
+                    </Button>
+                </Link>
 
             </AppBar>
 
