@@ -2,7 +2,7 @@ import {Either} from "@sweet-monads/either";
 import {BaseInteractionError} from "../services/Errors/BaseInteractionError";
 
 export type IdPayload = {
-    id: string
+    id: number
 }
 
 export type AsyncEither<T> = Promise<Either<BaseInteractionError, T>>
@@ -23,4 +23,8 @@ export interface ActionTypePure<ActionType> {
 }
 
 export type AnyActionName = string
+
+export type ErrorPayload = {
+    error: BaseInteractionError
+}
 

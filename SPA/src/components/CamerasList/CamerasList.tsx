@@ -52,4 +52,4 @@ class CamerasList extends React.Component<IProps> {
 
 }
 
-export default withStyles(styles)(CamerasList)
+export default  withStyles(styles)(CamerasList)

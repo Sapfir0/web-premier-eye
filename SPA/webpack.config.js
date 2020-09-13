@@ -88,6 +88,20 @@ module.exports = (env) => {
                     ]
                 },
                 {
+                    test: /\.(pcss)$/,
+                    exclude: /node_modules/,
+                    loader: [
+                        !isProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+                        'css-loader',
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: !isProduction,
+                            }
+                        }
+                    ]
+                },
+                {
                     test: /\.(jpg|jpeg|gif|png|svg)$/,
                     loader: ['file-loader?context=src/images&name=images/[path][name].[ext]'],
                 },

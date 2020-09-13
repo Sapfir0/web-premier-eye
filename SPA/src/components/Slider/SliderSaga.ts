@@ -1,40 +1,47 @@
 import {push} from "connected-react-router";
-import {inject} from "inversify";
+import {inject, injectable} from "inversify";
 import {TYPES} from "../../typings/types";
-import {ActionTypePayload} from "../../typings/common";
+import {ActionTypePayload, IdPayload} from "../../typings/common";
+import {ICameraApiInteractionService, IGalleryApiInteractionService} from "../../services/typings/ApiTypes";
+import {ISliderPrivateAction} from "../../typings/IAction";
+import {Either} from "@sweet-monads/either";
+import {BaseInteractionError} from "../../services/Errors/BaseInteractionError";
+import {ISliderSaga} from "../../typings/ISaga";
+import {GET_IMAGES_FROM_CAMERA, SLIDER_ACTIONS} from "../../store/actionNames/sliderActionNames";
+import {SliderBasePayload} from "../../typings/sliderTypes";
+import {put, takeEvery } from "redux-saga/effects";
 
 
+@injectable()
 export default class SliderSaga implements ISliderSaga {
-    private readonly usersFetcher: IUsersApiInteractionService
-    private _actions: ILoginAction
+    private readonly sliderFetcher: IGalleryApiInteractionService
+    private readonly actions: ISliderPrivateAction
+    private readonly cameraFetcher: ICameraApiInteractionService
 
     constructor(
-        @inject(TYPES.UsersApiInteractionService) usersFetcher: IUsersApiInteractionService,
-        @inject(TYPES.LoginAction) actions: ILoginAction,
+        @inject(TYPES.GalleryApiInteractionService) galleryFetcher: IGalleryApiInteractionService,
+        @inject(TYPES.CameraApiInteractionService) cameraFetcher: ICameraApiInteractionService,
+        @inject(TYPES.SliderAction) actions: ISliderPrivateAction,
     ) {
-        this._actions = actions
-        this.usersFetcher = usersFetcher
+        this.actions = actions
+        this.sliderFetcher = galleryFetcher
+        this.cameraFetcher = cameraFetcher
 
-        this.login = this.login.bind(this)
-        this.getUserInfo = this.getUserInfo.bind(this)
-
+        this.getImagesFromCamera = this.getImagesFromCamera.bind(this)
     }
 
-    public *getImagesFromCamera(action: ActionTypePayload<AuthDataPayload, AUTH_ACTIONS>) {
-        const either: Either<ValidationError, TokensDataExtended> = yield this.usersFetcher.login(action.payload.username, action.payload.password)
+    public *getImagesFromCamera(action: ActionTypePayload<IdPayload, SLIDER_ACTIONS>) {
+        const either: Either<BaseInteractionError, string[]> = yield this.cameraFetcher.getImageFromCamera(action.payload.id)
 
-        if(either.isRight()) { // TODO пришлось воспользоваться такой записью, потому что я не знаю как сделать две саги друг за другом последовательно
-            yield put(this._actions.setTokens(either.value))
-            yield put(this._actions.getUserInfo())
-            yield put(push(ClientRoutes.ProjectsList))
-        } else {
-            yield put(this._actions.setError(either.value))
-        }
+        const parsed = either
+            .mapRight((imagesUrl) => this.actions.setImagesUrlFromCamera(imagesUrl))
+            .mapLeft((error) => this.actions.setError(error))
+
+        yield put(parsed.value)
     }
 
     public *watch(): Generator {
-        yield takeEvery(LOGIN, this.login)
-        yield takeEvery(GET_USER_INFO, this.getUserInfo)
+        yield takeEvery(GET_IMAGES_FROM_CAMERA, this.getImagesFromCamera)
     }
 
 }

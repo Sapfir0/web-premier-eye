@@ -11,3 +11,10 @@ export type ImagesInfoPayload = {
 export type SrcPayload = {
     src: string
 }
+
+export type SliderBasePayload = ImagesInfoPayload & ImagesUrlPayload
+
+export type SliderStore = {
+    imageInfo: IImageInfo | null
+    imagesList: Array<string>
+}

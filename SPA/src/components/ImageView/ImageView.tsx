@@ -6,7 +6,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import {withStyles} from "@material-ui/core/styles";
 import NotFoundImage from "../atoms/NotFoundImage";
-import {ApiRoutes} from "../../config/apiRoutes";
+import {API_URL, ApiRoutes} from "../../config/apiRoutes";
 
 
 const styles = {
@@ -83,7 +83,7 @@ class ImageView extends React.Component<IProps, IState> {
                 {images.map((step: string, index: number) => (
                     <div key={step}>
                         {Math.abs(activeStep - index) <= 2 ? (
-                            <img className={classes.img} src={ApiRoutes.GALLERY.GET_IMAGE(step)} alt={step}/>
+                            <img className={classes.img} src={API_URL + ApiRoutes.GALLERY.GET_IMAGE(step)} alt={step}/>
                         ) : null}
                     </div>
                 ))}

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Home(props: { header: React.ReactNode; content: React.ReactNode; footer: React.ReactNode; }) {
+export default function Home(props: { header: React.ReactNode; content: React.ReactNode; }) {
     const classes = useStyles();
     return (
         <>
@@ -33,9 +33,6 @@ export default function Home(props: { header: React.ReactNode; content: React.Re
                     </div>
                 </Route>
             </Switch>
-            <footer>
-                {props.footer}
-            </footer>
 
         </>
     )

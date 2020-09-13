@@ -5,37 +5,31 @@ import CamerasList from "../CamerasList/CamerasList"
 import {withStyles} from '@material-ui/core/styles';
 import {IImageInfo} from "../ImageInfo/IImageInfo";
 import {ISliderPublicAction} from "../../typings/IAction";
+import "./Slider.pcss"
 
-const styles = {
-    root: {
-        display: 'flex',
-    },
-};
+export interface ISlider {
 
-
-interface IProps {
-    classes: any
-    imagesList: Array<any>,
-    imageInfo: IImageInfo
+    imagesList: Array<string>,
+    imageInfo: IImageInfo | null
     actions: ISliderPublicAction
 }
 
 
-class Slider extends React.Component<IProps> {
+class Slider extends React.Component<ISlider> {
     startCameraId = 1
 
-    constructor(props: IProps) {
+    constructor(props: ISlider) {
         super(props);
     }
 
     async componentDidMount() {
         await this.updateStateByImagesFromCamera(this.startCameraId)
-        await this.updateStateByInfo(this.state.imagesList[0])
+        //await this.updateStateByInfo(this.state.imagesList[0])
     }
 
     handleCameraChange = async (cameraId: number) => {
         await this.updateStateByImagesFromCamera(cameraId)
-        await this.updateStateByInfo(this.state.imagesList[0])
+        await this.updateStateByInfo(this.props.imagesList[0])
     }
 
      updateStateByImagesFromCamera = async (cameraId: number) => {
@@ -50,18 +44,21 @@ class Slider extends React.Component<IProps> {
     }
 
     render() {
-        const {classes} = this.props;
 
         return (
-            <div className={classes.root}>
-                <CamerasList onCameraChange={this.handleCameraChange}/> {/* меняет значение выбранной камеры*/}
-                <ImageView images={this.state.imagesList} updateStateByInfo={this.updateStateByInfo}> </ImageView>
-                <ImageInfo
-                    info={this.state.imageInfo}> </ImageInfo>
+            <div className="slider">
+                <CamerasList onCameraChange={this.handleCameraChange}/>
+                {
+                    this.props.imagesList &&
+                    <ImageView images={this.props.imagesList} updateStateByInfo={this.updateStateByInfo}> </ImageView>
+
+                }
+                {/*<ImageInfo*/}
+                {/*    info={this.props.imageInfo}> </ImageInfo>*/}
             </div>
         );
     }
 }
 
 
-export default withStyles(styles)(Slider);
+export default Slider;

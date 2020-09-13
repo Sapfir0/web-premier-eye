@@ -22,6 +22,13 @@ export interface IBaseInteractionService {
     put: <T=any>(url: string, data?: any, host?: string, settings?: any, config?: AxiosRequestConfig,) => Promise<Either<BaseInteractionError, T>>
 }
 
-export interface ISliderApiInteractionService {
+export interface IGalleryApiInteractionService {
+    getImage: (imageId: string) => AsyncEither<any>
+    getAllImages: () => AsyncEither<any>
+    getInfoImage: (src: string) => AsyncEither<any>
+}
 
+export interface ICameraApiInteractionService {
+    getImageFromCamera: (cameraId: number) => AsyncEither<any>
+    getCameraInfo: (cameraId: number) => AsyncEither<any>
 }
